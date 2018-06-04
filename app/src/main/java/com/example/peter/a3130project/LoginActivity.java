@@ -3,6 +3,7 @@ package com.example.peter.a3130project;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -108,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-       // updateUI(currentUser);
+	updateUI(currentUser);
     }
 
 
@@ -145,7 +146,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     //TODO implement this method
     private void updateUI(FirebaseUser user) {
-
+	if (user == null) {
+	    return;
+	}
+	else {
+	    Intent intent = new Intent(this, MainActivity.class);
+	    startActivity(intent);
+	}
     }
 
     /**
@@ -212,6 +219,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
     }
 
     private boolean isEmailValid(String email) {
