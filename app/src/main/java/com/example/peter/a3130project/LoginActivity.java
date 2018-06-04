@@ -102,15 +102,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
+        // mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        //     @Override
+        //     public void onClick(View view) {
+        //         attemptLogin();
+        //     }
+        // });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    public void loginButtonClick(View view) {
+	/* Function loginButtonClick
+	   Called on email_signin_button
+	   ---------
+	   Initiates login.
+	 */
+	attemptLogin();
     }
 
     @Override
@@ -159,7 +168,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     //TODO implement this method
     private void updateUI(FirebaseUser user) {
 	if (user == null) {
-	    return;
+	    setContentView(R.layout.activity_login);
 	}
 	else {
 	    Intent intent = new Intent(this, MainActivity.class);
@@ -203,7 +212,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -251,7 +260,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
 
-            showProgress(true);
+            //showProgress(true);
 
         }
         FirebaseUser currentUser = mAuth.getCurrentUser();
