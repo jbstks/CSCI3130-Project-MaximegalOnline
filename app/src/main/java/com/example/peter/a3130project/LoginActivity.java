@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        et_password = (EditText) findViewById(R.id.password);
+        et_password = (EditText) findViewById(R.id.et_password);
 
         //TODO: change this
         et_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
