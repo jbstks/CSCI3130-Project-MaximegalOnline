@@ -24,6 +24,7 @@ public class LoginEspressoTest {
     public ActivityTestRule<LoginActivity> activityrule =
             new ActivityTestRule<>(LoginActivity.class);
 
+    
     @Test
     public void testMalformedLogin_Button() {
 	onView(withId(R.id.bt_signin)).perform(click());
