@@ -119,7 +119,14 @@ public class LoginActivity extends AppCompatActivity implements android.support.
      */
 
     private boolean precheckLogin(String email, String password) {
-        //TODO: implement
+
+        if (password.isEmpty()) {
+            return false;
+        }
+        if (!email.matches("^.+@.+\\..+$")) {
+            return false;
+        }
+
         return true;
     }
 
