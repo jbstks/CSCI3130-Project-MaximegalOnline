@@ -33,13 +33,10 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
 
 
-
-
     // UI references.
     private EditText et_password;
     private EditText et_email;
 
-    private View mLoginFormView;
     private FirebaseAuth mAuth;
 
     @Override
@@ -88,15 +85,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         /** Function: updateUI
-	 *
-        Parameters:
+         *
+         Parameters:
 
-        @param FirebaseUser user:
-            the current session, or null if there is none
+         @param FirebaseUser user:
+         the current session, or null if there is none
 
-	Usage:
-            Decides whether to switch intent to main activity
-     */
+         Usage:
+         Decides whether to switch intent to main activity
+         */
         if (user == null) {
             setContentView(R.layout.activity_login);
         } else {
@@ -104,21 +101,25 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-	/**Function: precheckLogin
-	 * ------------
-	 *  Parameters:
-	 *  @param email: String
-	 *  @param password: String
-	 *
-	 *  Description:
-	 *  @return true if email and passwords are properly formatted. False otherwise
-	 *
-	*/
+
+    /**
+     * Function: precheckLogin
+     * ------------
+     * Parameters:
+     *
+     * @param email:    String
+     * @param password: String
+     *                  <p>
+     *                  Description:
+     * @return true if email and passwords are properly formatted. False otherwise
+     */
 
     private boolean precheckLogin(String email, String password) {
         //TODO: implement
+        return true;
     }
-}
+
+
 
 /**
  *Takes the email and password stores in fields and attempts to login 
