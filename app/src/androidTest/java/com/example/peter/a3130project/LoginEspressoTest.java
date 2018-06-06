@@ -1,5 +1,6 @@
 package com.example.peter.a3130project;
 
+import android.support.test.espresso.Espresso;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.rule.ActivityTestRule;
 
@@ -25,10 +26,17 @@ public class LoginEspressoTest {
             new ActivityTestRule<>(LoginActivity.class);
 
     
-    @Test
-    public void testMalformedLogin_Button() {
-	onView(withId(R.id.bt_signin)).perform(click());
-    }
+//    @Test
+//    public void testMalformedLogin_Button() {
+//        Espresso.closeSoftKeyboard();
+//
+//	onView(withId(R.id.bt_signin)).perform(click());
+//
+//    }
+//
+
+
+
     @Test
     public void testIncorrectLogin_Button() {
 		/*
@@ -39,23 +47,26 @@ public class LoginEspressoTest {
 
         onView(withId(R.id.et_email)).perform(typeText(username));
 	    onView(withId(R.id.et_password)).perform(typeText(password));
-        closeSoftKeyboard();
+        Espresso.closeSoftKeyboard();
 	    onView(withId(R.id.bt_signin)).perform(click());
 
 	//Wait until the view changes.
     }
     @Test
     public void testCorrectLogin_Button() {
+
 	/*
 	  Tests login using a correct login with the button.
 	 */
         String username = "testing@test.com";
         String password = "testing";
 
+
         onView(withId(R.id.et_email)).perform(typeText(username));
 	    onView(withId(R.id.et_password)).perform(typeText(password));
-        closeSoftKeyboard();
+        Espresso.closeSoftKeyboard();
 	    onView(withId(R.id.bt_signin)).perform(click());
+
 
 	//Wait until the view changes.
 
