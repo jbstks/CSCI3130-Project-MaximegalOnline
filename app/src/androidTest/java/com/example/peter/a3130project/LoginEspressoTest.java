@@ -49,6 +49,7 @@ public class LoginEspressoTest {
 	//Wait until the view changes.
     }
     @Test
+
     public void C_testCorrectLogin_Button() {
 
 	/*
