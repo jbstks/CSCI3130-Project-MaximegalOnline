@@ -1,9 +1,13 @@
 /* Note, some portions of code are adapted from https://firebase.google.com/docs/auth/android/password-auth */
 package com.example.peter.a3130project;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -30,7 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 
  Main entry point for sign-in
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
 
 
     // UI references.
@@ -126,7 +130,8 @@ public class LoginActivity extends AppCompatActivity {
  *
  */
     private void attemptLogin() {
-
+        et_email = (EditText) findViewById(R.id.et_email);
+        et_password = (EditText) findViewById(R.id.et_password);
         // Reset errors.
         et_email.setError(null);
         et_password.setError(null);
@@ -134,7 +139,8 @@ public class LoginActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         String email = et_email.getText().toString();
         String password = et_password.getText().toString();
-
+        Log.d("email123456:", " "+email);
+        Log.d("password123456:",  " "+password);
    
         if (!(precheckLogin(email,password))) {
 	    //Do something
@@ -170,6 +176,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        return null;
+    }
 
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+
+    }
 }
 
