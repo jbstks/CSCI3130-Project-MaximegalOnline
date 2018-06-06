@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">3130project</string>
+    <string name="action_more">more</string>
+    <string name="action_menu">menu</string>
 </resources>
