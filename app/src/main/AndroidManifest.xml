@@ -29,19 +29,14 @@
 
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".CourseActivity" />
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme">
-	</activity>
 	
         <activity
             android:name=".CourseInfo"
-            android:parentActivityName=".Main2Activity">
+            android:parentActivityName=".MainActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Main2Activity" />
+                android:value=".MainActivity" />
         </activity>
     </application>
 
