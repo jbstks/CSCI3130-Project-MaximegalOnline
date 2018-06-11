@@ -151,6 +151,17 @@ public class LoginActivity extends AppCompatActivity implements android.support.
    
         if (!(precheckLogin(email,password))) {
 	    //Do something
+            if (email.length() == 0) {
+            }
+
+            if (password.length() == 0) {
+            }
+	        if (email.length() < 8 ){
+		        et_email.setError(getString(R.string.error_invalid_email));
+	        }
+	        if (password.length() < 8 ){
+		    et_password.setError(getString(R.string.error_invalid_password));
+	        }
 
         } else {
 	    //TODO: refactor this to avoid lambda function
