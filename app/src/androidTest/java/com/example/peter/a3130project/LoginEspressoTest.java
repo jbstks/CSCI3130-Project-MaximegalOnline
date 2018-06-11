@@ -29,12 +29,44 @@ public class LoginEspressoTest {
         Espresso.closeSoftKeyboard();
 
 	onView(withId(R.id.bt_signin)).perform(click());
-
+	
+	editText.check(matches(hasErrorText(R.strings.badlengthlogin)));
     }
 
 
+
     @Test
-    public void B_testIncorrectLogin_Button() {
+    public void B_testShortUser() {
+	String username = "hi@hi.c";
+        String password = "tesdfting";
+	
+        onView(withId(R.id.et_email)).perform(typeText(username));
+	    onView(withId(R.id.et_password)).perform(typeText(password));
+        Espresso.closeSoftKeyboard();
+	    onView(withId(R.id.bt_signin)).perform(click());
+	
+	editText.check(matches(hasErrorText(R.strings.badlengthlogin)));
+
+    }
+
+    @Test
+    public void C_testShortPW() {
+	String username = "ac@tt.comasdg";
+        String password = "test";
+	
+        onView(withId(R.id.et_email)).perform(typeText(username));
+	    onView(withId(R.id.et_password)).perform(typeText(password));
+        Espresso.closeSoftKeyboard();
+	    onView(withId(R.id.bt_signin)).perform(click());
+	
+
+	
+	editText.check(matches(hasErrorText(R.strings.badlengthlogin)));
+
+    }
+
+    @Test
+    public void D_testIncorrectLogin_Button() {
 		/*
 	  Tests login using a correct login with the button.
 	 */
@@ -46,17 +78,20 @@ public class LoginEspressoTest {
         Espresso.closeSoftKeyboard();
 	    onView(withId(R.id.bt_signin)).perform(click());
 
-	//Wait until the view changes.
-    }
-    @Test
 
-    public void C_testCorrectLogin_Button() {
+	//Wait until the view changes.
+
+	intended(hasComponent(LoginActivity.class.getName()));
+    }
+
+    @Test
+    public void E_testCorrectLogin_Button() {
 
 	/*
 	  Tests login using a correct login with the button.
 	 */
         String username = "testing@test.com";
-        String password = "testing";
+        String password = "testing123";
 
 
         onView(withId(R.id.et_email)).perform(typeText(username));
@@ -66,6 +101,7 @@ public class LoginEspressoTest {
 
 
 	//Wait until the view changes.
+	    intended(hasComponent(MainActivity.class.getName()));
 
     }
 
