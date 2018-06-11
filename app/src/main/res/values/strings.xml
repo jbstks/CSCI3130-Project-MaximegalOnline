@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">3130project</string>
+
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -14,4 +15,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="action_more">more</string>
+    <string name="action_menu">menu</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="tab_text_1">Courses</string>
+    <string name="tab_text_2">Schedule</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Log Out</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
 </resources>
