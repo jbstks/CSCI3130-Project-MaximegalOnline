@@ -16,9 +16,11 @@
         completions."
     </string>
 
+    <!-- Strings related to course selection -->
+    <string name="title_activity_term">Term</string>
+    <string name="title_selected_term"></string>
     <string name="action_more">more</string>
     <string name="action_menu">menu</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="tab_text_1">Courses</string>
     <string name="tab_text_2">Schedule</string>
     <string name="tab_text_3">Tab 3</string>
