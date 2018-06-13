@@ -29,6 +29,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.toPack
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -41,7 +42,6 @@ public class LoginEspressoTest {
     @Rule
     public ActivityTestRule<LoginActivity> activityrule =
             new ActivityTestRule<>(LoginActivity.class);
-
 
 
     @Test
@@ -66,6 +66,13 @@ public class LoginEspressoTest {
 	    onView(withId(R.id.et_password)).perform(typeText(password));
         Espresso.closeSoftKeyboard();
 	    onView(withId(R.id.bt_signin)).perform(click());
+        //ViewInteraction et_field = onView(withId(R.id.til_email));
+        //et_field.check(matches(hasErrorText(error_invalid_email)));
+        //SystemClock.sleep(1500);
+        //onView(withText(error_invalid_email)).check(matches(isDisplayed()));
+        //SystemClock.sleep(1500);
+        //onView(withText(error_invalid_email)).check(matches(isDisplayed()));
+
         ViewInteraction et_field = onView(withId(R.id.et_email));
         et_field.check(matches(hasErrorText(error_invalid_email)));
     }

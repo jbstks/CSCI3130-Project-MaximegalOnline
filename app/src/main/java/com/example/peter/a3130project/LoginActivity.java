@@ -120,7 +120,10 @@ public class LoginActivity extends AppCompatActivity implements android.support.
 
     private boolean precheckLogin(String email, String password) {
 
-        if (password.isEmpty()) {
+        if (password.isEmpty() || email.isEmpty()) {
+            return false;
+        }
+        if (password.length() < 8 || email.length() < 8) {
             return false;
         }
         if (!email.matches("^.+@.+\\..+$")) {
@@ -139,7 +142,7 @@ public class LoginActivity extends AppCompatActivity implements android.support.
     private void attemptLogin() {
         et_email = (EditText) findViewById(R.id.et_email);
         et_password = (EditText) findViewById(R.id.et_password);
-        // Reset errors.
+        // Reset errors.1
         et_email.setError(null);
         et_password.setError(null);
 
@@ -151,19 +154,38 @@ public class LoginActivity extends AppCompatActivity implements android.support.
    
         if (!(precheckLogin(email,password))) {
 	    //Do something
-            if (email.length() == 0) {
-            }
+            Log.d("precheckbad", "Didn't get precheck");
+
 
             if (password.length() == 0) {
-            }
-	        if (email.length() < 8 ){
-		        et_email.setError(getString(R.string.error_invalid_email));
-	        }
-	        if (password.length() < 8 ){
-		    et_password.setError(getString(R.string.error_invalid_password));
-	        }
+                et_password.setError((CharSequence) getString(R.string.error_field_required), null);
 
-        } else {
+                et_password.requestFocus();
+                Log.d("passwlen", "0");
+            }
+            else if (password.length() < 8 ){
+                Log.d("passwlen", "less8");
+
+                et_password.setError((CharSequence) getString(R.string.error_invalid_password), null);
+
+                et_password.requestFocus();
+            }
+
+            if (email.length() == 0) {
+                Log.d("emaillen", "0");
+
+                et_email.setError((CharSequence) getString(R.string.error_field_required),null);
+                et_email.requestFocus();
+            }
+
+            else if (email.length() < 8 ){
+                Log.d("emaillen", "less8");
+                et_email.setError((CharSequence) getString(R.string.error_invalid_email),null);
+                et_email.requestFocus();
+            }
+
+        }
+	else {
 	    //TODO: refactor this to avoid lambda function
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -185,12 +207,13 @@ public class LoginActivity extends AppCompatActivity implements android.support.
 
                         }
 			});
+            /* Get the currentuser, if logged in and retry */
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            updateUI(currentUser);
 
 	}
 
-	/* Get the currentuser, if logged in and retry */
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+
     }
 
 
