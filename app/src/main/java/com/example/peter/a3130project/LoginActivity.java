@@ -50,8 +50,8 @@ public class LoginActivity extends AppCompatActivity implements android.support.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
 
+        mAuth = FirebaseAuth.getInstance();
         et_password = (EditText) findViewById(R.id.et_password);
 
         //TODO: change this
@@ -89,8 +89,11 @@ public class LoginActivity extends AppCompatActivity implements android.support.
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            updateUI(currentUser);
+
+
     }
 
 
