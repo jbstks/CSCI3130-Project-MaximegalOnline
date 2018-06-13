@@ -67,4 +67,7 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+	<TextView
+        android:id="@+id/tv_welcome">
+
 </android.support.design.widget.CoordinatorLayout>

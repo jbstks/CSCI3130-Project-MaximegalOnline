@@ -2,6 +2,7 @@
 package com.example.peter.a3130project;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.view.View;
 
 import android.view.inputmethod.EditorInfo;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +77,11 @@ public class LoginActivity extends AppCompatActivity implements android.support.
 	   ---------
 	   Initiates login.
 	 */
+        View curview = this.getCurrentFocus();
+        if (curview != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         attemptLogin();
     }
 
@@ -120,7 +127,10 @@ public class LoginActivity extends AppCompatActivity implements android.support.
 
     private boolean precheckLogin(String email, String password) {
 
-        if (password.isEmpty()) {
+        if (password.isEmpty() || email.isEmpty()) {
+            return false;
+        }
+        if (password.length() < 8 || email.length() < 8) {
             return false;
         }
         if (!email.matches("^.+@.+\\..+$")) {
@@ -139,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements android.support.
     private void attemptLogin() {
         et_email = (EditText) findViewById(R.id.et_email);
         et_password = (EditText) findViewById(R.id.et_password);
-        // Reset errors.
+        // Reset errors.1
         et_email.setError(null);
         et_password.setError(null);
 
@@ -151,8 +161,38 @@ public class LoginActivity extends AppCompatActivity implements android.support.
    
         if (!(precheckLogin(email,password))) {
 	    //Do something
+            Log.d("precheckbad", "Didn't get precheck");
 
-        } else {
+
+            if (password.length() == 0) {
+                et_password.setError((CharSequence) getString(R.string.error_field_required), null);
+
+                et_password.requestFocus();
+                Log.d("passwlen", "0");
+            }
+            else if (password.length() < 8 ){
+                Log.d("passwlen", "less8");
+
+                et_password.setError((CharSequence) getString(R.string.error_invalid_password), null);
+
+                et_password.requestFocus();
+            }
+
+            if (email.length() == 0) {
+                Log.d("emaillen", "0");
+
+                et_email.setError((CharSequence) getString(R.string.error_field_required),null);
+                et_email.requestFocus();
+            }
+
+            else if (email.length() < 8 ){
+                Log.d("emaillen", "less8");
+                et_email.setError((CharSequence) getString(R.string.error_invalid_email),null);
+                et_email.requestFocus();
+            }
+
+        }
+	else {
 	    //TODO: refactor this to avoid lambda function
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -174,12 +214,13 @@ public class LoginActivity extends AppCompatActivity implements android.support.
 
                         }
 			});
+            /* Get the currentuser, if logged in and retry */
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            updateUI(currentUser);
 
 	}
 
-	/* Get the currentuser, if logged in and retry */
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+
     }
 
 
