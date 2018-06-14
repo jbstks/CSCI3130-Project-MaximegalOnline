@@ -27,4 +27,12 @@ public class TermActivity extends AppCompatActivity {
         });*/
     }
 
+    /** Called when the user taps a course card */
+    public void viewTermInfo(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("semester", "Winter");
+        intent.putExtra("year", "2018");
+        startActivity(intent);
+    }
+
 }
