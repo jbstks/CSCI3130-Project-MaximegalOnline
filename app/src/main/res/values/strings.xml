@@ -18,7 +18,8 @@
 
     <!-- Strings related to course selection -->
     <string name="title_activity_term">Term</string>
-    <string name="title_selected_term"></string>
+    <!-- Ideally this will be retrieved from the database -->
+    <string name="title_selected_term">Winter 2018</string>
     <string name="action_more">more</string>
     <string name="action_menu">menu</string>
     <string name="tab_text_1">Courses</string>

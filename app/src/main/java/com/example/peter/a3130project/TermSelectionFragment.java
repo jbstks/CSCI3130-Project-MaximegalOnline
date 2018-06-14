@@ -20,12 +20,4 @@ public class TermSelectionFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_term, container, false);
     }
-
-    /** Called when the user taps a course card */
-    public void viewTermInfo(View view) {
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        intent.putExtra("semester", "Winter");
-        intent.putExtra("year", "2018");
-        startActivity(intent);
-    }
 }
