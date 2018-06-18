@@ -21,6 +21,7 @@
         tools:layout_constraintTop_creator="1" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">
