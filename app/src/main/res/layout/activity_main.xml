@@ -72,11 +72,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_welcome"
         android:visibility="invisible"></TextView>
-
-
-</android.support.design.widget.CoordinatorLayout>
-
-
     <Button
         android:id="@+id/bt_signout"
         android:layout_width="wrap_content"
@@ -87,5 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+
 
