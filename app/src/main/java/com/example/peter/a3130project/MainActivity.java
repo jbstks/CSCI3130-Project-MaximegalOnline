@@ -166,22 +166,25 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
-
-
-
-    public void logOut(View view){
+    /**
+    ** Called when user presses logout button in menu.
+    **/
+    public boolean logOut(MenuItem item){
 
         try {
             FirebaseAuth.getInstance().signOut();
         }
         catch(Exception e) {
             e.printStackTrace();
+            return false;
         }
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-
+        return true;
     }
+
+
+
+
 
 }
