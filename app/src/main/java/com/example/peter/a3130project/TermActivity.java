@@ -33,6 +33,8 @@ public class TermActivity extends AppCompatActivity {
 
         List<Term> terms;
 
+        // Populate the RecyclerView with these items
+        // These will appear as cards the user can click
         terms = new ArrayList<>();
         terms.add(new Term("Winter","2018"));
         terms.add(new Term("Summer","2018"));
@@ -41,9 +43,8 @@ public class TermActivity extends AppCompatActivity {
         terms.add(new Term("Summer","2019"));
         terms.add(new Term("Fall","2019"));
 
-
-        RVAdapter adapter = new RVAdapter(terms);
-        rv.setAdapter(adapter);
+        RVAdapter mAdapter = new RVAdapter(terms);
+        rv.setAdapter(mAdapter);
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
