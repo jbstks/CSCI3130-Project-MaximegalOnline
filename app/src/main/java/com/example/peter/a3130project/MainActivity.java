@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 // whenever data at this location is updated.
 
                 // TODO make this an arrayList?
-                // String value = dataSnapshot.getValue(String.class);
+                String value = dataSnapshot.getValue(String.class);
                 // Log.d("MainActivity", "Value is: " + value);
 
                 /* Sample way of querying database data
@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
                 */
 
                 // TODO query out only the courses that are the correct semester
-                // we would query
+                // we would query for the information then pass it into the Course Class
+                // The CourseTime part takes an arrayList of all the course times for that course
 
             }
 
