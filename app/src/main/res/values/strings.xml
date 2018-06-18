@@ -18,6 +18,9 @@
 
     <!-- Strings related to course selection -->
     <string name="title_activity_term">Term</string>
+    <!-- Default values as they will be overwritten by the RecyclerView -->
+    <string name="term_semester">Winter</string>
+    <string name="term_year">2018</string>
     <!-- Ideally this will be retrieved from the database -->
     <string name="title_selected_term">Winter 2018</string>
     <string name="action_more">more</string>
