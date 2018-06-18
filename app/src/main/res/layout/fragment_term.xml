@@ -19,8 +19,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/cv"
         android:clickable="true"
-        android:focusable="true"
-        android:onClick="viewTermInfo">
+        android:focusable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"

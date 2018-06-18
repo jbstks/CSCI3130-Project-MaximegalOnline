@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,42 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
+
+    List<Term> terms;
+
+    // constructor
+    RVAdapter(List<Term> terms) {
+        this.terms = terms;
+    }
+
+    // provides a way to access data
+    public static class TermViewHolder extends RecyclerView.ViewHolder {
+        CardView cv;
+        TextView term_semester;
+        TextView term_year;
+
+        TermViewHolder(View itemView) {
+            super(itemView);
+            cv = itemView.findViewById(R.id.cv);
+            term_semester = itemView.findViewById(R.id.term_semester);
+            term_year = itemView.findViewById(R.id.term_year);
+
+            Log.d("Debug","Entering click function");
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    String semester = term_semester.getText().toString();
+                    String year = term_year.getText().toString();
+                    intent.putExtra("semester", semester);
+                    intent.putExtra("year", year);
+                    v.getContext().startActivity(intent);
+                }
+            });
+        }
+
+    }
 
     @Override
     public TermViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -39,24 +76,4 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-
-    public static class TermViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView term_semester;
-        TextView term_year;
-
-
-        TermViewHolder(View itemView) {
-            super(itemView);
-            cv = itemView.findViewById(R.id.cv);
-            term_semester = itemView.findViewById(R.id.term_semester);
-            term_year = itemView.findViewById(R.id.term_year);
-        }
-    }
-
-    List<Term> terms;
-
-    RVAdapter(List<Term> terms) {
-        this.terms = terms;
-    }
 }
