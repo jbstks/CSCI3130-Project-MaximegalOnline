@@ -43,6 +43,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     String semester = term_semester.getText().toString();
                     String year = term_year.getText().toString();
+
+                    Log.d("Debug","Trying with " + semester + " and " + year + " .");
+
                     intent.putExtra("semester", semester);
                     intent.putExtra("year", year);
                     v.getContext().startActivity(intent);
@@ -54,7 +57,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
 
     @Override
     public TermViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_term, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.term_card_list, viewGroup, false);
         TermViewHolder pvh = new TermViewHolder(v);
         return pvh;
     }
