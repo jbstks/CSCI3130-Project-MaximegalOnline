@@ -88,6 +88,13 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        //Switch to Register Activity
+        if(id == R.id.action_settings2){
+            Intent myIntent = new Intent(this, RegisterActivity.class);
+            startActivity(myIntent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -99,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
          * The fragment argument representing the section number for this
          * fragment.
          */
+
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
