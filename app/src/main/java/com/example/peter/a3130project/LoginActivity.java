@@ -116,32 +116,6 @@ public class LoginActivity extends AppCompatActivity implements android.support.
         }
     }
 
-    /**
-     * Function: precheckLogin
-     * ------------
-     * Parameters:
-     *
-     * @param email:    String
-     * @param password: String
-     *                  <p>
-     *                  Description:
-     * @return true if email and passwords are properly formatted. False otherwise
-     */
-
-    private boolean precheckLogin(String email, String password) {
-
-        if (password.isEmpty() || email.isEmpty()) {
-            return false;
-        }
-        if (password.length() < 8 || email.length() < 8) {
-            return false;
-        }
-        if (!email.matches("^.+@.+\\..+$")) {
-            return false;
-        }
-
-        return true;
-    }
 
 
 
@@ -161,41 +135,37 @@ public class LoginActivity extends AppCompatActivity implements android.support.
         String password = et_password.getText().toString();
         Log.d("email123456:", " "+email);
         Log.d("password123456:",  " "+password);
-   
-        if (!(precheckLogin(email,password))) {
-	    //Do something
-            Log.d("precheckbad", "Didn't get precheck");
 
+	/* Evaluate login result*/
+	switch(LoginChecker.checkLogin(email,password)) {
+        case EMPTY_USER:
+                Log.d("emaillen", "0");
 
-            if (password.length() == 0) {
+                et_email.setError((CharSequence) getString(R.string.error_field_required),null);
+                et_email.requestFocus();
+		break;
+
+	case EMPTY_PASSWORD:
                 et_password.setError((CharSequence) getString(R.string.error_field_required), null);
 
                 et_password.requestFocus();
                 Log.d("passwlen", "0");
-            }
-            else if (password.length() < 8 ){
+		break;
+	case SHORT_USER:
+                Log.d("emaillen", "less8");
+                et_email.setError((CharSequence) getString(R.string.error_invalid_email),null);
+                et_email.requestFocus();
+		break;
+
+		
+	case SHORT_PASSWORD:
                 Log.d("passwlen", "less8");
 
                 et_password.setError((CharSequence) getString(R.string.error_invalid_password), null);
 
                 et_password.requestFocus();
-            }
-
-            if (email.length() == 0) {
-                Log.d("emaillen", "0");
-
-                et_email.setError((CharSequence) getString(R.string.error_field_required),null);
-                et_email.requestFocus();
-            }
-
-            else if (email.length() < 8 ){
-                Log.d("emaillen", "less8");
-                et_email.setError((CharSequence) getString(R.string.error_invalid_email),null);
-                et_email.requestFocus();
-            }
-
-        }
-	else {
+		break;
+	case OK:
 	    //TODO: refactor this to avoid lambda function
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

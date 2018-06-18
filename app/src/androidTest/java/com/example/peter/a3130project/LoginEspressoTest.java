@@ -135,7 +135,8 @@ public class LoginEspressoTest {
 	//Wait until the view changes.
         //intended(toPackage("com.example.peter.a3130.MainActivity"));
 	    //intended(hasComponent(MainActivity.class.getName()));
-        onView(withId(R.id.tv_welcome)).check(matches(isDisplayed()));
+        //onView(withId(R.menu.menu_main2)).check(matches(isDisplayed()));
+        onView(withId(R.id.main_content)).check(matches(isDisplayed()));
     }
 
 

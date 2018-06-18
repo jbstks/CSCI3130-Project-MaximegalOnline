@@ -32,7 +32,7 @@ public class UserPasswordCheck {
 	String username = "abc@def";
 	String password = "aewoifhaioefb";
 	LoginRet ret_checker = LoginChecker.checkLogin(username,password);
-	assertEquals(ret_checker, LoginRet.SHORT_PASSWORD);
+	assertEquals(ret_checker, LoginRet.SHORT_USER);
     }
 
     @Test 
@@ -40,7 +40,7 @@ public class UserPasswordCheck {
 	String username = "abcdefgh@ihd";
 	String password = "aewo";
 	LoginRet ret_checker = LoginChecker.checkLogin(username,password);
-	assertEquals(ret_checker, LoginRet.SHORT_USER);
+	assertEquals(ret_checker, LoginRet.SHORT_PASSWORD);
     }
     @Test 
     public void userEmpty_passwordGood() {
