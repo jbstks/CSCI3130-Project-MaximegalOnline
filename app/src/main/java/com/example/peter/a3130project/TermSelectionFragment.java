@@ -28,23 +28,6 @@ public class TermSelectionFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_term, container, false);
 
-        CardView getCards = (CardView) view.findViewById(R.id.cv);
-        getCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent in = new Intent(getActivity(), MainActivity.class);
-                TextView textViewSemester = view.findViewById(R.id.term_semester);
-                String semester = textViewSemester.getText().toString();
-
-                TextView textViewYear = view.findViewById(R.id.term_year);
-                String year = textViewYear.getText().toString();
-
-                in.putExtra("semester", semester);
-                in.putExtra("year", year);
-                startActivity(in);
-            }
-        });
-
         return view;
     }
 
