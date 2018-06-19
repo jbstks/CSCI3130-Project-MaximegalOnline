@@ -238,7 +238,9 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("COURSE", "[" + key + "] found course day: " + timeKey );
                         Map<String, Object> dataCourseTimes = (Map<String, Object>) dataSnapshot.child(key).child("times").child(timeKey).getValue();
 
-                        CourseTime time = new CourseTime((String) dataCourseTimes.get("day"), (String) dataCourseTimes.get("start"), (String) dataCourseTimes.get("end"), (String) dataCourseTimes.get("loc"));
+                        CourseTime time = new CourseTime(timeKey, (String) dataCourseTimes.get("start"), (String) dataCourseTimes.get("end"), (String) dataCourseTimes.get("loc"));
+
+                        Log.d("COURSE", "[" + key + "]" + "Found time: " + timeKey + " " + (String) dataCourseTimes.get("start") + " " + (String) dataCourseTimes.get("end") + " " + (String) dataCourseTimes.get("loc"));
 
                         courseTimes.add(time);
                     }
@@ -249,6 +251,8 @@ public class MainActivity extends AppCompatActivity {
                     Course course = new Course(key, (String) values.get("course"), (String) values.get("name"), (String) values.get("prof"), (String) values.get("semester"), (String) values.get("year"), courseTimes);
 
                     courses.add(course);
+
+                    Log.d("COURSE", "courses size is now: " + courses.size());
 
                 }
                 Log.d("Course", "returning courses");
