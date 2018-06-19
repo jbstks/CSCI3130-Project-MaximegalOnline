@@ -50,6 +50,8 @@
             android:name=".TermActivity"
             android:label="@string/title_activity_term"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".ScheduleActivity"></activity>
     </application>
 
 </manifest>
