@@ -62,15 +62,15 @@ public class MainActivity extends AppCompatActivity {
             String year = (String) termActivityBundle.get("year");
             setTitle(semester+" "+year);
         }
-
-
-        // TODO this breaks clicking on courses to get detailed information
-        // I think it just isn't properly fragmented out, as the implementation was half done
-        /*
+        
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
+
+        // TODO this breaks clicking on courses to get detailed information
+        // I think it just isn't properly fragmented out, as the implementation was half done
+        /*
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.

@@ -30,7 +30,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
 
         List<Course> courses = new ArrayList<>();
 
-        CourseViewHolder(View itemView, List<Course> courses) {
+        CourseViewHolder(View itemView, final List<Course> courses) {
             super(itemView);
             this.courses = courses;
             course_cv = itemView.findViewById(R.id.course_cv);
@@ -46,8 +46,23 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), CourseInfo.class);
+                    int position = getAdapterPosition();
 
-                    String code = course_code.getText().toString();
+                    Course intentCourse = courses.get(position);
+                    String id = intentCourse.id;
+                    String name = intentCourse.name;
+                    String code = intentCourse.code;
+                    String professor = intentCourse.professor;
+                    String semester = intentCourse.semester;
+                    String year = intentCourse.year;
+
+                    intent.putExtra("id", id);
+                    intent.putExtra("name", name);
+                    intent.putExtra("code", code);
+                    intent.putExtra("professor", professor);
+                    intent.putExtra("semester", semester);
+                    intent.putExtra("year", year);
+
                     Log.d("COURSE", "Course click found" + code);
 
                     v.getContext().startActivity(intent);
