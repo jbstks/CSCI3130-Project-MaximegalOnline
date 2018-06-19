@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
         */
 
-        getCourses();
+        getCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
 
     }
 
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
     // we would query for the information then pass it into the Course Class
     // The CourseTime part takes an arrayList of all the course times for that course
 
-    public void getCourses() {
+    public void getCourses(final String semester, final String year) {
         Log.d("COURSE", "Creating Course View\n");
 
         final RecyclerView course_rv = findViewById(R.id.course_rv);
@@ -255,7 +255,9 @@ public class MainActivity extends AppCompatActivity {
                     // Call the course constructor will all the values we have here
                     Course course = new Course(key, (String) values.get("course"), (String) values.get("name"), (String) values.get("prof"), (String) values.get("semester"), (String) values.get("year"), courseTimes);
 
-                    courses.add(course);
+                    if (course.semester.equalsIgnoreCase(semester) && course.year.equalsIgnoreCase(year)) {
+                        courses.add(course);
+                    }
 
                     Log.d("COURSE", "courses size is now: " + courses.size());
 
