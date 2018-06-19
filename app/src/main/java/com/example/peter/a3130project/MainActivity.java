@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        //Database setup
+        //Database setup test
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("available_courses");
