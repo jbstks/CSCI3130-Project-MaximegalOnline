@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Main2Activity$PlaceholderFragment">
+    tools:context=".MainActivity$PlaceholderFragment">
 
     <TextView
         android:id="@+id/section_label"
@@ -42,7 +42,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/person_photo"
                     android:text="CSCI 3130"
                     android:textSize="14sp" />
 
@@ -51,7 +50,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/course_code"
-                    android:layout_toRightOf="@+id/person_photo"
                     android:text="Software Engineering"
                     android:textSize="20sp"
                     android:textStyle="bold" />
