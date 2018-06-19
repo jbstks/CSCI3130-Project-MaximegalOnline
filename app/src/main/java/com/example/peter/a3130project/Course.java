@@ -7,6 +7,7 @@ public class Course {
 
     public String id;
     public String name;
+    public String code;
     public String professor;
     public String semester;
     public String year;
@@ -16,9 +17,10 @@ public class Course {
         // Default constructor
     }
 
-    public Course(String id, String name, String professor, String semester, String year, List<CourseTime> times) {
+    public Course(String id, String name, String code, String professor, String semester, String year, List<CourseTime> times) {
         this.id = id;
         this.name = name;
+        this.code = code;
         this.professor = professor;
         this.semester = semester;
         this.year = year;

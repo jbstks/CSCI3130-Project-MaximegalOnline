@@ -3,6 +3,8 @@ package com.example.peter.a3130project;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +26,10 @@ import android.widget.TextView;
 import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -72,17 +78,9 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+        getCourses();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -186,6 +184,96 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         return true;
+    }
+
+
+                /* Sample way of querying database data
+                // Find all dinosaurs whose height is exactly 25 meters.
+                    var ref = firebase.database().ref("dinosaurs");
+                    ref.orderByChild("height").equalTo(25).on("child_added", function(snapshot) {
+                      console.log(snapshot.key);
+                    });
+                */
+
+    // TODO query out only the courses that are the correct semester
+    // we would query for the information then pass it into the Course Class
+    // The CourseTime part takes an arrayList of all the course times for that course
+
+    public void getCourses() {
+        Log.d("COURSE", "Creating Course View\n");
+
+        final RecyclerView course_rv = findViewById(R.id.course_rv);
+        course_rv.setHasFixedSize(true);
+
+        Log.d("COURSE", "Creating Linear Layout\n");
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        course_rv.setLayoutManager(llm);
+
+        //Database setup
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("available_courses");
+
+        Log.d("COURSE", "Creating cards\n");
+
+        final List<Course> courses = new ArrayList<>();
+
+        // Read from the database
+        ValueEventListener courseListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    // Here is the id of the course (CRN)
+                    String key = snapshot.getKey();
+                    Log.d("COURSE", "Found course id: " + key );
+                    // Object value = snapshot.getValue();
+
+                    Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
+
+                    List<CourseTime> courseTimes = new ArrayList<>();
+
+                    // Populate course times
+                    for (DataSnapshot snapshotCourseTime : dataSnapshot.child(key).child("times").getChildren()) {
+                        String timeKey = snapshotCourseTime.getKey();
+                        Log.d("COURSE", "[" + key + "] found course day: " + timeKey );
+                        Map<String, Object> dataCourseTimes = (Map<String, Object>) dataSnapshot.child(key).child("times").child(timeKey).getValue();
+
+                        CourseTime time = new CourseTime((String) dataCourseTimes.get("day"), (String) dataCourseTimes.get("start"), (String) dataCourseTimes.get("end"), (String) dataCourseTimes.get("loc"));
+
+                        courseTimes.add(time);
+                    }
+
+                    Log.d("COURSE", "We have values" + key + (String) values.get("course") + (String) values.get("prof") + (String) values.get("semester") + (String) values.get("year"));
+
+                    // Call the course constructor will all the values we have here
+                    Course course = new Course(key, (String) values.get("course"), (String) values.get("name"), (String) values.get("prof"), (String) values.get("semester"), (String) values.get("year"), courseTimes);
+
+                    courses.add(course);
+
+                }
+                Log.d("Course", "returning courses");
+
+                CourseRVAdapter mCourseAdapter = new CourseRVAdapter(courses);
+                course_rv.setAdapter(mCourseAdapter);
+
+                Log.d("Course", "finished");
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("MainActivity", "Failed to read value.", error.toException());
+            }
+        };
+        Log.d("Course", "listener init complete");
+        myRef.addListenerForSingleValueEvent(courseListener);
+        myRef.removeEventListener(courseListener);
+
+        Log.d("Course", "returning courses");
+
+        Log.d("Course", "finished");
+
     }
 
 }
