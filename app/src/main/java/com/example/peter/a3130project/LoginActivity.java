@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements android.support.
         if (user == null) {
             setContentView(R.layout.activity_login);
         } else {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, TermActivity.class);
             startActivity(intent);
         }
     }
