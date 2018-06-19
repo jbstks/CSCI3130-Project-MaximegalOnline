@@ -35,7 +35,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
             term_semester = itemView.findViewById(R.id.term_semester);
             term_year = itemView.findViewById(R.id.term_year);
 
-            Log.d("Debug","Entering click function");
+            Log.d("Debug","Creating click function");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
