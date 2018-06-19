@@ -3,6 +3,12 @@
 
     <string name="title_activity_login">Sign in</string>
 
+    <string-array name="semesterArray">
+        <item>Fall</item>
+        <item>Winter</item>
+        <item>Summer</item>
+    </string-array>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Enter your user mail</string>
     <string name="prompt_password">Password</string>
