@@ -43,19 +43,11 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), CourseInfo.class);
+
+                    String code = course_code.getText().toString();
+                    Log.d("COURSE", "Course click found" + code);
+
                     v.getContext().startActivity(intent);
-
-                    /*
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    String semester = term_semester.getText().toString();
-                    String year = term_year.getText().toString();
-
-                    Log.d("Debug","Trying with " + semester + " and " + year + " .");
-
-                    intent.putExtra("semester", semester);
-                    intent.putExtra("year", year);
-                    v.getContext().startActivity(intent);
-                    */
                 }
             });
         }
@@ -73,6 +65,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     @Override
     public void onBindViewHolder(CourseViewHolder courseViewHolder, int i) {
         // This refers to the public class Courses
+        Log.d("COURSE","Card will have these values: " + courses.get(i).code + " " + courses.get(i).name + " " + courses.get(i).id);
         courseViewHolder.course_code.setText(courses.get(i).code);
         courseViewHolder.course_name.setText(courses.get(i).name);
         courseViewHolder.course_id.setText(courses.get(i).id);
