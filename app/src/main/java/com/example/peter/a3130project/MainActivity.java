@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
             setTitle(semester+" "+year);
         }
 
+
+        // TODO this breaks clicking on courses to get detailed information
+        // I think it just isn't properly fragmented out, as the implementation was half done
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        */
 
         getCourses();
 
@@ -272,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         };
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
-        myRef.removeEventListener(courseListener);
+        //myRef.removeEventListener(courseListener);
 
         Log.d("Course", "returning courses");
 

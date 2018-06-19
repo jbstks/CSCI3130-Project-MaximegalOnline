@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.CourseViewHolder>{
@@ -23,21 +24,23 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     // provides a way to access data
     public static class CourseViewHolder extends RecyclerView.ViewHolder {
         CardView course_cv;
-        // All of the text view fields
-        // TODO
         TextView course_code;
         TextView course_name;
         TextView course_id;
 
-        CourseViewHolder(View itemView) {
+        List<Course> courses = new ArrayList<>();
+
+        CourseViewHolder(View itemView, List<Course> courses) {
             super(itemView);
+            this.courses = courses;
             course_cv = itemView.findViewById(R.id.course_cv);
-            // TODO
             course_code = itemView.findViewById(R.id.course_code);
             course_name = itemView.findViewById(R.id.course_name);
             course_id = itemView.findViewById(R.id.course_id);
 
-            Log.d("Debug","Entering click function");
+            // itemView.setOnClickListener(this);
+
+            Log.d("Debug","Creating click function");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -51,14 +54,13 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
                 }
             });
         }
-
     }
 
     @Override
     public CourseViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         Log.d("RV", "Creating card");
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.course_card_list, viewGroup, false);
-        CourseViewHolder pvh = new CourseViewHolder(v);
+        CourseViewHolder pvh = new CourseViewHolder(v, this.courses);
         return pvh;
     }
 
@@ -80,5 +82,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
+
 
 }
