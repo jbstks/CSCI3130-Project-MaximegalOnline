@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("COURSE", "We have values" + key + (String) values.get("course") + (String) values.get("prof") + (String) values.get("semester") + (String) values.get("year"));
 
                     // Call the course constructor will all the values we have here
-                    Course course = new Course(key, (String) values.get("course"), (String) values.get("name"), (String) values.get("prof"), (String) values.get("semester"), (String) values.get("year"), courseTimes);
+                    Course course = new Course(key, (String) values.get("name"), (String) values.get("course"), (String) values.get("prof"), (String) values.get("semester"), (String) values.get("year"), courseTimes);
 
                     if (course.semester.equalsIgnoreCase(semester) && course.year.equalsIgnoreCase(year)) {
                         courses.add(course);

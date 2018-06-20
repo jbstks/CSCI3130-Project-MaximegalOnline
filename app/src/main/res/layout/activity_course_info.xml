@@ -4,100 +4,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CourseInfo">
+    android:padding="16dp"
+    tools:context=".CourseInfo"
+    tools:layout_editor_absoluteY="25dp">
 
     <TextView
-        android:id="@+id/courseInfo_id"
-        android:layout_width="wrap_content"
+        android:id="@+id/courseInfo_code"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="15235"
+        android:text="CSCI3136"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/courseInfo_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
         android:text="Software Engineering"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/courseInfo_id"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseInfo_id" />
+        app:layout_constraintTop_toBottomOf="@+id/courseInfo_code"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/courseInfo_code"
-        android:layout_width="wrap_content"
+        android:id="@+id/courseInfo_id"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="CSCI3136"
+        android:layout_marginTop="16dp"
+        android:text="15235"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseInfo_name" />
 
-    <TableLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseInfo_code">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseInfo_id"
+        tools:layout_editor_absoluteX="7dp">
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/courseInfo_professorDC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PROFESSOR"
-                android:textColor="@android:color/black"
-                tools:layout_editor_absoluteX="24dp"
-                tools:layout_editor_absoluteY="113dp" />
-        </TableRow>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/courseInfo_id">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/courseInfo_professor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Juliano Franz"
-                tools:layout_editor_absoluteX="24dp"
-                tools:layout_editor_absoluteY="132dp" />
-        </TableRow>
+                    <TextView
+                        android:id="@+id/courseInfo_professorDC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PROFESSOR"
+                        android:textColor="@android:color/black"
+                        tools:layout_editor_absoluteX="24dp"
+                        tools:layout_editor_absoluteY="113dp" />
+                </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-        </TableRow>
+                    <TextView
+                        android:id="@+id/courseInfo_professor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Juliano Franz"
+                        tools:layout_editor_absoluteX="24dp"
+                        tools:layout_editor_absoluteY="132dp" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+                </TableRow>
 
-        </TableRow>
-    </TableLayout>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/courseInfo_descriptionDC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DESCRIPTION"
+                        android:textColor="@android:color/black"
+                        tools:layout_editor_absoluteX="24dp"
+                        tools:layout_editor_absoluteY="113dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/courseInfo_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="The course examines the process of software development, from initial planning through implementation and maintenance. A brief survey of available tools and techniques will be presented covering the topics of analysis, planning, estimating, project management, design, testing, and evaluation. Particular emphasis will be given to organizing and planning, team participation and management, top-down design and structure charts, system and information flow diagrams, walk-throughs and peer review, and testing and quality control."
+                        tools:layout_editor_absoluteX="24dp"
+                        tools:layout_editor_absoluteY="113dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
