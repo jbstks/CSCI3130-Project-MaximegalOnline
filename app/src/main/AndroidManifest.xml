@@ -23,6 +23,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <!--Main Activity-->
@@ -47,6 +48,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+
             android:name=".TermActivity"
             android:label="@string/title_activity_term"
             android:theme="@style/AppTheme"></activity>
