@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("available_courses");
+        DatabaseReference myRef = database.getReference("available_courses1").child(semester + " " + year);
 
         Log.d("COURSE", "Creating cards\n");
 
@@ -234,32 +234,13 @@ public class MainActivity extends AppCompatActivity {
                     // Object value = snapshot.getValue();
 
                     Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
+                    Course course = new Course(key, (String) values.get("name"), (String) values.get("semester"), (String) values.get("year"));
 
-                    List<CourseTime> courseTimes = new ArrayList<>();
+                    Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " + (String) values.get("semester") + " " + (String) values.get("year"));
 
-                    // Populate course times
-                    for (DataSnapshot snapshotCourseTime : dataSnapshot.child(key).child("times").getChildren()) {
-                        String timeKey = snapshotCourseTime.getKey();
-                        Log.d("COURSE", "[" + key + "] found course day: " + timeKey );
-                        Map<String, Object> dataCourseTimes = (Map<String, Object>) dataSnapshot.child(key).child("times").child(timeKey).getValue();
+                    courses.add(course);
 
-                        CourseTime time = new CourseTime(timeKey, (String) dataCourseTimes.get("start"), (String) dataCourseTimes.get("end"), (String) dataCourseTimes.get("loc"));
-
-                        Log.d("COURSE", "[" + key + "]" + "Found time: " + timeKey + " " + (String) dataCourseTimes.get("start") + " " + (String) dataCourseTimes.get("end") + " " + (String) dataCourseTimes.get("loc"));
-
-                        courseTimes.add(time);
-                    }
-
-                    Log.d("COURSE", "We have values" + key + (String) values.get("course") + (String) values.get("prof") + (String) values.get("semester") + (String) values.get("year"));
-
-                    // Call the course constructor will all the values we have here
-                    Course course = new Course(key, (String) values.get("course"), (String) values.get("name"), (String) values.get("prof"), (String) values.get("semester"), (String) values.get("year"), courseTimes);
-
-                    if (course.semester.equalsIgnoreCase(semester) && course.year.equalsIgnoreCase(year)) {
-                        courses.add(course);
-                    }
-
-                    Log.d("COURSE", "courses size is now: " + courses.size());
+                    Log.d("COURSE", "courses list size is now: " + courses.size());
 
                 }
                 Log.d("Course", "returning courses");

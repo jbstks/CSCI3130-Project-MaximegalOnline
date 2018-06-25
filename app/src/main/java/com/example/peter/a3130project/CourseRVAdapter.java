@@ -26,7 +26,6 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
         CardView course_cv;
         TextView course_code;
         TextView course_name;
-        TextView course_id;
 
         List<Course> courses = new ArrayList<>();
 
@@ -36,8 +35,6 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
             course_cv = itemView.findViewById(R.id.course_cv);
             course_code = itemView.findViewById(R.id.course_code);
             course_name = itemView.findViewById(R.id.course_name);
-            course_id = itemView.findViewById(R.id.course_id);
-
             // itemView.setOnClickListener(this);
 
             Log.d("Debug","Creating click function");
@@ -49,17 +46,13 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
                     int position = getAdapterPosition();
 
                     Course intentCourse = courses.get(position);
-                    String id = intentCourse.id;
                     String name = intentCourse.name;
                     String code = intentCourse.code;
-                    String professor = intentCourse.professor;
                     String semester = intentCourse.semester;
                     String year = intentCourse.year;
 
-                    intent.putExtra("id", id);
                     intent.putExtra("name", name);
                     intent.putExtra("code", code);
-                    intent.putExtra("professor", professor);
                     intent.putExtra("semester", semester);
                     intent.putExtra("year", year);
 
@@ -82,10 +75,9 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     @Override
     public void onBindViewHolder(CourseViewHolder courseViewHolder, int i) {
         // This refers to the public class Courses
-        Log.d("COURSE","Card will have these values: " + courses.get(i).code + " " + courses.get(i).name + " " + courses.get(i).id);
+        Log.d("COURSE","Card will have these values: " + courses.get(i).code + " " + courses.get(i).name);
         courseViewHolder.course_code.setText(courses.get(i).code);
         courseViewHolder.course_name.setText(courses.get(i).name);
-        courseViewHolder.course_id.setText(courses.get(i).id);
     }
 
     @Override
