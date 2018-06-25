@@ -14,7 +14,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/term_semester"
@@ -28,7 +28,7 @@
             android:id="@+id/term_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12sp"
+            android:layout_marginLeft="10sp"
             android:layout_toRightOf="@+id/term_semester"
             android:text="@string/term_year"
             android:textSize="24sp"
@@ -40,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:drawableRight="@android:drawable/ic_dialog_info" />
+            android:layout_centerVertical="true" />
+        <!--android:drawableRight="@android:drawable/ic_dialog_info"-->
 
     </RelativeLayout>
 
