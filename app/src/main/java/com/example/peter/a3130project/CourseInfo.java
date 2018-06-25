@@ -39,6 +39,7 @@ public class CourseInfo extends AppCompatActivity {
             /* Assign course_code so that register can use this */
             course_code = (String) termActivityBundle.get("code");
 
+	    /* SEt into into fields*/
             idTextView.setText((String) termActivityBundle.get("id"));
             nameTextView.setText((String) termActivityBundle.get("name"));
             codeTextView.setText((String) termActivityBundle.get("code"));
@@ -48,7 +49,16 @@ public class CourseInfo extends AppCompatActivity {
     }
 
     public void click_RegisterButton(View view) {
-        
+	Course course;
+	course = construct_course_by_id(course_code); //TODO: implement
+
+	CourseRegistrationUI crui = new CourseRegistrationUI();
+	crui.attempt_register(course);
+
+	// check errors
+
+	//if ok
+	crui.do_register(course);
     }
 
 }
