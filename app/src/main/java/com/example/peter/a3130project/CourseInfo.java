@@ -36,6 +36,9 @@ public class CourseInfo extends AppCompatActivity {
             TextView codeTextView = (TextView) findViewById(R.id.courseInfo_code);
             TextView professorTextView = (TextView) findViewById(R.id.courseInfo_professor);
 
+            /* Assign course_code so that register can use this */
+            course_code = (String) termActivityBundle.get("code");
+
             idTextView.setText((String) termActivityBundle.get("id"));
             nameTextView.setText((String) termActivityBundle.get("name"));
             codeTextView.setText((String) termActivityBundle.get("code"));
@@ -45,7 +48,7 @@ public class CourseInfo extends AppCompatActivity {
     }
 
     public void click_RegisterButton(View view) {
-
+        
     }
 
 }
