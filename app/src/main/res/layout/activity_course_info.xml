@@ -160,6 +160,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <Button
+                        android:id="@+id/bt_register"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="click_RegisterButton"
+                        android:text="Register"
+                        tools:layout_editor_absoluteX="129dp"
+                        tools:layout_editor_absoluteY="473dp" />
                 </TableRow>
 
             </TableLayout>
