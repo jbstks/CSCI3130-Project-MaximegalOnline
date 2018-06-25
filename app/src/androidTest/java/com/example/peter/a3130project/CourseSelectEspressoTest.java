@@ -51,7 +51,7 @@ public class CourseSelectEspressoTest {
         SystemClock.sleep(1500);
         onView(withId(R.id.course_rv))
                 .perform(RecyclerViewActions.actionOnItem(
-                        hasDescendant(withText("Computer Science 1")), click()));
+                        hasDescendant(withText("Computer Science I")), click()));
         SystemClock.sleep(1500);
     }
 
@@ -67,8 +67,8 @@ public class CourseSelectEspressoTest {
                 .perform(RecyclerViewActions.actionOnItem(
                         hasDescendant(withText("42665")), click()));
         onView(withId(R.id.courseInfo_id)).check(matches(withText("42665")));
-        onView(withId(R.id.courseInfo_code)).check(matches(withText("Software Engineering")));
-        onView(withId(R.id.courseInfo_name)).check(matches(withText("CSCI3130")));
+        onView(withId(R.id.courseInfo_code)).check(matches(withText("CSCI3130")));
+        onView(withId(R.id.courseInfo_name)).check(matches(withText("Software Engineering")));
         SystemClock.sleep(1500);
     }
 
@@ -84,9 +84,42 @@ public class CourseSelectEspressoTest {
                 .perform(RecyclerViewActions.actionOnItem(
                         hasDescendant(withText("Software Engineering")), click()));
         onView(withId(R.id.courseInfo_id)).check(matches(withText("42665")));
-        onView(withId(R.id.courseInfo_code)).check(matches(withText("Software Engineering")));
-        onView(withId(R.id.courseInfo_name)).check(matches(withText("CSCI3130")));
+        onView(withId(R.id.courseInfo_code)).check(matches(withText("CSCI3130")));
+        onView(withId(R.id.courseInfo_name)).check(matches(withText("Software Engineering")));
         SystemClock.sleep(1500);
     }
 
+    @Test
+    public void TestSummer2018OSid() {
+        onView(withId(R.id.rv)).perform(actionOnItemAtPosition(1, click()));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText("Summer 2018")));
+        SystemClock.sleep(1500);
+        /*onView(withId(R.id.course_rv))
+                .check(matches(hasDescendant(withText("42665")))).perform(click());*/
+        onView(withId(R.id.course_rv))
+                .perform(RecyclerViewActions.actionOnItem(
+                        hasDescendant(withText("42784")), click()));
+        onView(withId(R.id.courseInfo_id)).check(matches(withText("42784")));
+        onView(withId(R.id.courseInfo_code)).check(matches(withText("CSCI3120")));
+        onView(withId(R.id.courseInfo_name)).check(matches(withText("Operating Systems")));
+        SystemClock.sleep(1500);
+    }
+
+    @Test
+    public void TestSummer2018OSName() {
+        onView(withId(R.id.rv)).perform(actionOnItemAtPosition(1, click()));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText("Summer 2018")));
+        SystemClock.sleep(1500);
+        /*onView(withId(R.id.course_rv))
+                .check(matches(hasDescendant(withText("42665")))).perform(click());*/
+        onView(withId(R.id.course_rv))
+                .perform(RecyclerViewActions.actionOnItem(
+                        hasDescendant(withText("Operating Systems")), click()));
+        onView(withId(R.id.courseInfo_id)).check(matches(withText("42784")));
+        onView(withId(R.id.courseInfo_code)).check(matches(withText("CSCI3120")));
+        onView(withId(R.id.courseInfo_name)).check(matches(withText("Operating Systems")));
+        SystemClock.sleep(1500);
+    }
 }
