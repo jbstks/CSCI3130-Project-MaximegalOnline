@@ -5,25 +5,19 @@ import java.util.List;
 
 public class Course {
 
-    public String id;
-    public String name;
     public String code;
-    public String professor;
+    public String name;
     public String semester;
     public String year;
-    public List<CourseTime> times;
 
     public Course() {
         // Default constructor
     }
 
-    public Course(String id, String name, String code, String professor, String semester, String year, List<CourseTime> times) {
-        this.id = id;
-        this.name = name;
+    public Course(String name, String code, String semester, String year) {
         this.code = code;
-        this.professor = professor;
+        this.name = name;
         this.semester = semester;
         this.year = year;
-        this.times = times;
     }
 }
