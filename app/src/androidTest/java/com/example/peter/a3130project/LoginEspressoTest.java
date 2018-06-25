@@ -136,7 +136,7 @@ public class LoginEspressoTest {
         //intended(toPackage("com.example.peter.a3130.MainActivity"));
 	    //intended(hasComponent(MainActivity.class.getName()));
         //onView(withId(R.menu.menu_main2)).check(matches(isDisplayed()));
-        onView(withId(R.id.main_content)).check(matches(isDisplayed()));
+        onView(withId(R.id.rv)).check(matches(isDisplayed()));
     }
 
 
