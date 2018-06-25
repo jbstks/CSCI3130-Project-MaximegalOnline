@@ -20,14 +20,7 @@ public class CourseInfo extends AppCompatActivity {
         Bundle termActivityBundle = termActivityIntent.getExtras();
 
         if (termActivityBundle != null) {
-            /*
-            String id = (String) termActivityBundle.get("id");
-            String name = (String) termActivityBundle.get("name");
-            String code = (String) termActivityBundle.get("code");
-            String professor = (String) termActivityBundle.get("professor");
-            String semester = (String) termActivityBundle.get("semester");
-            String year = (String) termActivityBundle.get("year");
-            */
+            // TODO query for data from the database based upon the supplied information code, semester, year
 
             TextView idTextView = (TextView) findViewById(R.id.courseInfo_id);
             TextView nameTextView = (TextView) findViewById(R.id.courseInfo_name);
