@@ -46,10 +46,10 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
                     int position = getAdapterPosition();
 
                     Course intentCourse = courses.get(position);
-                    String name = intentCourse.name;
-                    String code = intentCourse.code;
-                    String semester = intentCourse.semester;
-                    String year = intentCourse.year;
+                    String name = intentCourse.getname();
+                    String code = intentCourse.getcode();
+                    String semester = intentCourse.getsemester();
+                    String year = intentCourse.getyear();
 
                     intent.putExtra("name", name);
                     intent.putExtra("code", code);
@@ -75,9 +75,9 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     @Override
     public void onBindViewHolder(CourseViewHolder courseViewHolder, int i) {
         // This refers to the public class Courses
-        Log.d("COURSE","Card will have these values: " + courses.get(i).code + " " + courses.get(i).name);
-        courseViewHolder.course_code.setText(courses.get(i).code);
-        courseViewHolder.course_name.setText(courses.get(i).name);
+        Log.d("COURSE","Card will have these values: " + courses.get(i).getcode() + " " + courses.get(i).getname());
+        courseViewHolder.course_code.setText(courses.get(i).getcode());
+        courseViewHolder.course_name.setText(courses.get(i).getname());
     }
 
     @Override

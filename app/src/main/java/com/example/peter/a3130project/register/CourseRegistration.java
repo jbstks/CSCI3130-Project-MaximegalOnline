@@ -1,11 +1,11 @@
 package com.example.peter.a3130project.register;
-import com.example.peter.a3130project.Course;
+import com.example.peter.a3130project.CourseSection;
 import com.example.peter.a3130project.CourseTime;
 
 import java.util.ArrayList;
 
 public class CourseRegistration {
-    private ArrayList<Course> current_courses;
+    private ArrayList<CourseSection> current_courses;
 
     public CourseRegistration() {
     }
@@ -20,7 +20,7 @@ public class CourseRegistration {
      * @param current_courses:
      *       The current courses that the user has.
      **/
-    public CourseRegistration(ArrayList<Course> current_courses){
+    public CourseRegistration(ArrayList<CourseSection> current_courses){
         this.current_courses = current_courses;
     }
 
@@ -34,7 +34,7 @@ public class CourseRegistration {
      * @param course:
      *       The course that is attempted to register with
      **/
-    public ArrayList<Course> attempt_register(Course course) {
+    public ArrayList<CourseSection> attempt_register(CourseSection course) {
 	// Steps:
 	// 1. sort current_course by times
 	// 2. see whether course conflicts with any
@@ -42,22 +42,22 @@ public class CourseRegistration {
 
 	/* Check for duplicate course id */
 	for (int i=0;i < current_courses.size(); i++) {
-	    if (course.id.equals(current_courses.get(i).id)){
+	    if (course.getcrn().equals(current_courses.get(i).getcrn())){
 		// there is a matching item, therefore return null
 		return null;
 	    }
 	}
-	ArrayList<Course> result = new ArrayList<Course>();
+	ArrayList<CourseSection> result = new ArrayList<CourseSection>();
 
-	ArrayList<CourseTime> coursetimes = (ArrayList<CourseTime>) course.get_times();
+	ArrayList<CourseTime> coursetimes = (ArrayList<CourseTime>) course.getcourseTimeList();
 
 	for (int a=0; a < coursetimes.size(); a++ ){
 	    // Get a time segment for current course
 	    int [] course_time = coursetimes.get(a).get_universal_time();
 
 	    for (int i=0;i < current_courses.size(); i++) {
-		Course candidate = current_courses.get(i);
-		ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.get_times();
+		CourseSection candidate = current_courses.get(i);
+		ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.getcourseTimeList();
 		for  (int j=0; j < candtimes.size(); j++ ){
 		    int [] cand_time = candtimes.get(j).get_universal_time();
 		    
@@ -77,10 +77,14 @@ public class CourseRegistration {
     }
     
 
-    public ArrayList<Course> getcurrent_courses(){
-        return current_courses
+    public ArrayList<CourseSection> getcurrent_courses(){
+        return current_courses;
     }
-    public void setcurrent_courses(ArrayList<Course> val){
+    public void setcurrent_courses(ArrayList<CourseSection> val){
          this.current_courses = val;
+    }
+
+    public boolean equals(CourseRegistration cr) {
+	return this.current_courses.equals(cr.getcurrent_courses());
     }
 }

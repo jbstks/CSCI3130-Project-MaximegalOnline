@@ -1,7 +1,24 @@
-xpackage com.example.peter.a3130project;
+package com.example.peter.a3130project;
 
 import java.util.HashMap;
-
+/**
+ * CourseTime:
+ *
+ * Class for keeping track of course times
+ *
+ * @attr day: String
+ *       Day of the week
+ *
+ * @attr startTime: String
+ *       start of class in 24h format
+ *
+ * @attr endTime: String
+ *       end of class in 24h format
+ *
+ * @attr location: String
+ *       location of class
+ *
+ **/
 public class CourseTime {
 
     private String day;
@@ -31,7 +48,7 @@ public class CourseTime {
      * convert's the string time to user's universal times.
      * --------------
      * Parameters:
-     * 
+     *
      * None
      */
     public int [] get_universal_time() {
@@ -48,30 +65,30 @@ public class CourseTime {
 	return arr;
     }
 
-    /* Get and set methods...*/
+    /** Get and set methods...**/
     public String getday(){
-        return day
+        return day;
     }
     public void setday(String val){
          this.day = val;
     }
     
     public String getstartTime(){
-        return startTime
+        return startTime;
     }
     public void setstartTime(String val){
          this.startTime = val;
     }
     
     public String getendTime(){
-        return endTime
+        return endTime;
     }
     public void setendTime(String val){
          this.endTime = val;
     }
     
     public String getlocation(){
-        return location
+        return location;
     }
     public void setlocation(String val){
          this.location = val;

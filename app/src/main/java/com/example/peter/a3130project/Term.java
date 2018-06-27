@@ -15,13 +15,13 @@ class Term {
 
     /* Get and set methods */
     public String getsemester(){
-        return semester
+        return semester;
     }
     public void setsemester(String val){
          this.semester = val;
     }
     public String getyear(){
-        return year
+        return year;
     }
     public void setyear(String val){
          this.year = val;
