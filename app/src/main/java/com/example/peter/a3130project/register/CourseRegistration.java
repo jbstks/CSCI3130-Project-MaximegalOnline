@@ -76,8 +76,11 @@ public class CourseRegistration {
 	
     }
     
+
+    public ArrayList<Course> getcurrent_courses(){
+        return current_courses
+    }
+    public void setcurrent_courses(ArrayList<Course> val){
+         this.current_courses = val;
+    }
 }
-
-
-
-

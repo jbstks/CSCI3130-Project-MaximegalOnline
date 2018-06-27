@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Course {
 
-    public String code;
-    public String name;
-    public String semester;
-    public String year;
+    private String code;
+    private String name;
+    private String semester;
+    private String year;
 
 
     public Course() {
@@ -35,5 +35,36 @@ public class Course {
 		this.id.equals(other.id) &&
 		this.id.equals(other.id) &&
 		this.id.equals(other.id));
+    }
+
+    public String getcode(){
+        return code
+    }
+    public void setcode(String val){
+         this.code = val;
+    }
+
+    public String getname(){
+        return name
+    }
+    
+    public void setname(String val){
+         this.name = val;
+    }
+    
+    public String getsemester(){
+        return semester
+    }
+    
+    public void setsemester(String val){
+         this.semester = val;
+    }
+    
+    public String getyear(){
+        return year
+    }
+    
+    public void setyear(String val){
+         this.year = val;
     }
 }

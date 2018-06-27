@@ -1,13 +1,13 @@
-package com.example.peter.a3130project;
+xpackage com.example.peter.a3130project;
 
 import java.util.HashMap;
 
 public class CourseTime {
 
-    public String day;
-    public String startTime;
-    public String endTime;
-    public String location;
+    private String day;
+    private String startTime;
+    private String endTime;
+    private String location;
     private HashMap<String, Integer> day_time_conversion;
 	public CourseTime(String day, String startTime, String endTime, String location) {
         this.day = day;
@@ -48,4 +48,32 @@ public class CourseTime {
 	return arr;
     }
 
+    /* Get and set methods...*/
+    public String getday(){
+        return day
+    }
+    public void setday(String val){
+         this.day = val;
+    }
+    
+    public String getstartTime(){
+        return startTime
+    }
+    public void setstartTime(String val){
+         this.startTime = val;
+    }
+    
+    public String getendTime(){
+        return endTime
+    }
+    public void setendTime(String val){
+         this.endTime = val;
+    }
+    
+    public String getlocation(){
+        return location
+    }
+    public void setlocation(String val){
+         this.location = val;
+    }
 }
