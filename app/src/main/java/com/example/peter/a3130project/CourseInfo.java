@@ -14,7 +14,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class CourseInfo extends AppCompatActivity {
 
@@ -63,13 +65,31 @@ public class CourseInfo extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
-                    for (DataSnapshot sections : dataSnapshot.getChildren()) {
+                    List<CourseSection> sections = new ArrayList<>();
+                    for (DataSnapshot section : dataSnapshot.getChildren()) {
 
-                            Iterator<DataSnapshot> iterator=  sections.getChildren().iterator();
-                            //Iterates through each child of the node "sections"
-                            while (iterator.hasNext())
-                                //TODO do something with the data
-                            Log.d("sections","" + iterator.next().getChildrenCount());
+                        String sectionNum = section.getKey();
+                        String crn = section.child("crn").getValue(String.class);
+                        String professor = dataSnapshot.child("professor").getValue(String.class);
+                        List<CourseTime> courseTimes = new ArrayList<>();
+
+                        for(DataSnapshot time : section.child("times").getChildren()) {
+                            String day = time.getKey();
+                            String start = time.child("start").getValue(String.class);
+                            String end = time.child("end").getValue(String.class);
+                            String location = time.child("location").getValue(String.class);
+                            Log.d("sections", "Found values" + day + " " + start + " " + end + " " + location);
+                            CourseTime courseTime = new CourseTime(day, start, end, location);
+                            courseTimes.add(courseTime);
+                        }
+
+                        CourseSection courseSection= new CourseSection(sectionNum, crn, professor, courseTimes);
+                        sections.add(courseSection);
+                        /*Iterator<DataSnapshot> iterator=  section.child("times").getChildren().iterator();
+                        //Iterates through each child of the node "times    "
+                        while (iterator.hasNext())
+                            iterator.next();
+                        Log.d("sections","" + iterator.next().getChildrenCount());*/
 
                     }
                 }
