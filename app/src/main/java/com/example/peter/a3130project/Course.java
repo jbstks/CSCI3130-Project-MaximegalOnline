@@ -32,5 +32,14 @@ public class Course {
         return times;
     }
 
-
+    @Override
+    public boolean equals(Course other) {
+	return (this.id.equals(other.id) &&
+		this.id.equals(other.id) &&
+		this.id.equals(other.id) &&
+		this.id.equals(other.id) &&
+		this.id.equals(other.id) &&
+		this.id.equals(other.id) &&
+		this.id.equals(other.id));
+    }
 }
