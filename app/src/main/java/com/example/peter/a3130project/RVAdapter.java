@@ -16,7 +16,7 @@ import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
 
-    List<Term> terms;
+    private List<Term> terms;
 
     // constructor
     RVAdapter(List<Term> terms) {
@@ -65,8 +65,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
     @Override
     public void onBindViewHolder(TermViewHolder termViewHolder, int i) {
         // This refers to the public class Term
-        termViewHolder.term_semester.setText(terms.get(i).semester);
-        termViewHolder.term_year.setText(terms.get(i).year);
+        termViewHolder.term_semester.setText(terms.get(i).getsemester());
+        termViewHolder.term_year.setText(terms.get(i).getyear());
     }
 
     @Override
@@ -79,4 +79,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /* Get and set methods */
+    public List<Term> getterms(){
+        return terms;
+    }
+    public void setterms(List<Term> val){
+         this.terms = val;
+    }
 }

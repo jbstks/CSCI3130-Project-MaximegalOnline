@@ -14,13 +14,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/course_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentTop="false"
             android:text="CSCI 3130"
             android:textSize="14sp" />
 
@@ -32,14 +32,6 @@
             android:text="Software Engineering"
             android:textSize="20sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/course_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/course_name"
-            android:text="45353"
-            android:textSize="10sp" />
 
     </RelativeLayout>
 
