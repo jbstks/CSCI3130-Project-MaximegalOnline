@@ -34,32 +34,26 @@ public class CourseInfo extends AppCompatActivity {
         if (termActivityBundle != null) {
             // TODO query for data from the database based upon the supplied information code, semester, year
 
-            TextView idTextView = (TextView) findViewById(R.id.courseInfo_id);
-            TextView nameTextView = (TextView) findViewById(R.id.courseInfo_name);
             TextView codeTextView = (TextView) findViewById(R.id.courseInfo_code);
-            TextView professorTextView = (TextView) findViewById(R.id.courseInfo_professor);
+            TextView nameTextView = (TextView) findViewById(R.id.courseInfo_name);
 
-            String id = (String) termActivityBundle.get("id");
             String name=(String) termActivityBundle.get("name");
             String code= (String) termActivityBundle.get("code");
-            String professor= (String) termActivityBundle.get("professor");
             String semester = (String) termActivityBundle.get("semester");
             String year = (String) termActivityBundle.get("year");
-            getCourseInfo(name, semester, year);
+            getCourseInfo(code, semester, year);
 
 
-            idTextView.setText(id);
-            nameTextView.setText(name);
             codeTextView.setText(code);
-            professorTextView.setText(professor);
+            nameTextView.setText(name);
         }
     }
         /** Queries  data from the database based upon  supplied information name, semester, year */
-    public void getCourseInfo(String name, String semester, String year){
+    public void getCourseInfo(String code, String semester, String year){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef =
-                database.getReference("available_courses1").child(semester + " " + year).child(name);
+                database.getReference("available_courses1").child(semester + " " + year).child(code);
 
         Query query = myRef.child("sections");
 

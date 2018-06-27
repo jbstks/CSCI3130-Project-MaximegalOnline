@@ -14,7 +14,7 @@ public class Course {
         // Default constructor
     }
 
-    public Course(String name, String code, String semester, String year) {
+    public Course(String code, String name, String semester, String year) {
         this.code = code;
         this.name = name;
         this.semester = semester;
