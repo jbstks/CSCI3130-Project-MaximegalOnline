@@ -84,8 +84,8 @@ public class TermActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static TermActivity.PlaceholderFragment newInstance(int sectionNumber) {
-            TermActivity.PlaceholderFragment fragment = new TermActivity.PlaceholderFragment();
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
