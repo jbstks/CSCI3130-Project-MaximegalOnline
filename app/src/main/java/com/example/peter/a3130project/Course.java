@@ -22,30 +22,26 @@ public class Course {
         this.year = year;
     }
 
-    public List<CourseTime> get_times() {
-        return times;
-    }
-
     @Override
-    public boolean equals(Course other) {
-	return (this.id.equals(other.id) &&
-		this.id.equals(other.id) &&
-		this.id.equals(other.id) &&
-		this.id.equals(other.id) &&
-		this.id.equals(other.id) &&
-		this.id.equals(other.id) &&
-		this.id.equals(other.id));
+    public boolean equals(Object ot) {
+	Course other = (Course) ot;
+	return (this.code.equals(other.getcode()) &&
+		this.name.equals(other.getname()) &&
+		this.semester.equals(other.getsemester()) &&
+		this.year.equals(other.getyear()));
+
     }
 
+    /** Get set methods **/
     public String getcode(){
-        return code
+        return code;
     }
     public void setcode(String val){
          this.code = val;
     }
 
     public String getname(){
-        return name
+        return name;
     }
     
     public void setname(String val){
@@ -53,7 +49,7 @@ public class Course {
     }
     
     public String getsemester(){
-        return semester
+        return semester;
     }
     
     public void setsemester(String val){
@@ -61,7 +57,7 @@ public class Course {
     }
     
     public String getyear(){
-        return year
+        return year;
     }
     
     public void setyear(String val){
