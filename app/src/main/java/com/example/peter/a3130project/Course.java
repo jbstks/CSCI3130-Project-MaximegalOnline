@@ -13,6 +13,7 @@ public class Course {
     public String year;
     public List<CourseTime> times;
 
+
     public Course() {
         // Default constructor
     }
@@ -26,4 +27,10 @@ public class Course {
         this.year = year;
         this.times = times;
     }
+
+    public List<CourseTime> get_times() {
+        return times;
+    }
+
+
 }
