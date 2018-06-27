@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import com.example.peter.a3130project.register.CourseRegistrationUI;
 
 public class CourseInfo extends AppCompatActivity {
     private String course_code;
@@ -50,15 +51,15 @@ public class CourseInfo extends AppCompatActivity {
 
     public void click_RegisterButton(View view) {
 	Course course;
-	course = construct_course_by_id(course_code); //TODO: implement
+	//course = construct_course_by_id(course_code); //TODO: implement
 
-	CourseRegistrationUI crui = new CourseRegistrationUI();
-	crui.attempt_register(course);
+	//CourseRegistrationUI crui = new CourseRegistrationUI();
+	//crui.attempt_register(course);
 
 	// check errors
 
 	//if ok
-	crui.do_register(course);
+	//crui.do_register(course);
     }
 
 }
