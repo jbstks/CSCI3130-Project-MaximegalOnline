@@ -1,6 +1,7 @@
 package com.example.peter.a3130project;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -39,16 +40,22 @@ public class CourseInfo extends AppCompatActivity {
 
 
         if (termActivityBundle != null) {
-            // TODO query for data from the database based upon the supplied information code, semester, year
 
             TextView codeTextView = (TextView) findViewById(R.id.courseInfo_code);
             TextView nameTextView = (TextView) findViewById(R.id.courseInfo_name);
+
 
             String name=(String) termActivityBundle.get("name");
             String code= (String) termActivityBundle.get("code");
             String semester = (String) termActivityBundle.get("semester");
             String year = (String) termActivityBundle.get("year");
-            getCourseInfo(code, semester, year);
+
+            // TODO query for the extra course information under the course_listings database
+            getCourseExtra(code);
+
+            // Database query for all sections of this course
+            getSections(code, semester, year);
+            // TODO build a dynamic place to show all the sections and a button to register for a specific section
 
 
             codeTextView.setText(code);
@@ -69,8 +76,35 @@ public class CourseInfo extends AppCompatActivity {
 	//if ok
 	//crui.do_register(course);
     }
+
+    public void getCourseExtra(String code) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference("course_listings").child(code);
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String description = dataSnapshot.child("description").getValue(String.class);
+                List<String> prerequisites = new ArrayList<>();
+
+                for (DataSnapshot course : dataSnapshot.child("prerequisites").getChildren()) {
+                    String courseCode = course.getValue(String.class);
+                    prerequisites.add(courseCode);
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
         /** Queries  data from the database based upon  supplied information name, semester, year */
-    public void getCourseInfo(String code, String semester, String year){
+    public void getSections(String code, String semester, String year){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef =
