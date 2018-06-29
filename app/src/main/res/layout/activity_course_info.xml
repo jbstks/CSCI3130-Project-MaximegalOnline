@@ -110,67 +110,22 @@
                 tools:layout_editor_absoluteX="24dp"
                 tools:layout_editor_absoluteY="113dp" />
 
-            <TableLayout
+            <TextView
+                android:id="@+id/courseInfo_prerequisitesDC2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="SECTIONS"
+                android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="113dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/sections_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/courseInfo_id">
-
-                <TableRow
-                    android:id="@+id/label_professor"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/content_professor"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/label_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="16dp">
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/content_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/label_prerequisites"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="16dp">
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/content_prerequisites"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <Button
-                        android:id="@+id/bt_register"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="click_RegisterButton"
-                        android:text="Register"
-                        tools:layout_editor_absoluteX="129dp"
-                        tools:layout_editor_absoluteY="473dp" />
-                </TableRow>
-
-            </TableLayout>
+                tools:layout_editor_absoluteX="77dp"
+                tools:layout_editor_absoluteY="416dp" />
 
         </LinearLayout>
     </ScrollView>
