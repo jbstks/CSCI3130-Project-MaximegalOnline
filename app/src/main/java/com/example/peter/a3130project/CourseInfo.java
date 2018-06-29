@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.view.View;
@@ -106,6 +108,17 @@ public class CourseInfo extends AppCompatActivity {
         /** Queries  data from the database based upon  supplied information name, semester, year */
     public void getSections(String code, String semester, String year){
 
+
+
+
+        final RecyclerView section_rv = findViewById(R.id.sections_rv);
+        section_rv.setHasFixedSize(true);
+
+        Log.d("SECTIONS", "Creating  RELATIVE Layout\n");
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        section_rv.setLayoutManager(llm);
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef =
                 database.getReference("available_courses1").child(semester + " " + year).child(code);
@@ -123,7 +136,7 @@ public class CourseInfo extends AppCompatActivity {
 
                         String sectionNum = section.getKey();
                         String crn = section.child("crn").getValue(String.class);
-                        String professor = dataSnapshot.child("professor").getValue(String.class);
+                        String professor = section.child("professor").getValue(String.class);
                         List<CourseTime> courseTimes = new ArrayList<>();
 
                         for(DataSnapshot time : section.child("times").getChildren()) {
@@ -144,7 +157,18 @@ public class CourseInfo extends AppCompatActivity {
                             iterator.next();
                         Log.d("sections","" + iterator.next().getChildrenCount());*/
 
+
+
                     }
+
+                    SectionRVAdapter sectionRVAdapter = new SectionRVAdapter(sections);
+                    section_rv.setAdapter(sectionRVAdapter);
+
+                    Log.d("SECTION", "finished");
+
+
+
+
                 }
             }
 
