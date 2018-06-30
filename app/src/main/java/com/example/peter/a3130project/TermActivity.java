@@ -58,7 +58,7 @@ public class TermActivity extends AppCompatActivity {
         });*/
     }
 
-    /** Modifies the behaviour of the Back button so that it acts like  the home button  */
+    /** Modifies the behaviour of the Back button so that it acts like the home button  */
     @Override
     public void onBackPressed() {
         Intent pressHome = new Intent(Intent.ACTION_MAIN);
