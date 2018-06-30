@@ -1,5 +1,6 @@
 package com.example.peter.a3130project;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         getCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -219,9 +222,6 @@ public class MainActivity extends AppCompatActivity {
         course_rv.setHasFixedSize(true);
 
         Log.d("COURSE", "Creating Linear Layout\n");
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        course_rv.setLayoutManager(llm);
 
         //Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();

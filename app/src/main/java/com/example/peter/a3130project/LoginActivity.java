@@ -195,8 +195,7 @@ public class LoginActivity extends AppCompatActivity implements android.support.
 
 
     }
-
-
+    
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {

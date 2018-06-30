@@ -1,7 +1,8 @@
 package com.example.peter.a3130project;
 
-import android.content.Intent;
-import android.support.v7.widget.CardView;
+import android.app.Application;
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,8 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static java.security.AccessController.getContext;
 
 public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.SectionViewHolder>{
 
@@ -26,6 +28,9 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         TextView section_crn;
         TextView section_prof;
         TextView section_id;
+        RecyclerView times_rv;
+
+
 
         List<CourseSection> sections;
 
@@ -35,35 +40,11 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
             section_crn = itemView.findViewById(R.id.section_crn);
             section_prof = itemView.findViewById(R.id.section_professor);
             section_id = itemView.findViewById(R.id.section_id);
+          times_rv=  (RecyclerView) itemView.findViewById(R.id.section_times_rv);
 
 
 
-            // itemView.setOnClickListener(this);
 
-//            Log.d("Debug","Creating click function");
-//
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(v.getContext(), CourseInfo.class);
-//                    int position = getAdapterPosition();
-//
-//                    Course intentCourse = courses.get(position);
-//                    String name = intentCourse.getname();
-//                    String code = intentCourse.getcode();
-//                    String semester = intentCourse.getsemester();
-//                    String year = intentCourse.getyear();
-//
-//                    intent.putExtra("name", name);
-//                    intent.putExtra("code", code);
-//                    intent.putExtra("semester", semester);
-//                    intent.putExtra("year", year);
-//
-//                    Log.d("COURSE", "Course click found" + code);
-//
-//                    v.getContext().startActivity(intent);
-//                }
-//            });
         }
     }
 
@@ -82,6 +63,14 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         sectionViewHolder.section_crn.setText(sections.get(i).getcrn());
         sectionViewHolder.section_prof.setText(sections.get(i).getprofessor());
         sectionViewHolder.section_id.setText(sections.get(i).getsectionNum());
+        //Setting up the inner recycler view
+        SectionTimesRVAdapter adapter=new SectionTimesRVAdapter(sections.get(i).getcourseTimeList());
+        sectionViewHolder.times_rv.setAdapter(adapter);
+        sectionViewHolder.times_rv.setHasFixedSize(true);
+        //I couldn't get this to work:
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(context?, LinearLayoutManager.HORIZONTAL, false);
+       // sectionViewHolder.times_rv.setLayoutManager(layoutManager);
+
     }
 
     @Override
@@ -93,6 +82,9 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
+
+
 
 
 
