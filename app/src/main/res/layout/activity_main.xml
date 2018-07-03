@@ -47,7 +47,7 @@
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_course_main" />
+   <!-- <include layout="@layout/content_course_main" /> -->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
