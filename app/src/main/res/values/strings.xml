@@ -44,5 +44,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_register">Register</string>
 
+    <!-- formatting string -->
+    <string name="time_spacer"> - </string>
 
 </resources>

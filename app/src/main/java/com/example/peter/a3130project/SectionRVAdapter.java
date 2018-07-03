@@ -30,8 +30,6 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         TextView section_id;
         RecyclerView times_rv;
 
-
-
         List<CourseSection> sections;
 
         SectionViewHolder(View itemView, final List<CourseSection> sections) {
@@ -40,7 +38,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
             section_crn = itemView.findViewById(R.id.section_crn);
             section_prof = itemView.findViewById(R.id.section_professor);
             section_id = itemView.findViewById(R.id.section_id);
-          times_rv=  (RecyclerView) itemView.findViewById(R.id.section_times_rv);
+            times_rv=  (RecyclerView) itemView.findViewById(R.id.section_times_rv);
 
 
 
@@ -63,13 +61,15 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         sectionViewHolder.section_crn.setText(sections.get(i).getcrn());
         sectionViewHolder.section_prof.setText(sections.get(i).getprofessor());
         sectionViewHolder.section_id.setText(sections.get(i).getsectionNum());
+
+        //Get the context from the view in the constructor
+        LinearLayoutManager layoutManager = new LinearLayoutManager(sectionViewHolder.itemView.getContext());
+        sectionViewHolder.times_rv.setLayoutManager(layoutManager);
+
         //Setting up the inner recycler view
         SectionTimesRVAdapter adapter=new SectionTimesRVAdapter(sections.get(i).getcourseTimeList());
         sectionViewHolder.times_rv.setAdapter(adapter);
         sectionViewHolder.times_rv.setHasFixedSize(true);
-        //I couldn't get this to work:
-        //LinearLayoutManager layoutManager = new LinearLayoutManager(context?, LinearLayoutManager.HORIZONTAL, false);
-       // sectionViewHolder.times_rv.setLayoutManager(layoutManager);
 
     }
 
