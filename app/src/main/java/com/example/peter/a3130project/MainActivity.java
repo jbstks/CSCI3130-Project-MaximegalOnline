@@ -52,12 +52,15 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    private List<Course> courseList = new ArrayList<>();
+    private final List<Course> courseList = new ArrayList<>();
+    private CourseRVAdapter courseRVAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        courseRVAdapter = new CourseRVAdapter(courseList);
 
         Intent termActivityIntent = getIntent();
         Bundle termActivityBundle = termActivityIntent.getExtras();
@@ -149,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             //return PlaceholderFragment.newInstance(position + 1);
             switch (position) {
                 case 0:
-                    CourseFragment courseTab = new CourseFragment(courseList);
+                    CourseFragment courseTab = new CourseFragment(courseRVAdapter);
                     return courseTab;
                 case 1:
                     ScheduleFragment scheduleTab = new ScheduleFragment();
@@ -212,8 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("COURSE", "Creating cards\n");
 
-        final List<Course> courses = new ArrayList<>();
-
         // Read from the database
         final ValueEventListener courseListener = new ValueEventListener() {
             @Override
@@ -247,18 +248,17 @@ public class MainActivity extends AppCompatActivity {
                     Course course = new Course(key, (String) values.get("name"), (String) values.get("course"), (String) values.get("prof"), (String) values.get("semester"), (String) values.get("year"), courseTimes);
 
                     if (course.semester.equalsIgnoreCase(semester) && course.year.equalsIgnoreCase(year)) {
-                        courses.add(course);
+                        courseList.add(course);
                     }
 
-                    Log.d("COURSE", "courses size is now: " + courses.size());
+                    Log.d("COURSE", "courses size is now: " + courseList.size());
+
+                    courseRVAdapter.notifyDataSetChanged();
 
                 }
                 Log.d("Course", "returning courses");
 
                 Log.d("Course", "finished");
-
-                courseList = courses;
-
             }
 
             @Override
