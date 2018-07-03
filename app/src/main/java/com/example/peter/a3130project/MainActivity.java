@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private List<Course> courseList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             //return PlaceholderFragment.newInstance(position + 1);
             switch (position) {
                 case 0:
-                    CourseFragment courseTab = new CourseFragment();
+                    CourseFragment courseTab = new CourseFragment(courseList);
                     return courseTab;
                 case 1:
                     ScheduleFragment scheduleTab = new ScheduleFragment();
@@ -201,13 +203,8 @@ public class MainActivity extends AppCompatActivity {
     public void getCourses(final String semester, final String year) {
         Log.d("COURSE", "Creating Course View\n");
 
-        final RecyclerView course_rv = findViewById(R.id.course_rv);
-        course_rv.setHasFixedSize(true);
-
         Log.d("COURSE", "Creating Linear Layout\n");
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        course_rv.setLayoutManager(llm);
 
         //Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -218,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         final List<Course> courses = new ArrayList<>();
 
         // Read from the database
-        ValueEventListener courseListener = new ValueEventListener() {
+        final ValueEventListener courseListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
@@ -258,10 +255,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.d("Course", "returning courses");
 
-                CourseRVAdapter mCourseAdapter = new CourseRVAdapter(courses);
-                course_rv.setAdapter(mCourseAdapter);
-
                 Log.d("Course", "finished");
+
+                courseList = courses;
 
             }
 
@@ -271,6 +267,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("MainActivity", "Failed to read value.", error.toException());
             }
         };
+
+
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
         //myRef.removeEventListener(courseListener);

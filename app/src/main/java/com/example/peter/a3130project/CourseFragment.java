@@ -2,16 +2,25 @@ package com.example.peter.a3130project;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class CourseFragment extends Fragment {
 
-    public CourseFragment() {
+    private List<Course> courses;
+
+    public CourseFragment(List<Course> courses) {
+        Log.d("coursefragment", "courses size: " + courses.size());
+        this.courses = courses;
     }
 
     @Override
@@ -19,6 +28,23 @@ public class CourseFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_courses, container, false);
+
+        final RecyclerView course_rv = view.findViewById(R.id.course_rv);
+        course_rv.setHasFixedSize(false);
+
+        course_rv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("courses", "course list clicked");
+            }
+        });
+
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        course_rv.setLayoutManager(llm);
+
+
+        CourseRVAdapter mCourseAdapter = new CourseRVAdapter(courses);
+        course_rv.setAdapter(mCourseAdapter);
 
         return view;
     }
