@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final List<Course> courseList = new ArrayList<>();
     private CourseRVAdapter courseRVAdapter;
+    private ScheduleFragment scheduleFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,8 +156,9 @@ public class MainActivity extends AppCompatActivity {
                     CourseFragment courseTab = new CourseFragment(courseRVAdapter);
                     return courseTab;
                 case 1:
-                    ScheduleFragment scheduleTab = new ScheduleFragment();
-                    return scheduleTab;
+                    scheduleFragment = new ScheduleFragment();
+                    scheduleFragment.update(courseList);
+                    return scheduleFragment;
                 default:
                     return null;
             }
@@ -254,6 +256,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("COURSE", "courses size is now: " + courseList.size());
 
                     courseRVAdapter.notifyDataSetChanged();
+                    if (scheduleFragment != null)
+                        scheduleFragment.update(courseList);
 
                 }
                 Log.d("Course", "returning courses");
