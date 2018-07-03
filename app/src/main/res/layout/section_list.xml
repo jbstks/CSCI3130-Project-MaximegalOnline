@@ -1,34 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/section_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:clickable="true"
+    android:focusable="true">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/section_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true">
+
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
         <TextView
             android:id="@+id/section_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/section_professor"
-            android:layout_marginTop="95dp"
             android:text="4424234"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/section_professor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/section_crn"
-            android:layout_marginTop="44dp"
-            android:text="Juliano Franz"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -36,16 +30,26 @@
             android:id="@+id/section_crn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="false"
+            android:layout_below="@+id/section_id"
             android:text="CSCI 3130"
             android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/section_professor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/section_crn"
+            android:text="Juliano Franz"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/section_times_rv"
             android:layout_width="158dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/section_professor">
 
         </android.support.v7.widget.RecyclerView>
-    </android.support.v7.widget.CardView>
+    </RelativeLayout>
 
-</RelativeLayout>
+</android.support.v7.widget.CardView>
