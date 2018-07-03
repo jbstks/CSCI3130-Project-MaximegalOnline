@@ -16,11 +16,10 @@ import java.util.List;
  */
 public class CourseFragment extends Fragment {
 
-    private List<Course> courses;
+    private CourseRVAdapter courseRVAdapter;
 
-    public CourseFragment(List<Course> courses) {
-        Log.d("coursefragment", "courses size: " + courses.size());
-        this.courses = courses;
+    public CourseFragment(CourseRVAdapter courseRVAdapter) {
+        this.courseRVAdapter = courseRVAdapter;
     }
 
     @Override
@@ -42,9 +41,7 @@ public class CourseFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         course_rv.setLayoutManager(llm);
 
-
-        CourseRVAdapter mCourseAdapter = new CourseRVAdapter(courses);
-        course_rv.setAdapter(mCourseAdapter);
+        course_rv.setAdapter(courseRVAdapter);
 
         return view;
     }
