@@ -223,6 +223,9 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("COURSE", "Creating Linear Layout\n");
 
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        course_rv.setLayoutManager(llm);
+
         //Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("available_courses1").child(semester + " " + year);
