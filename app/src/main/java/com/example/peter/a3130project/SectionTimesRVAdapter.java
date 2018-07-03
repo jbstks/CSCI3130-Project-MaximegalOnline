@@ -24,6 +24,7 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
         TextView times_day;
         TextView times_start;
         TextView times_end;
+        TextView times_location;
 
         List<CourseTime> times;
 
@@ -33,7 +34,9 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
             times_day = itemView.findViewById(R.id.section_times_day);
             times_start = itemView.findViewById(R.id.section_times_start);
             times_end = itemView.findViewById(R.id.section_times_end);
+            times_location = itemView.findViewById(R.id.section_times_location);
 
+            // TODO maybe we do a pop up and ask if they want to register?
 
         }
     }
@@ -49,10 +52,11 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
     @Override
     public void onBindViewHolder(SectionTimesViewHolder sectionViewHolder, int i) {
         // This refers to the public class Courses
-        Log.d("TIMES", "Section will have these values: " + times.get(i).getday() + " " + times.get(i).getstartTime() + " " + times.get(i).getendTime());
+        Log.d("TIMES", "Section will have these values: " + times.get(i).getday() + " " + times.get(i).getstartTime() + " " + times.get(i).getendTime() + " " + times.get(i).getlocation());
         sectionViewHolder.times_day.setText(times.get(i).getday());
         sectionViewHolder.times_start.setText(times.get(i).getstartTime());
         sectionViewHolder.times_end.setText(times.get(i).getendTime());
+        sectionViewHolder.times_location.setText(times.get(i).getlocation());
     }
 
     @Override
