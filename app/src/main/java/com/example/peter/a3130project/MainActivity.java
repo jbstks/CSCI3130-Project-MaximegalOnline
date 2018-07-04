@@ -142,15 +142,23 @@ public class MainActivity extends AppCompatActivity {
      */
     public class PagerAdapter extends FragmentStatePagerAdapter {
 
+        /**
+         * Constructor for PagerAdapter
+         *
+         * @param fm FragmentManager
+         */
         public PagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
+        /**
+         * getItem is called to instantiate the fragment for the given page
+         *
+         * @param position the selected tab
+         * @return the fragment corresponding to the selected tab
+         */
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            //return PlaceholderFragment.newInstance(position + 1);
             switch (position) {
                 case 0:
                     CourseFragment courseTab = new CourseFragment(courseRVAdapter);
@@ -164,22 +172,35 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        /**
+         * Gets the number of tabs
+         *
+         * @return 2, the number of tabs
+         */
         @Override
         public int getCount() {
-            // Show 2 total pages.
             return 2;
         }
     }
 
-    /** Called when the user taps a course card */
+    /**
+     * Called when the user taps a course card
+     *
+     * @param view
+     */
     public void viewCourseDetails(View view) {
         Intent intent = new Intent(this, CourseInfo.class);
         startActivity(intent);
     }
 
     /**
-    * Called when user presses logout button in menu.
-    */
+     * Called when user presses logout button in menu.
+     *
+     * @author Peter Lee
+     * @author Aecio Cavalcanti
+     * @param item logout button in the menu
+     * @return whether or not the log out was successful
+     */
     public boolean logOut(MenuItem item){
 
         try {
@@ -193,25 +214,34 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         return true;
     }
-                /* Sample way of querying database data
-                // Find all dinosaurs whose height is exactly 25 meters.
-                    var ref = firebase.database().ref("dinosaurs");
-                    ref.orderByChild("height").equalTo(25).on("child_added", function(snapshot) {
-                      console.log(snapshot.key);
-                    });
-                */
+
+    // TODO: delete commented code
+    /* Sample way of querying database data
+    // Find all dinosaurs whose height is exactly 25 meters.
+        var ref = firebase.database().ref("dinosaurs");
+        ref.orderByChild("height").equalTo(25).on("child_added", function(snapshot) {
+          console.log(snapshot.key);
+        });
+    */
 
     // TODO query out only the courses that are the correct semester
     // we would query for the information then pass it into the Course Class
     // The CourseTime part takes an arrayList of all the course times for that course
 
+    /**
+     * Gets courses from the database
+     *
+     * @author Dawson Wilson
+     * @author Joanna Bistekos
+     * @param semester selected semester month
+     * @param year     selected semester year
+     */
     public void getCourses(final String semester, final String year) {
         Log.d("COURSE", "Creating Course View\n");
 
         Log.d("COURSE", "Creating Linear Layout\n");
 
-
-        //Database setup
+        // Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("available_courses");
 
@@ -225,7 +255,6 @@ public class MainActivity extends AppCompatActivity {
                     // Here is the id of the course (CRN)
                     String key = snapshot.getKey();
                     Log.d("COURSE", "Found course id: " + key );
-                    // Object value = snapshot.getValue();
 
                     Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
 
@@ -265,6 +294,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Course", "finished");
             }
 
+            /**
+             * Prints error if there was a problem getting data from the database
+             *
+             * @param error
+             */
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
@@ -280,7 +314,5 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Course", "returning courses");
 
         Log.d("Course", "finished");
-
     }
-
 }
