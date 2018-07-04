@@ -19,6 +19,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     // constructor
     CourseRVAdapter(List<Course> courses) {
         this.courses = courses;
+        Log.d("Course", "called the CourseRVAdapter");
     }
 
     // provides a way to access data
@@ -37,7 +38,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
             course_name = itemView.findViewById(R.id.course_name);
             // itemView.setOnClickListener(this);
 
-            Log.d("Debug","Creating click function");
+            Log.d("COURSE","Creating click function");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,7 +67,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
 
     @Override
     public CourseViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        Log.d("RV", "Creating card");
+        Log.d("COURSE", "Creating card");
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.course_card_list, viewGroup, false);
         CourseViewHolder pvh = new CourseViewHolder(v, this.courses);
         return pvh;
@@ -89,7 +90,5 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
-
-
 
 }
