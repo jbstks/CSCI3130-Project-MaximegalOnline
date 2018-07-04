@@ -11,6 +11,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Contributors: PL, MG
+ *
+ * @class CourseRegistration
+ * Deals confirming registration conflicts given courses and requested course.
+ * Updates firebase if and only if it is a valid addition.
+ **/
+
 public class CourseRegistrationUI extends CourseRegistration{
 
     public CourseRegistrationUI(FirebaseUser user) {

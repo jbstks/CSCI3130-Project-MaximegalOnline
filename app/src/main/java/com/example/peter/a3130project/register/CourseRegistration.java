@@ -4,6 +4,12 @@ import com.example.peter.a3130project.CourseTime;
 
 import java.util.ArrayList;
 
+/**
+ * Contributors: PL, MG
+ *
+ * @class CourseRegistration
+ * Deals confirming registration conflicts given courses and requested course.
+ **/
 public class CourseRegistration {
     private ArrayList<CourseSection> current_courses;
 
