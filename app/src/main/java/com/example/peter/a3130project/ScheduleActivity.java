@@ -21,6 +21,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * Class to create an entry in a users schedule
+ *
+ * @author Bradley Garagan
+ * @author Megan Gosse
+ * @author Joanna Bistekos
+ */
 class ScheduleEntry implements Comparable<ScheduleEntry> {
     private String name;
     private int start;
@@ -45,6 +52,12 @@ class ScheduleEntry implements Comparable<ScheduleEntry> {
         this.color = color;
     }
 
+    /**
+     * Compare schedule entries
+     *
+     * @param e schedule entry to compare to
+     * @return -1 if smaller, 1 if larger, 0 otherwise
+     */
     @Override
     public int compareTo(ScheduleEntry e) {
         if (start < e.start) return -1;
@@ -69,8 +82,16 @@ class ScheduleEntry implements Comparable<ScheduleEntry> {
     public void setColor(int color) { this.color = color; }
 }
 
+/**
+ * Activity for the schedule
+ */
 public class ScheduleActivity extends AppCompatActivity {
 
+    /**
+     * Things to do when the activity is created
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,6 +178,11 @@ public class ScheduleActivity extends AppCompatActivity {
                 }
             }
 
+            /**
+             * Prints error if there was a problem getting data from the database
+             *
+             * @param databaseError
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

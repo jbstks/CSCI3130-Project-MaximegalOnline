@@ -18,14 +18,28 @@ import java.util.Map;
 
 /**
  * A fragment containing the user's schedule.
+ *
+ * @author Joanna Bistekos
+ * @author Bradley Garagan
  */
 public class ScheduleFragment extends Fragment {
 
     private View view;
 
+    /**
+     * Default constructor for ScheduleFragment
+     */
     public ScheduleFragment() {
     }
 
+    /**
+     * Things to be done on activity creation
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return inflated schedule view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,6 +49,11 @@ public class ScheduleFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Update courses if they are changed in the database
+     *
+     * @param courses list of available courses (of object Course)
+     */
     public void update(List<Course> courses) {
 
         if (view == null)

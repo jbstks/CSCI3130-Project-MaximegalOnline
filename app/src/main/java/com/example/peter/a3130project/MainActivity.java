@@ -34,15 +34,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * MainActivity class
+ *
+ * @author Joanna Bistekos
+ * @author Dawson Wilson
+ * @author Aecio Cavalcanti
+ * @author Peter Lee
+ */
 public class MainActivity extends AppCompatActivity {
 
     /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
+     * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
+     * sections. We use a {@link FragmentPagerAdapter} derivative, which will keep every loaded
+     * fragment in memory. If this becomes too memory intensive, it may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private PagerAdapter mPagerAdapter;
@@ -56,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
     private CourseRVAdapter courseRVAdapter;
     private ScheduleFragment scheduleFragment;
 
+    /**
+     * Things to be done on activity creation
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-
-        // TODO this breaks clicking on courses to get detailed information
-        // I think it just isn't properly fragmented out, as the implementation was half done
 
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
@@ -107,23 +112,29 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
-        
-
-
     }
 
+    /**
+     * Inflate the menu; this adds items to the action bar if it is present
+     *
+     * @param menu
+     * @return true if successful
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main2, menu);
         return true;
     }
 
+    /**
+     * Handle action bar item clicks here. The action bar will automatically handle clicks on
+     * the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
+     *
+     * @param item
+     * @return MenuItem selectied
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -133,8 +144,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

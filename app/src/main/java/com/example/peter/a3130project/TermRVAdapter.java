@@ -14,16 +14,28 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
+/**
+ * RecyclerView Adapter for term list view
+ *
+ * @author Joanna Bistekos
+ * @author Dawson Wilson
+ */
+public class TermRVAdapter extends RecyclerView.Adapter<TermRVAdapter.TermViewHolder>{
 
     List<Term> terms;
 
-    // constructor
-    RVAdapter(List<Term> terms) {
+    /**
+     * Constructor to create RecyclerView adapter
+     *
+     * @param terms list of terms
+     */
+    TermRVAdapter(List<Term> terms) {
         this.terms = terms;
     }
 
-    // provides a way to access data
+    /**
+     * Provides a way to access data
+     */
     public static class TermViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView term_semester;
@@ -55,6 +67,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
 
     }
 
+    /**
+     *
+     * @param viewGroup
+     * @param i
+     * @return
+     */
     @Override
     public TermViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.term_card_list, viewGroup, false);
