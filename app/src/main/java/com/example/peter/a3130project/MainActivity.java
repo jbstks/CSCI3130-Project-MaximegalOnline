@@ -203,18 +203,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-                /* Sample way of querying database data
-                // Find all dinosaurs whose height is exactly 25 meters.
-                    var ref = firebase.database().ref("dinosaurs");
-                    ref.orderByChild("height").equalTo(25).on("child_added", function(snapshot) {
-                      console.log(snapshot.key);
-                    });
-                */
-
-    // TODO query out only the courses that are the correct semester
-    // we would query for the information then pass it into the Course Class
-    // The CourseTime part takes an arrayList of all the course times for that course
-
+    /**
+     * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView
+     * @param semester The semester of the year you want course from
+     * @param year The year that you want courses from
+     * @author Dawson
+     * @author Joanna
+     */
     public void getCourses(final String semester, final String year) {
         Log.d("COURSE", "Creating Course View\n");
 
@@ -234,7 +229,9 @@ public class MainActivity extends AppCompatActivity {
 
         final List<Course> courses = new ArrayList<>();
 
-        // Read from the database
+        /**
+         * Queries the database and fills in the courses ArrayList
+         */
         ValueEventListener courseListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -272,11 +269,7 @@ public class MainActivity extends AppCompatActivity {
         };
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
-        //myRef.removeEventListener(courseListener);
-
-        Log.d("Course", "returning courses");
-
-        Log.d("Course", "finished");
+        Log.d("Course", "Getting Courses Complete");
 
     }
 
