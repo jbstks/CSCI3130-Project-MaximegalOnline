@@ -13,6 +13,9 @@ import android.util.Log;
 
 import android.widget.TextView;
 import com.example.peter.a3130project.register.CourseRegistrationUI;
+import com.example.peter.a3130project.course.Course;
+import com.example.peter.a3130project.course.CourseTime;
+import com.example.peter.a3130project.course.CourseSection;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

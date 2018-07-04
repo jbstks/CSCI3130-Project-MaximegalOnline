@@ -1,7 +1,10 @@
-package com.example.peter.a3130project;
+package com.example.peter.a3130project.course;
 
 import java.util.HashMap;
 /**
+ * Contributors:
+ * PL, MG, DW, AC 
+ *
  * CourseTime:
  *
  * Class for keeping track of course times
