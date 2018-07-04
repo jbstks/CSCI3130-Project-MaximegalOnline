@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A placeholder fragment containing a simple view.
+ * A fragment containing the user's schedule.
  */
 public class ScheduleFragment extends Fragment {
 
@@ -78,8 +78,8 @@ public class ScheduleFragment extends Fragment {
             for (ScheduleEntry e : day) {
                 TextView tv = new TextView(getActivity().getApplicationContext());
 
-                int duration = 60 * ((e.end / 100) - (e.start / 100)) + (e.end % 100 - e.start % 100);
-                int before =  60 * ((e.start / 100) - (time / 100)) + (e.start % 100 - time % 100);
+                int duration = 60 * ((e.getEnd() / 100) - (e.getStart() / 100)) + (e.getEnd() % 100 - e.getStart() % 100);
+                int before =  60 * ((e.getStart() / 100) - (time / 100)) + (e.getStart() % 100 - time % 100);
 
                 duration = ((duration + 25) / 30) * 30;
                 before = ((before + 25) / 30) * 30;
@@ -90,8 +90,8 @@ public class ScheduleFragment extends Fragment {
                 int margin = blockSize * before / 60;
 
                 Log.d("tv", "blockSize = " + blockSize);
-                Log.d("tv", "start = " + e.start);
-                Log.d("tv", "end = " + e.end);
+                Log.d("tv", "start = " + e.getStart());
+                Log.d("tv", "end = " + e.getEnd());
                 Log.d("tv", "height = " + height);
                 Log.d("tv", "margin = " + margin);
                 Log.d("tv", "duration = " + duration);
@@ -103,14 +103,13 @@ public class ScheduleFragment extends Fragment {
                 v.setLayoutParams(mlp);
                 dayViews[i].addView(v);
 
-
-                tv.setBackgroundColor(e.color);
+                tv.setBackgroundColor(e.getColor());
                 tv.setTextColor(Color.parseColor("#000000"));
                 tv.setLayoutParams(lp);
-                tv.setText(e.name + "\n" + e.location);
+                tv.setText(e.getName() + "\n" + e.getLocation());
                 dayViews[i].addView(tv);
 
-                time = e.end;
+                time = e.getEnd();
             }
         }
     }
