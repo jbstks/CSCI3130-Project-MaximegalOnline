@@ -22,12 +22,21 @@ import java.util.Collections;
 import java.util.Map;
 
 class ScheduleEntry implements Comparable<ScheduleEntry> {
-    public String name;
-    public int start;
-    public int end;
-    public String location;
-    int color;
+    private String name;
+    private int start;
+    private int end;
+    private String location;
+    private int color;
 
+    /**
+     * Constructor to create a schedule entry
+     *
+     * @param name      Course name
+     * @param start     Start time of course
+     * @param end       End time of course
+     * @param location  Lecture location
+     * @param color     Color to represent schedule entry
+     */
     public ScheduleEntry(String name, int start, int end, String location, int color) {
         this.name = name;
         this.start = start;
@@ -42,6 +51,22 @@ class ScheduleEntry implements Comparable<ScheduleEntry> {
         if (start > e.start) return  1;
         return 0;
     }
+
+    /* getters and setters */
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public int getStart() { return start; }
+    public void setStart(int start) { this.start = start; }
+
+    public int getEnd() { return end; }
+    public void setEnd(int end) { this.end = end; }
+
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
+
+    public int getColor() { return color; }
+    public void setColor(int color) { this.color = color; }
 }
 
 public class ScheduleActivity extends AppCompatActivity {
@@ -103,8 +128,8 @@ public class ScheduleActivity extends AppCompatActivity {
                     for (ScheduleEntry e : day) {
                         TextView tv = new TextView(getApplicationContext());
 
-                        int duration = 60 * ((e.end / 100) - (e.start / 100)) + (e.end % 100 - e.start % 100);
-                        int before =  60 * ((e.start / 100) - (time / 100)) + (e.start % 100 - time % 100);
+                        int duration = 60 * ((e.getEnd() / 100) - (e.getStart() / 100)) + (e.getEnd() % 100 - e.getStart() % 100);
+                        int before =  60 * ((e.getStart() / 100) - (time / 100)) + (e.getStart() % 100 - time % 100);
 
                         duration = ((duration + 25) / 30) * 30;
                         before = ((before + 25) / 30) * 30;
@@ -114,13 +139,6 @@ public class ScheduleActivity extends AppCompatActivity {
                         int height = blockSize * duration / 60;
                         int margin = blockSize * before / 60;
 
-                        Log.d("tv", "blockSize = " + blockSize);
-                        Log.d("tv", "start = " + e.start);
-                        Log.d("tv", "end = " + e.end);
-                        Log.d("tv", "height = " + height);
-                        Log.d("tv", "margin = " + margin);
-                        Log.d("tv", "duration = " + duration);
-
                         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, height);
                         LinearLayout.LayoutParams mlp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, margin);
 
@@ -128,14 +146,13 @@ public class ScheduleActivity extends AppCompatActivity {
                         v.setLayoutParams(mlp);
                         dayViews[i].addView(v);
 
-
-                        tv.setBackgroundColor(e.color);
+                        tv.setBackgroundColor(e.getColor());
                         tv.setTextColor(Color.parseColor("#000000"));
                         tv.setLayoutParams(lp);
-                        tv.setText(e.name + "\n" + e.location);
+                        tv.setText(e.getName() + "\n" + e.getLocation());
                         dayViews[i].addView(tv);
 
-                        time = e.end;
+                        time = e.getEnd();
                     }
                 }
             }
