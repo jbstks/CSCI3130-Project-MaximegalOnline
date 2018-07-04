@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         TextView section_crn;
         TextView section_prof;
         TextView section_id;
+        Button register_button;
         RecyclerView times_rv;
 
         List<CourseSection> sections;
@@ -40,9 +42,17 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
             section_crn = itemView.findViewById(R.id.section_crn);
             section_prof = itemView.findViewById(R.id.section_professor);
             section_id = itemView.findViewById(R.id.section_id);
+            register_button = itemView.findViewById(R.id.register_button);
             times_rv=  (RecyclerView) itemView.findViewById(R.id.section_times_rv);
 
-
+            register_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Here we would make a call to the database to register for a course
+                    int position = getAdapterPosition();
+                    Log.d("SECTION", "REGISTER BUTTON CLICKED for " + sections.get(position).getsectionNum());
+                }
+            });
 
 
         }
