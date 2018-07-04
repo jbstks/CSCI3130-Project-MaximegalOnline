@@ -1,4 +1,4 @@
-package com.example.peter.a3130project;
+package com.example.peter.a3130project.course;
 
 import java.util.List;
 /**

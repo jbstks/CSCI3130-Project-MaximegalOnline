@@ -1,6 +1,7 @@
 package com.example.peter.a3130project.register;
-import com.example.peter.a3130project.CourseSection;
-import com.example.peter.a3130project.CourseTime;
+import com.example.peter.a3130project.course.CourseSection;
+import com.example.peter.a3130project.course.CourseTime;
+import com.example.peter.a3130project.course.CourseSection;
 
 import java.util.ArrayList;
 

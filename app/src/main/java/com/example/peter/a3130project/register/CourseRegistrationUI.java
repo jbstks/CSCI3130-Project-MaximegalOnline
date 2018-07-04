@@ -1,7 +1,7 @@
 package com.example.peter.a3130project.register;
-import com.example.peter.a3130project.CourseSection;
+import com.example.peter.a3130project.course.CourseSection;
+import com.example.peter.a3130project.course.Course;
 
-import com.example.peter.a3130project.Course;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;

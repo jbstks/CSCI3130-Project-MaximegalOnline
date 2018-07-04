@@ -1,6 +1,8 @@
 package com.example.peter.a3130project;
 
 import com.example.peter.a3130project.register.CourseRegistration;
+import com.example.peter.a3130project.course.Course;
+import com.example.peter.a3130project.course.CourseTime;
 
 import org.junit.Test;
 
@@ -10,7 +12,11 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-
+/**
+ * Contributors: PL, MG
+ *
+ * Tests for register business logic
+ */
 public class RegisterTest {
     
     /** Tests acceptance in using a valid registration **/

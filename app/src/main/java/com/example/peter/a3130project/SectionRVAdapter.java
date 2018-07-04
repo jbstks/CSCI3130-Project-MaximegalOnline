@@ -14,6 +14,8 @@ import java.util.List;
 
 import static java.security.AccessController.getContext;
 
+import com.example.peter.a3130project.course.CourseSection;
+
 public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.SectionViewHolder>{
 
     List<CourseSection> sections;
