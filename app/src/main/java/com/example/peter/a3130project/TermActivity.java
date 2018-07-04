@@ -18,6 +18,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity for the Term
+ *
+ * @author Joanna Bistekos
+ * @author Dawson Wilson
+ */
 public class TermActivity extends AppCompatActivity {
 
     @Override
@@ -45,7 +51,7 @@ public class TermActivity extends AppCompatActivity {
         terms.add(new Term("Summer","2019"));
         terms.add(new Term("Fall","2019"));
 
-        RVAdapter mAdapter = new RVAdapter(terms);
+        TermRVAdapter mAdapter = new TermRVAdapter(terms);
         rv.setAdapter(mAdapter);
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
