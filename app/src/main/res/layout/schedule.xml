@@ -159,18 +159,20 @@
                         android:background="#edf"
                         android:text="Thursday"/>
                 </LinearLayout>
+
                 <LinearLayout
+                    android:id="@+id/friday"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/friday"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
+                        android:background="#edf"
                         android:gravity="center|bottom"
                         android:paddingBottom="3dp"
-                        android:background="#edf"
-                        android:text="Friday"/>
+                        android:text="Friday" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
