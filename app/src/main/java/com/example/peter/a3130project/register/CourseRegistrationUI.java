@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 public class CourseRegistrationUI extends CourseRegistration{
 
+    private DatabaseReference currentCoursesRef;
     public CourseRegistrationUI(FirebaseUser user) {
         super();
         //  Fills in current_courses with the firebase instance.
@@ -29,7 +30,7 @@ public class CourseRegistrationUI extends CourseRegistration{
         DatabaseReference ref = db.getReference("students");
 
         // TODO setup B00 numbers for each user and query for them here
-        DatabaseReference currentCoursesRef = ref.child("B00123456").child("courses").child("current");
+        currentCoursesRef = ref.child("B00123456").child("courses").child("current");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -52,24 +53,24 @@ public class CourseRegistrationUI extends CourseRegistration{
     
     /** do_register
      *-------------
-     * @param course: 
+     * @param course_sec:
      *    course that is desired to be reigstered
      **/
-    public void do_register(CourseSection course_sec) {
+    public void do_register(CourseSection course_sec) throws Exception {
 
         /* Check to see if the course is valid */
         ArrayList<CourseSection> cs= attempt_register(course_sec);
 
         /* Check for bad things which shouldn't happen */
         if (cs == null) {
-            throw Exception;
+            throw new Exception("Invalid registration state");
         }
 
         if (cs.size() != 0 ) {
-            throw Exception;
+            throw new Exception("Invalid registration state");
         }
         
 	/* Adds the course to the database*/
-	currentCoursesRef.push().setValue(course_sec.id);
+	currentCoursesRef.push().setValue(course_sec.getcrn());
     }
 }

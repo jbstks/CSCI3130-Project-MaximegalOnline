@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.security.AccessController.getContext;
 
 import com.example.peter.a3130project.course.CourseSection;
+import com.example.peter.a3130project.register.CourseRegistrationUI;
 
 /**
  * @class SectionRVAdapter
@@ -33,7 +36,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
     // constructor
     SectionRVAdapter(List<CourseSection> sections) {
         this.sections = sections;
-        applicationContext = null; //TODO: change this
+
 
     }
 
@@ -45,7 +48,8 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         Button register_button;
         RecyclerView times_rv;
         List<CourseSection> sections;
-        
+        Context applicationContext;
+
         SectionViewHolder(View itemView, final List<CourseSection> sections) {
             super(itemView);
             this.sections = sections;
@@ -53,54 +57,58 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
             section_prof = itemView.findViewById(R.id.section_professor);
             section_id = itemView.findViewById(R.id.section_id);
             register_button = itemView.findViewById(R.id.register_button);
-            times_rv=  (RecyclerView) itemView.findViewById(R.id.section_times_rv);
+            times_rv = (RecyclerView) itemView.findViewById(R.id.section_times_rv);
 
+            applicationContext = null; //TODO: change this
 
-            
             register_button.setOnClickListener(new View.OnClickListener() {
 
-                    /**
-                     * manager for clicking on register button 
-                     **/
+                /**
+                 * manager for clicking on register button
+                 **/
                 @Override
                 public void onClick(View v) {
                     // Here we would make a call to the database to register for a course
-                    
+
                     int position = getAdapterPosition();
                     //Update current CourseRegistrationUI
 
                     CourseRegistrationUI coursereg = new CourseRegistrationUI(null); //TODO change null pointer here
-                    
+
                     CourseSection cs = sections.get(position);
-                    
-                    ArrayList<CourseSection> register_result = attempt_register(cs);
-                    if (register_result == null ){ //TODO: define applicationContext
+
+                    ArrayList<CourseSection> register_result = coursereg.attempt_register(cs);
+                    if (register_result == null) { //TODO: define applicationContext
                         Toast.makeText(applicationContext, "Can't register. Course is already registered for you.",
-                                        Toast.LENGTH_SHORT).show();   
-                    }
-                    
-                    else if (register_result.size()!=0 ){  //There is a conflicting course. Mention the conflicting course in the output.
-                        StringBuilder outputmessage =new StringBuilder("Can't register. Course conflicts with ");
-                        for (int i=0;i< register_result.size();i++) {
-                            outputmessage.append(" "+register_result.get(i).getcrn());
-                            
+                                Toast.LENGTH_SHORT).show();
+                    } else if (register_result.size() != 0) {  //There is a conflicting course. Mention the conflicting course in the output.
+                        StringBuilder outputmessage = new StringBuilder("Can't register. Course conflicts with ");
+                        for (int i = 0; i < register_result.size(); i++) {
+                            outputmessage.append(" " + register_result.get(i).getcrn());
+
                         }
-                        
+
                         Toast.makeText(applicationContext, outputmessage.toString(),
-                                       Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT).show();
+                    } else { //Otherwise, register
+                        try {
+                            coursereg.do_register(cs);
+                        } catch (Exception e) {
+                            Log.d("Reigster", "Something bad happened on register");
+                        }
                     }
-                    
-                    else { //Otherwise, register
-                        do_register(cs);
-                    }
-                    
-                    Log.d("SECTION", "REGISTER BUTTON CLICKED for " + sections.get(position).getsectionNum());
                 }
             });
-
-
         }
     }
+
+                //Log.d("SECTION", "REGISTER BUTTON CLICKED for " + sections.get(position).getsectionNum());
+
+
+
+
+
+
 
     @Override
     public SectionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
