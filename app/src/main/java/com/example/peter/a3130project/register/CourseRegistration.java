@@ -53,18 +53,25 @@ public class CourseRegistration {
 		// there is a matching item, therefore return null
 		return null;
 	    }
+            
 	}
 	ArrayList<CourseSection> result = new ArrayList<CourseSection>();
 
 	ArrayList<CourseTime> coursetimes = (ArrayList<CourseTime>) course.getcourseTimeList();
 
 	for (int a=0; a < coursetimes.size(); a++ ){
+            
 	    // Get a time segment for current course
 	    int [] course_time = coursetimes.get(a).get_universal_time();
 
 	    for (int i=0;i < current_courses.size(); i++) {
 		CourseSection candidate = current_courses.get(i);
 		ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.getcourseTimeList();
+
+                if (!(candidate.getcourse().getsemester().equals(course.getcourse().getsemester()) && candidate.getcourse().getyear().equals(course.getcourse().getyear()))) { //This term and/or year doesn't match. No need to check schedule
+                    continue;
+                }
+                
 		for  (int j=0; j < candtimes.size(); j++ ){
 		    int [] cand_time = candtimes.get(j).get_universal_time();
 		    
