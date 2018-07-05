@@ -12,7 +12,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 /**
- * Contributors: PL, MG
+ * @author PL,
+ * @author MG
  *
  * @class CourseRegistration
  * Deals confirming registration conflicts given courses and requested course.
@@ -48,8 +49,27 @@ public class CourseRegistrationUI extends CourseRegistration{
         });
 
     }
-    public void do_register(Course course, FirebaseUser user) {
+    
+    /** do_register
+     *-------------
+     * @param course: 
+     *    course that is desired to be reigstered
+     **/
+    public void do_register(CourseSection course_sec) {
+
+        /* Check to see if the course is valid */
+        ArrayList<CourseSection> cs= attempt_register(course_sec);
+
+        /* Check for bad things which shouldn't happen */
+        if (cs == null) {
+            throw Exception;
+        }
+
+        if (cs.size() != 0 ) {
+            throw Exception;
+        }
+        
 	/* Adds the course to the database*/
-	
+	currentCoursesRef.push().setValue(course_sec.id);
     }
 }

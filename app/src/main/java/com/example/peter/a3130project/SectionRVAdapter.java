@@ -17,6 +17,15 @@ import static java.security.AccessController.getContext;
 
 import com.example.peter.a3130project.course.CourseSection;
 
+/**
+ * @class SectionRVAdapter
+ * @author DW
+ * @author AC
+ * @author PL
+ * @author MG
+ * Adapter for handling view for courses.
+ **/
+
 public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.SectionViewHolder>{
 
     List<CourseSection> sections;
@@ -24,6 +33,8 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
     // constructor
     SectionRVAdapter(List<CourseSection> sections) {
         this.sections = sections;
+        applicationContext = null; //TODO: change this
+
     }
 
     // provides a way to access data
@@ -33,9 +44,8 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         TextView section_id;
         Button register_button;
         RecyclerView times_rv;
-
         List<CourseSection> sections;
-
+        
         SectionViewHolder(View itemView, final List<CourseSection> sections) {
             super(itemView);
             this.sections = sections;
@@ -45,11 +55,45 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
             register_button = itemView.findViewById(R.id.register_button);
             times_rv=  (RecyclerView) itemView.findViewById(R.id.section_times_rv);
 
+
+            
             register_button.setOnClickListener(new View.OnClickListener() {
+
+                    /**
+                     * manager for clicking on register button 
+                     **/
                 @Override
                 public void onClick(View v) {
                     // Here we would make a call to the database to register for a course
+                    
                     int position = getAdapterPosition();
+                    //Update current CourseRegistrationUI
+
+                    CourseRegistrationUI coursereg = new CourseRegistrationUI(null); //TODO change null pointer here
+                    
+                    CourseSection cs = sections.get(position);
+                    
+                    ArrayList<CourseSection> register_result = attempt_register(cs);
+                    if (register_result == null ){ //TODO: define applicationContext
+                        Toast.makeText(applicationContext, "Can't register. Course is already registered for you.",
+                                        Toast.LENGTH_SHORT).show();   
+                    }
+                    
+                    else if (register_result.size()!=0 ){  //There is a conflicting course. Mention the conflicting course in the output.
+                        StringBuilder outputmessage =new StringBuilder("Can't register. Course conflicts with ");
+                        for (int i=0;i< register_result.size();i++) {
+                            outputmessage.append(" "+register_result.get(i).getcrn());
+                            
+                        }
+                        
+                        Toast.makeText(applicationContext, outputmessage.toString(),
+                                       Toast.LENGTH_SHORT).show();
+                    }
+                    
+                    else { //Otherwise, register
+                        do_register(cs);
+                    }
+                    
                     Log.d("SECTION", "REGISTER BUTTON CLICKED for " + sections.get(position).getsectionNum());
                 }
             });
