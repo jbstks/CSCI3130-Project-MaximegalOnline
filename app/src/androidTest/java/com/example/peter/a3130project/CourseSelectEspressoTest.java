@@ -66,7 +66,7 @@ public class CourseSelectEspressoTest {
         onView(withId(R.id.course_rv))
                 .perform(RecyclerViewActions.actionOnItem(
                         hasDescendant(withText("42665")), click()));
-        onView(withId(R.id.courseInfo_id)).check(matches(withText("42665")));
+        onView(withId(R.id.section_crn)).check(matches(withText("42665")));
         onView(withId(R.id.courseInfo_code)).check(matches(withText("CSCI3130")));
         onView(withId(R.id.courseInfo_name)).check(matches(withText("Software Engineering")));
         SystemClock.sleep(1500);
@@ -83,7 +83,7 @@ public class CourseSelectEspressoTest {
         onView(withId(R.id.course_rv))
                 .perform(RecyclerViewActions.actionOnItem(
                         hasDescendant(withText("Algorithms")), click()));
-        //onView(withId(R.id.courseInfo_id)).check(matches(withText("42665")));
+        //onView(withId(R.id.section_crn)).check(matches(withText("42665")));
         //onView(withId(R.id.courseInfo_code)).check(matches(withText("CSCI3130")));
         //onView(withId(R.id.courseInfo_name)).check(matches(withText("Software Engineering")));
         SystemClock.sleep(1500);
@@ -100,7 +100,7 @@ public class CourseSelectEspressoTest {
         onView(withId(R.id.course_rv))
                 .perform(RecyclerViewActions.actionOnItem(
                         hasDescendant(withText("42784")), click()));
-        onView(withId(R.id.courseInfo_id)).check(matches(withText("42784")));
+        onView(withId(R.id.section_crn)).check(matches(withText("42784")));
         onView(withId(R.id.courseInfo_code)).check(matches(withText("CSCI3120")));
         onView(withId(R.id.courseInfo_name)).check(matches(withText("Operating Systems")));
         SystemClock.sleep(1500);
@@ -117,7 +117,7 @@ public class CourseSelectEspressoTest {
         onView(withId(R.id.course_rv))
                 .perform(RecyclerViewActions.actionOnItem(
                         hasDescendant(withText("Operating Systems")), click()));
-        onView(withId(R.id.courseInfo_id)).check(matches(withText("42784")));
+        onView(withId(R.id.section_crn)).check(matches(withText("42784")));
         onView(withId(R.id.courseInfo_code)).check(matches(withText("CSCI3120")));
         onView(withId(R.id.courseInfo_name)).check(matches(withText("Operating Systems")));
         SystemClock.sleep(1500);
