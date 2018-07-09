@@ -1,7 +1,5 @@
 package com.example.peter.a3130project;
 
-import android.app.Application;
-import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,18 +11,29 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import static java.security.AccessController.getContext;
+/** This class functions as a bridge between the course section data and the RecyclerView
+ * that displays it
+ *
+ *
+ */
 
 public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.SectionViewHolder>{
 
     List<CourseSection> sections;
 
-    // constructor
+    /** Constructor
+     *
+     * @param sections A list containing CourseSection objects
+     */
     SectionRVAdapter(List<CourseSection> sections) {
         this.sections = sections;
     }
 
-    // provides a way to access data
+
+    /** Assigns data from a CourseSection object in the list  to UI elements of an item in the RecyclerView
+     * for display.
+     *
+     */
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
         TextView section_crn;
         TextView section_prof;
@@ -34,6 +43,11 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
 
         List<CourseSection> sections;
 
+        /** Constructor
+         *
+         * @param itemView each item/"row" on the RecyclerView list
+         * @param sections A list containing CourseSection objects
+         */
         SectionViewHolder(View itemView, final List<CourseSection> sections) {
             super(itemView);
             this.sections = sections;
@@ -56,6 +70,12 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         }
     }
 
+    /** Creates and returns a SectionViewHolder to be used by onBindViewHolder
+     *
+     * @param viewGroup
+     * @param i
+     * @return a SectionViewHolder
+     */
     @Override
     public SectionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         Log.d("RV", "Creating card");
@@ -64,6 +84,12 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         return pvh;
     }
 
+    /** This method is called by RecyclerView to display the data at the specified position
+     * it assigns the data from a CourseSection object to the fields on the corresponding RecyclerView
+     * row
+     * @param sectionViewHolder
+     * @param i the position of a item on the sections list
+     */
     @Override
     public void onBindViewHolder(SectionViewHolder sectionViewHolder, int i) {
         // This refers to the public class Courses
@@ -83,6 +109,10 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
 
     }
 
+    /**
+     *
+     * @return number of itens on the RecyclerView
+     */
     @Override
     public int getItemCount() {
         return sections.size();
