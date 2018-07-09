@@ -39,18 +39,21 @@ public class CourseSection {
     public void setsectionNum(String val){
          this.sectionNum = val;
     }
+
     public String getcrn(){
         return this.crn;
     }
     public void setcrn(String val){
          this.crn = val;
     }
+
     public String getprofessor(){
         return this.professor;
     }
     public void setprofessor(String val){
          this.professor = val;
     }
+
     public List<CourseTime> getcourseTimeList(){
         return this.courseTimeList;
     }

@@ -1,5 +1,6 @@
 package com.example.peter.a3130project;
 
+import com.example.peter.a3130project.course.*;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -52,9 +53,9 @@ public class ScheduleFragment extends Fragment {
     /**
      * Update courses if they are changed in the database
      *
-     * @param courses list of available courses (of object Course)
+     * @param registeredCourses list of available courses (of object CourseSections)
      */
-    public void update(List<Course> courses) {
+    public void update(List<CourseSection> registeredCourses) {
 
         if (view == null)
             return;
@@ -78,13 +79,13 @@ public class ScheduleFragment extends Fragment {
             dayViews[i].removeViews(1, dayViews[i].getChildCount() - 1);
         }
 
-        for (Course c : courses) {
+        for (CourseSection c : registeredCourses) {
             int color = Color.parseColor(colors[colorIndex++ % colors.length]);
-            for (CourseTime t : c.times) {
-                int i = days.indexOf(t.day);
-                int start = Integer.parseInt(t.startTime);
-                int end = Integer.parseInt(t.endTime);
-                schedule.get(i).add(new ScheduleEntry(c.code, start, end, t.location, color));
+            for (CourseTime t : c.getcourseTimeList()) {
+                int i = days.indexOf(t.getday());
+                int start = Integer.parseInt(t.getstartTime());
+                int end = Integer.parseInt(t.getendTime());
+                schedule.get(i).add(new ScheduleEntry(c.getcourse().getcode(), start, end, t.getlocation(), color));
             }
         }
 
@@ -133,3 +134,39 @@ public class ScheduleFragment extends Fragment {
         }
     }
 }
+
+/**
+ for (DataSnapshot semesterSnapshot : dataSnapshot.child("available_courses1").getChildren()) {
+ //.//child("courses").child("current").getChildren()) {
+ //loop through courses
+ for (DataSnapshot courseSnapshot : semesterSnapshot.getChildren()) {
+ //loop through sections
+ for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
+ for (String CRN: CRNs) {
+ if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
+ String sectionNum = sectionSnapshot.getKey();
+ //String CRN = CRNs.get(i);
+ String prof = sectionSnapshot.child("professor").getValue(String.class);
+
+ List<CourseTime> courseTimeList = new ArrayList<>();
+ //get CourseTime info
+ for (DataSnapshot timesSnapshot : sectionSnapshot.child("times").getChildren()) {
+ String day = timesSnapshot.getKey();
+ String startTime = timesSnapshot.child("start").getValue(String.class);
+ String endTime = timesSnapshot.child("end").getValue(String.class);
+ String location = timesSnapshot.child("location").getValue(String.class);
+
+ CourseTime courseTime = new CourseTime(day, startTime, endTime, location);
+ courseTimeList.add(courseTime);
+ }
+
+ //get Course info
+ String code = courseSnapshot.getKey();
+ String name = courseSnapshot.child("name").getValue(String.class);
+ String semester = courseSnapshot.child("semester").getValue(String.class);
+ String year = courseSnapshot.child("year").getValue(String.class);
+ Course course = new Course(code, name, semester, year);
+
+ CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
+ currentCourseSections.add(section);
+ */

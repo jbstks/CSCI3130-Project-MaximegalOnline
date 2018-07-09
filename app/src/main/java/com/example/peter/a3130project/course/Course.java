@@ -10,7 +10,6 @@ public class Course {
     private String semester;
     private String year;
 
-
     public Course() {
         // Default constructor
     }
@@ -43,7 +42,6 @@ public class Course {
     public String getname(){
         return name;
     }
-    
     public void setname(String val){
          this.name = val;
     }
@@ -51,7 +49,6 @@ public class Course {
     public String getsemester(){
         return semester;
     }
-    
     public void setsemester(String val){
          this.semester = val;
     }
@@ -59,7 +56,6 @@ public class Course {
     public String getyear(){
         return year;
     }
-    
     public void setyear(String val){
          this.year = val;
     }
