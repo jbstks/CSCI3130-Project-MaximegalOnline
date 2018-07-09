@@ -1,9 +1,17 @@
 package com.example.peter.a3130project.register;
-import com.example.peter.a3130project.CourseSection;
-import com.example.peter.a3130project.CourseTime;
+import com.example.peter.a3130project.course.CourseSection;
+import com.example.peter.a3130project.course.CourseTime;
+import com.example.peter.a3130project.course.CourseSection;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
+/**
+ * Contributors: PL, MG
+ *
+ * @class CourseRegistration
+ * Deals confirming registration conflicts given courses and requested course.
+ **/
 public class CourseRegistration {
     private ArrayList<CourseSection> current_courses;
 
@@ -46,18 +54,25 @@ public class CourseRegistration {
 		// there is a matching item, therefore return null
 		return null;
 	    }
+            
 	}
 	ArrayList<CourseSection> result = new ArrayList<CourseSection>();
+	HashSet<CourseSection> hashresult = new HashSet<CourseSection>();
 
 	ArrayList<CourseTime> coursetimes = (ArrayList<CourseTime>) course.getcourseTimeList();
 
 	for (int a=0; a < coursetimes.size(); a++ ){
+            
 	    // Get a time segment for current course
 	    int [] course_time = coursetimes.get(a).get_universal_time();
 
 	    for (int i=0;i < current_courses.size(); i++) {
 		CourseSection candidate = current_courses.get(i);
 		ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.getcourseTimeList();
+		if (!(candidate.getcourse().getsemester().equals(course.getcourse().getsemester()) && candidate.getcourse().getyear().equals(course.getcourse().getyear())) || hashresult.contains(candidate)) { //This term and/or year doesn't match. No need to check schedule
+                    continue;
+                }
+                
 		for  (int j=0; j < candtimes.size(); j++ ){
 		    int [] cand_time = candtimes.get(j).get_universal_time();
 		    
@@ -67,6 +82,7 @@ public class CourseRegistration {
 			(cand_time[0] >= course_time[0] && cand_time[0] <= course_time[1])||
 			(cand_time[1] >= course_time[0] && cand_time[1] <= course_time[1])) {
 			result.add(candidate);
+			hashresult.add(candidate);
 		    
 		    }
 		}
