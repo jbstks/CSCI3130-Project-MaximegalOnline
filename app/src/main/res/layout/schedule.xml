@@ -20,144 +20,164 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#edf">
+
                     <View
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="60dp"
+                        android:layout_height="35dp"
                         android:background="#fafafa" />
+
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="60dp"
                         android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
                         android:layout_gravity="end"
                         android:padding="8dp"
-                        android:text="8:00 AM"/>
+                        android:text="8 AM"
+                        android:textAlignment="viewEnd" />
+
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="60dp"
                         android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"
+                        android:background="#dbe"
+                        android:padding="8dp"
+                        android:text="9 AM"
+                        android:textAlignment="viewEnd" />
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="80dp"
                         android:layout_gravity="end"
                         android:padding="8dp"
-                        android:text="9:00 AM"
-                        android:background="#dbe"/>
+                        android:text="10 AM"
+                        android:textAlignment="viewEnd" />
+
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="60dp"
                         android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"
+                        android:background="#dbe"
+                        android:padding="8dp"
+                        android:text="11 AM"
+                        android:textAlignment="viewEnd" />
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="80dp"
                         android:layout_gravity="end"
                         android:padding="8dp"
-                        android:text="10:00 AM"/>
+                        android:text="12 PM"
+                        android:textAlignment="viewEnd" />
+
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="60dp"
                         android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"
+                        android:background="#dbe"
+                        android:padding="8dp"
+                        android:text="1 PM"
+                        android:textAlignment="viewEnd" />
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="80dp"
                         android:layout_gravity="end"
                         android:padding="8dp"
-                        android:text="11:00 AM"
-                        android:background="#dbe"/>
+                        android:text="2 PM"
+                        android:textAlignment="viewEnd" />
+
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="60dp"
                         android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"
+                        android:background="#dbe"
+                        android:padding="8dp"
+                        android:text="3 PM"
+                        android:textAlignment="viewEnd" />
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="80dp"
                         android:layout_gravity="end"
                         android:padding="8dp"
-                        android:text="12:00 PM"/>
+                        android:text="4 PM"
+                        android:textAlignment="viewEnd" />
+
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="60dp"
                         android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"
+                        android:background="#dbe"
+                        android:padding="8dp"
+                        android:text="5 PM"
+                        android:textAlignment="viewEnd" />
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="80dp"
                         android:layout_gravity="end"
                         android:padding="8dp"
-                        android:text="1:00 PM"
-                        android:background="#dbe"/>
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
-                        android:layout_gravity="end"
-                        android:padding="8dp"
-                        android:text="2:00 PM"/>
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
-                        android:layout_gravity="end"
-                        android:padding="8dp"
-                        android:text="3:00 PM"
-                        android:background="#dbe"/>
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
-                        android:layout_gravity="end"
-                        android:padding="8dp"
-                        android:text="4:00 PM"/>
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
-                        android:layout_gravity="end"
-                        android:padding="8dp"
-                        android:text="5:00 PM"
-                        android:background="#dbe"/>
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:textAlignment="viewEnd"
-                        android:layout_gravity="end"
-                        android:padding="8dp"
-                        android:text="6:00 PM"/>
+                        android:text="6 PM"
+                        android:textAlignment="viewEnd" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/monday"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:gravity="center|bottom"
-                        android:paddingBottom="3dp"
+                        android:layout_height="wrap_content"
                         android:background="#edf"
-                        android:text="Monday"/>
+                        android:gravity="center|bottom"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="Monday" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/tuesday"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:gravity="center|bottom"
-                        android:paddingBottom="3dp"
+                        android:layout_height="wrap_content"
                         android:background="#edf"
-                        android:text="Tuesday"/>
+                        android:gravity="center|bottom"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="Tuesday" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/wednesday"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:gravity="center|bottom"
-                        android:paddingBottom="3dp"
+                        android:layout_height="wrap_content"
                         android:background="#edf"
-                        android:text="Wednesday"/>
+                        android:gravity="center|bottom"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="Wednesday" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/thursday"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:gravity="center|bottom"
-                        android:paddingBottom="3dp"
+                        android:layout_height="wrap_content"
                         android:background="#edf"
-                        android:text="Thursday"/>
+                        android:gravity="center|bottom"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="Thursday" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -168,10 +188,11 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="wrap_content"
                         android:background="#edf"
                         android:gravity="center|bottom"
-                        android:paddingBottom="3dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
                         android:text="Friday" />
                 </LinearLayout>
             </LinearLayout>
