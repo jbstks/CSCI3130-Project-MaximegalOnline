@@ -9,17 +9,30 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+/** This class functions as a bridge between the  section times data and the RecyclerView
+ * that displays it
+ *
+ *
+ */
 
 public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAdapter.SectionTimesViewHolder> {
 
     List<CourseTime> times;
 
-    // constructor
+
+    /** Constructor
+     *
+     * @param times A list containing CourseTime objects
+     */
     SectionTimesRVAdapter(List<CourseTime> times) {
         this.times = times;
     }
 
-    // provides a way to access data
+
+    /** Assigns data from a CourseTime object in the list to the corresponding UI elements
+     * of the RecyclerView entry
+     *
+     */
     public static class SectionTimesViewHolder extends RecyclerView.ViewHolder {
         TextView times_day;
         TextView times_start;
@@ -28,6 +41,11 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
 
         List<CourseTime> times;
 
+        /**
+         *
+         * @param itemView each item/"row" on the RecyclerView list
+         * @param times list containing CourseTime objects
+         */
         SectionTimesViewHolder(View itemView, final List<CourseTime> times) {
             super(itemView);
             this.times = times;
@@ -41,6 +59,12 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
         }
     }
 
+    /** Creates and returns a SectionViewHolder to be used by onBindViewHolder
+     *
+     * @param viewGroup
+     * @param i
+     * @return a SectionViewHolder
+     */
     @Override
     public SectionTimesViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         Log.d("RV", "Creating card");
@@ -49,6 +73,13 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
         return pvh;
     }
 
+
+    /** This method is called by RecyclerView to display the data at the specified position
+     * it assigns the data from a CourseTime object to the fields on the corresponding RecyclerView
+     * row
+     * @param sectionViewHolder
+     * @param i the position of a item on the times list
+     */
     @Override
     public void onBindViewHolder(SectionTimesViewHolder sectionViewHolder, int i) {
         // This refers to the public class Courses
@@ -59,6 +90,10 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
         sectionViewHolder.times_location.setText(times.get(i).getlocation());
     }
 
+    /**
+     *
+     * @return number of itens on the RecyclerView
+     */
     @Override
     public int getItemCount() {
         return times.size();
