@@ -1,5 +1,6 @@
 package com.example.peter.a3130project;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,9 @@ import static java.security.AccessController.getContext;
 
 import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.register.CourseRegistrationUI;
+import com.example.peter.a3130project.register.RegistrationException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * @class SectionRVAdapter
@@ -39,8 +43,9 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
 
 
     }
-
-    // provides a way to access data
+    /** @class SectionViewHolder
+     * provides a way to access data
+     **/
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
         TextView section_crn;
         TextView section_prof;
@@ -59,7 +64,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
             register_button = itemView.findViewById(R.id.register_button);
             times_rv = (RecyclerView) itemView.findViewById(R.id.section_times_rv);
 
-            applicationContext = null; //TODO: change this
+            applicationContext = itemView.getContext().getApplicationContext();
 
             register_button.setOnClickListener(new View.OnClickListener() {
 
@@ -72,41 +77,17 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
 
                     int position = getAdapterPosition();
                     //Update current CourseRegistrationUI
+                    CourseRegistrationUI coursereg = null;
+                    FirebaseUser currentUser= FirebaseAuth.getInstance().getCurrentUser();
 
-                    CourseRegistrationUI coursereg = new CourseRegistrationUI(null); //TODO change null pointer here
+		    coursereg = new CourseRegistrationUI(); //TODO change null pointer here
+		    CourseSection cs = sections.get(position);
+		    coursereg.firebaseRegister(currentUser,cs, applicationContext);
 
-                    CourseSection cs = sections.get(position);
-
-                    ArrayList<CourseSection> register_result = coursereg.attempt_register(cs);
-                    if (register_result == null) { //TODO: define applicationContext
-                        Toast.makeText(applicationContext, "Can't register. Course is already registered for you.",
-                                Toast.LENGTH_SHORT).show();
-                    } else if (register_result.size() != 0) {  //There is a conflicting course. Mention the conflicting course in the output.
-                        StringBuilder outputmessage = new StringBuilder("Can't register. Course conflicts with ");
-                        for (int i = 0; i < register_result.size(); i++) {
-                            outputmessage.append(" " + register_result.get(i).getcrn());
-
-                        }
-
-                        Toast.makeText(applicationContext, outputmessage.toString(),
-                                Toast.LENGTH_SHORT).show();
-                    } else { //Otherwise, register
-                        try {
-                            coursereg.do_register(cs);
-                        } catch (Exception e) {
-                            Log.d("Reigster", "Something bad happened on register");
-                        }
-                    }
                 }
             });
         }
     }
-
-                //Log.d("SECTION", "REGISTER BUTTON CLICKED for " + sections.get(position).getsectionNum());
-
-
-
-
 
 
 

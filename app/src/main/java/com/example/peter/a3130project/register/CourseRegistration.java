@@ -4,6 +4,7 @@ import com.example.peter.a3130project.course.CourseTime;
 import com.example.peter.a3130project.course.CourseSection;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Contributors: PL, MG
@@ -56,6 +57,7 @@ public class CourseRegistration {
             
 	}
 	ArrayList<CourseSection> result = new ArrayList<CourseSection>();
+	HashSet<CourseSection> hashresult = new HashSet<CourseSection>();
 
 	ArrayList<CourseTime> coursetimes = (ArrayList<CourseTime>) course.getcourseTimeList();
 
@@ -67,8 +69,7 @@ public class CourseRegistration {
 	    for (int i=0;i < current_courses.size(); i++) {
 		CourseSection candidate = current_courses.get(i);
 		ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.getcourseTimeList();
-
-                if (!(candidate.getcourse().getsemester().equals(course.getcourse().getsemester()) && candidate.getcourse().getyear().equals(course.getcourse().getyear()))) { //This term and/or year doesn't match. No need to check schedule
+		if (!(candidate.getcourse().getsemester().equals(course.getcourse().getsemester()) && candidate.getcourse().getyear().equals(course.getcourse().getyear())) || hashresult.contains(candidate)) { //This term and/or year doesn't match. No need to check schedule
                     continue;
                 }
                 
@@ -81,6 +82,7 @@ public class CourseRegistration {
 			(cand_time[0] >= course_time[0] && cand_time[0] <= course_time[1])||
 			(cand_time[1] >= course_time[0] && cand_time[1] <= course_time[1])) {
 			result.add(candidate);
+			hashresult.add(candidate);
 		    
 		    }
 		}
