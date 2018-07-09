@@ -64,7 +64,10 @@ public class RegisterEspressoTest {
         SystemClock.sleep(1500);
 
         onView(withText("CSCI3110")).perform(click());
-        assert(false);
+        SystemClock.sleep(1500);
+
+        onView(withText("Register")).perform(click());
+
     }
 
 
@@ -75,6 +78,22 @@ public class RegisterEspressoTest {
      **/
     @Test
     public void B_removeTest() {assert(false);
-        
+        String username = "testing@test.com";
+        String password = "testing123";
+
+
+        onView(withId(R.id.et_email)).perform(typeText(username));
+        onView(withId(R.id.et_password)).perform(typeText(password));
+        Espresso.closeSoftKeyboard();
+
+
+        onView(withId(R.id.bt_signin)).perform(click());
+        SystemClock.sleep(1500);
+
+        onView(withText("CSCI3110")).perform(click());
+        SystemClock.sleep(1500);
+
+        onView(withText("Register")).perform(click());
+
     }
 }
