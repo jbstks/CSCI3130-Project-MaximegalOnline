@@ -21,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.peter.a3130project.course.CourseSection;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    private final List<Course> courseList = new ArrayList<>();
+    private final List<Course> courses = new ArrayList<>();
+    private final List<CourseSection> courseList = new ArrayList<>();
     private CourseRVAdapter courseRVAdapter;
     private ScheduleFragment scheduleFragment;
 
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        courseRVAdapter = new CourseRVAdapter(courseList);
+        courseRVAdapter = new CourseRVAdapter(courses);
 
         Intent termActivityIntent = getIntent();
         Bundle termActivityBundle = termActivityIntent.getExtras();
@@ -160,11 +163,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+   /* public static class PlaceholderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
-         */
+         *
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -174,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Returns a new instance of this fragment for the given section
          * number.
-         */
+         *
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -188,10 +191,10 @@ public class MainActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
+            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*
             return rootView;
         }
-    }
+    }*/
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -308,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
         final ValueEventListener courseListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Here is the id of the course (CRN)
                     String key = snapshot.getKey();
                     Log.d("COURSE", "Found course id: " + key );
@@ -320,15 +323,15 @@ public class MainActivity extends AppCompatActivity {
 
                     courses.add(course);
 
-                    if (course.semester.equalsIgnoreCase(semester) && course.year.equalsIgnoreCase(year)) {
-                        courseList.add(course);
+                    if (course.getsemester().equalsIgnoreCase(semester) && course.getyear().equalsIgnoreCase(year)) {
+                        //courseList.add(course);
                     }
 
                     Log.d("COURSE", "courses size is now: " + courseList.size());
 
                     courseRVAdapter.notifyDataSetChanged();
                     if (scheduleFragment != null)
-                        scheduleFragment.update(courseList);
+                        //scheduleFragment.update(courseList);
 
                     Log.d("COURSE", "courses list size is now: " + courses.size());
 
