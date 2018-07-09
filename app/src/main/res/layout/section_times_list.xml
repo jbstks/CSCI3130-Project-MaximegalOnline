@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/section_times_cv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true">
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/section_times_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monday"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/section_times_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/section_times_day"
+            android:text="0935"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/section_times_spacer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/section_times_start"
+            android:layout_toRightOf="@+id/section_times_start"
+            android:layout_below="@+id/section_times_day"
+            android:text="@string/time_spacer"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/section_times_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/section_times_spacer"
+            android:layout_toRightOf="@+id/section_times_spacer"
+            android:layout_below="@+id/section_times_day"
+            android:text="1055"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/section_times_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/section_times_start"
+            android:text="CHEB C170"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
