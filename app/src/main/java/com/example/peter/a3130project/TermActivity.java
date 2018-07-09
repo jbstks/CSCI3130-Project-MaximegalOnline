@@ -64,6 +64,16 @@ public class TermActivity extends AppCompatActivity {
         });*/
     }
 
+    /** Modifies the behaviour of the Back button so that it acts like the home button  */
+    @Override
+    public void onBackPressed() {
+        Intent pressHome = new Intent(Intent.ACTION_MAIN);
+        pressHome.addCategory(Intent.CATEGORY_HOME);
+        pressHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(pressHome);
+
+    }
+
    /** Called when the user taps a course card */
     public void viewTermInfo(View view) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -106,6 +116,8 @@ public class TermActivity extends AppCompatActivity {
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
             return rootView;
         }
+
+
     }
 
 }

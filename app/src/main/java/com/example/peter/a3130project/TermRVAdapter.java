@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class TermRVAdapter extends RecyclerView.Adapter<TermRVAdapter.TermViewHolder>{
 
-    List<Term> terms;
+    private List<Term> terms;
 
     /**
      * Constructor to create RecyclerView adapter
@@ -83,8 +83,8 @@ public class TermRVAdapter extends RecyclerView.Adapter<TermRVAdapter.TermViewHo
     @Override
     public void onBindViewHolder(TermViewHolder termViewHolder, int i) {
         // This refers to the public class Term
-        termViewHolder.term_semester.setText(terms.get(i).semester);
-        termViewHolder.term_year.setText(terms.get(i).year);
+        termViewHolder.term_semester.setText(terms.get(i).getsemester());
+        termViewHolder.term_year.setText(terms.get(i).getyear());
     }
 
     @Override
@@ -97,4 +97,11 @@ public class TermRVAdapter extends RecyclerView.Adapter<TermRVAdapter.TermViewHo
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /* Get and set methods */
+    public List<Term> getterms(){
+        return terms;
+    }
+    public void setterms(List<Term> val){
+         this.terms = val;
+    }
 }

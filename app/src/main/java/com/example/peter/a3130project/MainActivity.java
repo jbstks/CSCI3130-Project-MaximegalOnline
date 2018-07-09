@@ -1,5 +1,6 @@
 package com.example.peter.a3130project;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -42,6 +43,9 @@ import java.util.Map;
  * @author Aecio Cavalcanti
  * @author Peter Lee
  */
+
+import com.example.peter.a3130project.course.Course;
+
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -120,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
      * @param menu
      * @return true if successful
      */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main2, menu);
@@ -142,7 +147,50 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        //Switch to Register Activity
+        if(id == R.id.action_settings2){
+            Intent myIntent = new Intent(this, RegisterActivity.class);
+            startActivity(myIntent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
+            return rootView;
+        }
     }
 
     /**
@@ -252,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("available_courses");
+        DatabaseReference myRef = database.getReference("available_courses1").child(semester + " " + year);
 
         Log.d("COURSE", "Creating cards\n");
 
@@ -266,26 +314,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("COURSE", "Found course id: " + key );
 
                     Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
+                    Course course = new Course(key, (String) values.get("name"), (String) values.get("semester"), (String) values.get("year"));
 
-                    List<CourseTime> courseTimes = new ArrayList<>();
+                    Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " + (String) values.get("semester") + " " + (String) values.get("year"));
 
-                    // Populate course times
-                    for (DataSnapshot snapshotCourseTime : dataSnapshot.child(key).child("times").getChildren()) {
-                        String timeKey = snapshotCourseTime.getKey();
-                        Log.d("COURSE", "[" + key + "] found course day: " + timeKey );
-                        Map<String, Object> dataCourseTimes = (Map<String, Object>) dataSnapshot.child(key).child("times").child(timeKey).getValue();
-
-                        CourseTime time = new CourseTime(timeKey, (String) dataCourseTimes.get("start"), (String) dataCourseTimes.get("end"), (String) dataCourseTimes.get("loc"));
-
-                        Log.d("COURSE", "[" + key + "]" + "Found time: " + timeKey + " " + (String) dataCourseTimes.get("start") + " " + (String) dataCourseTimes.get("end") + " " + (String) dataCourseTimes.get("loc"));
-
-                        courseTimes.add(time);
-                    }
-
-                    Log.d("COURSE", "We have values" + key + (String) values.get("course") + (String) values.get("prof") + (String) values.get("semester") + (String) values.get("year"));
-
-                    // Call the course constructor will all the values we have here
-                    Course course = new Course(key, (String) values.get("name"), (String) values.get("course"), (String) values.get("prof"), (String) values.get("semester"), (String) values.get("year"), courseTimes);
+                    courses.add(course);
 
                     if (course.semester.equalsIgnoreCase(semester) && course.year.equalsIgnoreCase(year)) {
                         courseList.add(course);
@@ -296,6 +329,8 @@ public class MainActivity extends AppCompatActivity {
                     courseRVAdapter.notifyDataSetChanged();
                     if (scheduleFragment != null)
                         scheduleFragment.update(courseList);
+
+                    Log.d("COURSE", "courses list size is now: " + courses.size());
 
                 }
                 Log.d("Course", "returning courses");
