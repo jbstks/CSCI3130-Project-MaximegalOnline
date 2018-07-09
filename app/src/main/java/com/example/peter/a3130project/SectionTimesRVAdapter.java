@@ -15,6 +15,8 @@ import java.util.List;
  *
  */
 
+import com.example.peter.a3130project.course.CourseTime;
+
 public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAdapter.SectionTimesViewHolder> {
 
     List<CourseTime> times;

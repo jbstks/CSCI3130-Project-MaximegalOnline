@@ -1,5 +1,6 @@
 package com.example.peter.a3130project;
 
+import com.example.peter.a3130project.course.Course;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;

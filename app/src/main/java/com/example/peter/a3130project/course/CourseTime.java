@@ -1,7 +1,10 @@
-package com.example.peter.a3130project;
+package com.example.peter.a3130project.course;
 
 import java.util.HashMap;
 /**
+ * Contributors:
+ * PL, MG, DW, AC 
+ *
  * CourseTime:
  *
  * Class for keeping track of course times
@@ -40,7 +43,17 @@ public class CourseTime {
 	day_time_conversion.put("Thursday", 4);
 	day_time_conversion.put("Friday", 5);
 	day_time_conversion.put("Saturday", 6);
+	
+	day_time_conversion.put("sunday", 0);
+	day_time_conversion.put("monday", 1);
+	day_time_conversion.put("tuesday", 2);
+	day_time_conversion.put("wednesday", 3);
+	day_time_conversion.put("thursday", 4);
+	day_time_conversion.put("friday", 5);
+	day_time_conversion.put("saturday", 6);
+
     }
+    
 
     /**
      * get_universal_time:
