@@ -20,13 +20,16 @@ public class CourseSection {
     private String sectionNum;
     private String crn;
     private String professor;
+    private Course course;
     private List<CourseTime> courseTimeList;
     
-    public CourseSection(String sectionNum, String crn, String professor, List<CourseTime> courseTimeList){
+    public CourseSection(String sectionNum, String crn, String professor, Course course, List<CourseTime> courseTimeList){
         this.sectionNum = sectionNum;
         this.crn = crn;
         this.professor = professor;
+        this.course = course;
         this.courseTimeList = courseTimeList;
+        
     }
 
     /** Get set methods **/
@@ -53,5 +56,12 @@ public class CourseSection {
     }
     public void setcourseTimeList(List<CourseTime> val){
          this.courseTimeList = val;
+    }
+
+    public Course getcourse(){
+        return this.course;
+    }
+    public void setcourse(Course val){
+         this.course = val;
     }
 }

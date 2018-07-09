@@ -1,5 +1,6 @@
 package com.example.peter.a3130project;
 
+import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.register.CourseRegistration;
 import com.example.peter.a3130project.course.Course;
 import com.example.peter.a3130project.course.CourseTime;
@@ -25,25 +26,31 @@ public class RegisterTest {
 	
 	CourseTime at1 = new CourseTime("Monday", "1135", "1225", "lol");
 	CourseTime at2 = new CourseTime("Wednesday", "1135", "1225", "lol");
-	Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+	Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
+        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+        
 
 	CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
 	CourseTime bt2 = new CourseTime("Wednesday", "1235", "1325", "lol");
 
-	Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
+        Course b_c = new Course("CSCI1001","B",  "Fall", "2050");
+        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
+
+
 	
 	CourseTime ct1 = new CourseTime("Monday", "1335", "1425", "lol");
 	CourseTime ct2 = new CourseTime("Wednesday", "1335", "1425", "lol");
 
-	Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
+	Course c_c = new Course("CSCI1002","C", "Fall", "2050");
+        CourseSection c = new CourseSection("1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
+        
 
+	CourseRegistration cr = new CourseRegistration(new ArrayList<CourseSection>(Arrays.asList(a,b)));
 
-	CourseRegistration cr = new CourseRegistration(new ArrayList<Course>(Arrays.asList(a,b)));
+	ArrayList<CourseSection> result = cr.attempt_register(c);
 
-	ArrayList<Course> result = cr.attempt_register(c);
-
-	assert(result!=null);
-	assert(result.size() == 0);
+	assertTrue(result!=null);
+	assertTrue(result.size() == 0);
 	
     }
 
@@ -52,27 +59,34 @@ public class RegisterTest {
     public void validRegister_day() {
 	
 	CourseTime at1 = new CourseTime("Monday", "1135", "1225", "lol");
-	//CourseTime at2 = new CourseTime("Wednesday", "1135", "1225", "lol");
-	Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1)));
 
-	//CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
+        Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
+        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1)));
+
+        
 	CourseTime bt2 = new CourseTime("Wednesday", "1235", "1325", "lol");
 
-	Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt2)));
+
+        Course b_c = new Course("CSCI1001","B",  "Fall", "2050");
+        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt2)));
+
+        
 	
 	CourseTime ct1 = new CourseTime("Monday", "1235", "1325", "lol");	
 	CourseTime ct2 = new CourseTime("Wednesday", "1135", "1225", "lol");
 
 
-	Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
+        Course c_c = new Course("CSCI1002","C", "Fall", "2050");
+        CourseSection c = new CourseSection("1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
 
 
-	CourseRegistration cr = new CourseRegistration((new ArrayList<Course>(Arrays.asList(a,b))));
 
-	ArrayList<Course> result = cr.attempt_register(c);
+	CourseRegistration cr = new CourseRegistration((new ArrayList<CourseSection>(Arrays.asList(a,b))));
 
-	assert(result!=null);
-	assert(result.size() == 0);
+	ArrayList<CourseSection> result = cr.attempt_register(c);
+
+	assertTrue(result!=null);
+	assertTrue(result.size() == 0);
 	
     }
 
@@ -83,25 +97,36 @@ public class RegisterTest {
 
 	CourseTime at1 = new CourseTime("Monday", "1135", "1225", "lol");
 	CourseTime at2 = new CourseTime("Wednesday", "1135", "1225", "lol");
-	Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+	//Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+
+        Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
+        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+
 
 	CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
 	CourseTime bt2 = new CourseTime("Wednesday", "1235", "1325", "lol");
 
-	Course b = new Course("11112", "B", "CSCI1001", "You", "Winter", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
+	//Course b = new Course("11112", "B", "CSCI1001", "You", "Winter", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
+
+        Course b_c = new Course("CSCI1001","B",  "Winter", "2050");
+        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
+
 	
 	CourseTime ct1 = new CourseTime("Monday", "1235", "1325", "lol");
 	CourseTime ct2 = new CourseTime("Wednesday", "1235", "1325", "lol");
 
-	Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
+	//Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
+        Course c_c = new Course("CSCI1002","C", "Fall", "2050");
+        CourseSection c = new CourseSection("1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
 
 
-	CourseRegistration cr = new CourseRegistration((new ArrayList<Course>(Arrays.asList(a,b))));
 
-	ArrayList<Course> result = cr.attempt_register(c);
+	CourseRegistration cr = new CourseRegistration((new ArrayList<CourseSection>(Arrays.asList(a,b))));
 
-	assert(result!=null);
-	assert(result.size() == 0);
+	ArrayList<CourseSection> result = cr.attempt_register(c);
+
+	assertTrue(result!=null);
+	assertTrue(result.size() == 0);
 
     }
 
@@ -111,25 +136,35 @@ public class RegisterTest {
 
 	CourseTime at1 = new CourseTime("Monday", "1135", "1225", "lol");
 	CourseTime at2 = new CourseTime("Wednesday", "1135", "1225", "lol");
-	Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+	//Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+
+        Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
+        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+
 
 	CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
 	CourseTime bt2 = new CourseTime("Wednesday", "1235", "1325", "lol");
 
-	Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
+	//Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
+        Course b_c = new Course("CSCI1001","B",  "Fall", "2050");
+        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
+
 	
 	CourseTime ct1 = new CourseTime("Monday", "1300", "1425", "lol");
 	CourseTime ct2 = new CourseTime("Wednesday", "1300", "1425", "lol");
 
-	Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
+	//Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
+        Course c_c = new Course("CSCI1002","C", "Fall", "2050");
+        CourseSection c = new CourseSection("1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
 
 
-	CourseRegistration cr = new CourseRegistration((new ArrayList<Course>(Arrays.asList(a,b))));
 
-	ArrayList<Course> result = cr.attempt_register(c);
+	CourseRegistration cr = new CourseRegistration((new ArrayList<CourseSection>(Arrays.asList(a,b))));
 
-	assert(result!=null);
-	assert(result.size() != 0);
+	ArrayList<CourseSection> result = cr.attempt_register(c);
+
+	assertTrue(result!=null);
+	assertTrue(result.size() != 0);
 
 
     }
@@ -140,25 +175,35 @@ public class RegisterTest {
 
 	CourseTime at1 = new CourseTime("Monday", "1135", "1225", "lol");
 	CourseTime at2 = new CourseTime("Wednesday", "1135", "1225", "lol");
-	Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+	//Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+
+        Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
+        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+
 
 	CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
 	CourseTime bt2 = new CourseTime("Wednesday", "1235", "1325", "lol");
 
-	Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
+	//Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
+            Course b_c = new Course("CSCI1001","B",  "Fall", "2050");
+        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
+
 	
 	CourseTime ct1 = new CourseTime("Monday", "1000", "1200", "lol");
 	CourseTime ct2 = new CourseTime("Wednesday", "1000", "1200", "lol");
 
-	Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
+	//Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
+        Course c_c = new Course("CSCI1002","C", "Fall", "2050");
+        CourseSection c = new CourseSection("1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
 
 
-	CourseRegistration cr = new CourseRegistration((new ArrayList<Course>(Arrays.asList(a,b))));
 
-	ArrayList<Course> result = cr.attempt_register(c);
+	CourseRegistration cr = new CourseRegistration((new ArrayList<CourseSection>(Arrays.asList(a,b))));
 
-	assert(result!=null);
-	assert(result.size() != 0);
+	ArrayList<CourseSection> result = cr.attempt_register(c);
+
+	assertTrue(result!=null);
+	assertTrue(result.size() != 0);
 
 
     }
@@ -168,22 +213,33 @@ public class RegisterTest {
     public void duplicateRegister() {
 	CourseTime at1 = new CourseTime("Monday", "1135", "1225", "lol");
 	CourseTime at2 = new CourseTime("Wednesday", "1135", "1225", "lol");
-	Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+	//Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+
+        Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
+        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+
 
 	CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
 	CourseTime bt2 = new CourseTime("Wednesday", "1235", "1325", "lol");
 
-	Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
-	
-
-	Course c = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(at1,at2))));
+        Course b_c = new Course("CSCI1001","B",  "Fall", "2050");
+        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
 
 
-	CourseRegistration cr = new CourseRegistration((new ArrayList<Course>(Arrays.asList(a,b))));
+        //Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
 
-	ArrayList<Course> result = cr.attempt_register(c);
 
-	assert(result==null);
+        //Course c = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(at1,at2))));
+	Course c_c = new Course("CSCI1000","A", "Fall", "2050");
+        CourseSection c = new CourseSection("1", "11111", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+
+
+
+	CourseRegistration cr = new CourseRegistration((new ArrayList<CourseSection>(Arrays.asList(a,b))));
+
+	ArrayList<CourseSection> result = cr.attempt_register(c);
+
+	assertTrue(result==null);
 
 
     }

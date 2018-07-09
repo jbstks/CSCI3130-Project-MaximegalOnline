@@ -31,6 +31,9 @@ import java.util.List;
 public class CourseInfo extends AppCompatActivity {
     private String course_code;
 
+    private Course curr_course;
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,8 @@ public class CourseInfo extends AppCompatActivity {
             String code = (String) termActivityBundle.get("code");
             String semester = (String) termActivityBundle.get("semester");
             String year = (String) termActivityBundle.get("year");
+
+            curr_course = new Course(code, name, semester, year);
 
             // TODO query for the extra course information under the course_listings database
             getCourseExtra(code);
@@ -146,7 +151,7 @@ public class CourseInfo extends AppCompatActivity {
                             courseTimes.add(courseTime);
                         }
 
-                        CourseSection courseSection= new CourseSection(sectionNum, crn, professor, courseTimes);
+                        CourseSection courseSection= new CourseSection(sectionNum, crn, professor, curr_course, courseTimes);
                         sections.add(courseSection);
                         /*Iterator<DataSnapshot> iterator=  section.child("times").getChildren().iterator();
                         //Iterates through each child of the node "times    "
