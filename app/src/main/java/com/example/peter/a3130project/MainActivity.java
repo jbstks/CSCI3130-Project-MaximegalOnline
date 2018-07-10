@@ -1,6 +1,7 @@
 package com.example.peter.a3130project;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.peter.a3130project.course.CourseSection;
+import com.example.peter.a3130project.course.CourseTime;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +36,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +70,15 @@ public class MainActivity extends AppCompatActivity {
     private final List<CourseSection> courseList = new ArrayList<>();
     private CourseRVAdapter courseRVAdapter;
     private ScheduleFragment scheduleFragment;
+
+    private ArrayList<String> registeredCRNs;
+    private HashSet<String> setCRN;
+    private ArrayList<CourseSection> currentCourseSections;
+    private Context applicationContext;
+    private CourseSection coursesection;
+    private String B00;
+    private FirebaseUser user;
+    private int i;
 
     /**
      * Things to be done on activity creation
@@ -119,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
+        getRegisteredCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
     }
 
     /**
@@ -139,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
      * the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
      *
      * @param item
-     * @return MenuItem selectied
+     * @return MenuItem selected
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -323,17 +336,19 @@ public class MainActivity extends AppCompatActivity {
 
                     courses.add(course);
 
-                    if (course.getsemester().equalsIgnoreCase(semester) && course.getyear().equalsIgnoreCase(year)) {
+                    // TODO: delete if getCourseSections work
+                    /*if (course.getsemester().equalsIgnoreCase(semester) && course.getyear().equalsIgnoreCase(year)) {
                         //courseList.add(course);
-                    }
+                    }*/
 
-                    Log.d("COURSE", "courses size is now: " + courseList.size());
+                    Log.d("COURSE", "courses size is now: " + courses.size());
 
                     courseRVAdapter.notifyDataSetChanged();
-                    if (scheduleFragment != null)
-                        //scheduleFragment.update(courseList);
+                    // TODO: delete if getCourseSections work
+                    /*if (scheduleFragment != null)
+                        scheduleFragment.update(courses);*/
 
-                    Log.d("COURSE", "courses list size is now: " + courses.size());
+                    //Log.d("COURSE", "courses list size is now: " + courses.size());
 
                 }
                 Log.d("Course", "returning courses");
@@ -356,6 +371,142 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
+        //myRef.removeEventListener(courseListener);
+
+        Log.d("Course", "returning courses");
+
+        Log.d("Course", "finished");
+    }
+
+    /**
+     * Gets courses as CourseSections and put them in a list, from the database
+     * Re-used from {@link com.example.peter.a3130project.register.CourseRegistrationUI}'s
+     * {@code firebaseRegister()} function
+     *
+     * @author Joanna Bistekos
+     * @author Bradley Garagan
+     * @param semester selected semester month
+     * @param year     selected semester year
+     */
+    public void getRegisteredCourses(final String semester, final String year) {
+        // Database setup
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef  = database.getReference();
+        //DatabaseReference myRef = database.getReference("available_courses1").child(semester + " " + year);
+
+        Log.d("REGISTEREDCOURSES", "we called the function\n");
+
+        // Read from the database
+        final ValueEventListener courseSectionListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // TODO: get the email of the logged in user
+                String email = "testing@test.com";
+                //String email = user.getEmail();
+                B00 = null;
+                //int index = 0;
+                for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
+                    Log.d("REGISTEREDCOURSES", "going through list of students");
+
+                    String Bcand = bentry.getKey();
+                    Log.d("REGISTEREDCOURSES", "current student b00: " + Bcand);
+
+                    // if this student matches the currently logged in user
+                    if (bentry.child("email").getValue(String.class).equals(email)) {
+                        Log.d("REGISTEREDCOURSES", "woohoo we found a match!");
+                        B00 = Bcand;
+                        break;
+                    }
+
+                }
+                if (B00 == null) {
+                    //Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
+                    // no course
+                    return;
+                }
+
+                registeredCRNs = new ArrayList<>();
+                //setCRN = new HashSet<>();
+                // Getting the CRNs for courses a user has already enrolled in
+                for (DataSnapshot snapshot : dataSnapshot.child("students").child(B00).child("courses").child("current").getChildren()) {
+                    Log.d("REGISTEREDCOURSES", "user is registered for this course: " + snapshot.getValue(String.class));
+                    registeredCRNs.add(snapshot.getValue(String.class));
+                    /*String key = snapshot.getKey();
+                    if (!setCRN.contains(tmp)) {
+                        CRNs.add(tmp);
+                        setCRN.add(tmp);
+                        if (Integer.parseInt(key) > index ) {
+                            index = Integer.parseInt(key) + 1;
+                        }
+                    }*/
+                }
+
+                i = 0;
+                //get courseSection info from CRNs
+                currentCourseSections = new ArrayList<>();
+                //TODO refactor database structure to avoid nested loops
+                //loop through courses
+                for (DataSnapshot courseSnapshot : dataSnapshot.child("available_courses1").child(semester + " " + year).getChildren()) {
+                    Log.d("REGISTEREDCOURSES", "looping through courses in " + semester + " " + year);
+                    Log.d("REGISTEREDCOURSES", "found this course: " + courseSnapshot.getKey());
+                    //loop through sections
+                    for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
+                        Log.d("REGISTEREDCOURSES", "found this section: " + sectionSnapshot.getKey());
+                        for (String CRN : registeredCRNs) {
+                            Log.d("REGISTEREDCOURSES", "found this registered CRN: " + CRN);
+                            if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
+                                Log.d("REGISTEREDCOURSES", "this section matches the current CRN!");
+                                String sectionNum = sectionSnapshot.getKey();
+                                //String CRN = CRNs.get(i);
+                                String prof = sectionSnapshot.child("professor").getValue(String.class);
+
+                                List<CourseTime> courseTimeList = new ArrayList<>();
+                                //get CourseTime info
+                                for (DataSnapshot timesSnapshot : sectionSnapshot.child("times").getChildren()) {
+                                    String day = timesSnapshot.getKey();
+                                    String startTime = timesSnapshot.child("start").getValue(String.class);
+                                    String endTime = timesSnapshot.child("end").getValue(String.class);
+                                    String location = timesSnapshot.child("location").getValue(String.class);
+
+                                    CourseTime courseTime = new CourseTime(day, startTime, endTime, location);
+                                    courseTimeList.add(courseTime);
+                                }
+
+                                //get Course info
+                                String code = courseSnapshot.getKey();
+                                String name = courseSnapshot.child("name").getValue(String.class);
+                                String semester = courseSnapshot.child("semester").getValue(String.class);
+                                String year = courseSnapshot.child("year").getValue(String.class);
+                                Course course = new Course(code, name, semester, year);
+
+                                CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
+                                currentCourseSections.add(section);
+
+                                if (scheduleFragment != null)
+                                    scheduleFragment.update(currentCourseSections);
+                            } else {
+                                i++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            /**
+             * Prints error if there was a problem getting data from the database
+             *
+             * @param error
+             */
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("MainActivity", "Failed to read value.", error.toException());
+            }
+        };
+
+
+        Log.d("Course", "listener init complete");
+        myRef.addListenerForSingleValueEvent(courseSectionListener);
         //myRef.removeEventListener(courseListener);
 
         Log.d("Course", "returning courses");
