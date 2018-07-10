@@ -68,7 +68,7 @@ public class ScheduleFragment extends Fragment {
                 view.findViewById(R.id.friday)
         };
 
-        final ArrayList<String> days = new ArrayList<String>(Arrays.asList("mon", "tue", "wed", "thu", "fri"));
+        final ArrayList<String> days = new ArrayList<String>(Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday"));
 
         final String[] colors = { "#ffe8e8", "#f0f0da", "#d3eabb", "#a9c4a0" };
         int colorIndex = 0;
@@ -134,39 +134,3 @@ public class ScheduleFragment extends Fragment {
         }
     }
 }
-
-/**
- for (DataSnapshot semesterSnapshot : dataSnapshot.child("available_courses1").getChildren()) {
- //.//child("courses").child("current").getChildren()) {
- //loop through courses
- for (DataSnapshot courseSnapshot : semesterSnapshot.getChildren()) {
- //loop through sections
- for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
- for (String CRN: CRNs) {
- if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
- String sectionNum = sectionSnapshot.getKey();
- //String CRN = CRNs.get(i);
- String prof = sectionSnapshot.child("professor").getValue(String.class);
-
- List<CourseTime> courseTimeList = new ArrayList<>();
- //get CourseTime info
- for (DataSnapshot timesSnapshot : sectionSnapshot.child("times").getChildren()) {
- String day = timesSnapshot.getKey();
- String startTime = timesSnapshot.child("start").getValue(String.class);
- String endTime = timesSnapshot.child("end").getValue(String.class);
- String location = timesSnapshot.child("location").getValue(String.class);
-
- CourseTime courseTime = new CourseTime(day, startTime, endTime, location);
- courseTimeList.add(courseTime);
- }
-
- //get Course info
- String code = courseSnapshot.getKey();
- String name = courseSnapshot.child("name").getValue(String.class);
- String semester = courseSnapshot.child("semester").getValue(String.class);
- String year = courseSnapshot.child("year").getValue(String.class);
- Course course = new Course(code, name, semester, year);
-
- CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
- currentCourseSections.add(section);
- */
