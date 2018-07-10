@@ -18,7 +18,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-/** @class TermActivity
+/**  TermActivity
   * Activity for viewing the courses by term.
   *
  * @author Joanna Bistekos

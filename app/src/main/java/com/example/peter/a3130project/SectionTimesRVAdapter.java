@@ -17,7 +17,7 @@ import java.util.List;
 
 import com.example.peter.a3130project.course.CourseTime;
 
-/** @class SectionTimesRVAdapter
+/**  SectionTimesRVAdapter
  *
  * Recycler view for section times in calander
  *

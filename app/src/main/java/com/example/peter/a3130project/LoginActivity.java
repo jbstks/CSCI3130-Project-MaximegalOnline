@@ -32,7 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 
-/** @class LoginActivity
+/**  LoginActivity
  *
  * Main entry point for sign-in
  * @author PL

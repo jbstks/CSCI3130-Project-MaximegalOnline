@@ -1,7 +1,7 @@
 package com.example.peter.a3130project;
 
 import static com.example.peter.a3130project.LoginRet.*;
-/** @class LoginChecker
+/**  LoginChecker
  * Business class for checking if an email is valid.
  *
  * @author PL
