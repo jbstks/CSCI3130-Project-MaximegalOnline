@@ -300,7 +300,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Read from the database
-        final ValueEventListener courseListener = new ValueEventListener() {
 
         /**
          * Queries the database and fills in the courses ArrayList
@@ -312,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Here is the id of the course (CRN)
                     String key = snapshot.getKey();
-                    Log.d("COURSE", "Found course id: " + key );
+                    Log.d("COURSE", "Found course id: " + key);
 
                     Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
                     Course course = new Course(key, (String) values.get("name"), (String) values.get("semester"), (String) values.get("year"));
