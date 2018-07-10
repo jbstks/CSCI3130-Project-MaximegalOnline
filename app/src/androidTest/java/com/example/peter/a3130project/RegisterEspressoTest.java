@@ -90,10 +90,12 @@ public class RegisterEspressoTest {
         onView(withId(R.id.bt_signin)).perform(click());
         SystemClock.sleep(1500);
 
-        onView(withText("CSCI3110")).perform(click());
+
+        onView(withText("Schedule")).perform(click());
         SystemClock.sleep(1500);
 
-        onView(withText("Register")).perform(click());
+        
+        
 
     }
 }
