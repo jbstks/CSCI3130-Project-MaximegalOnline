@@ -21,6 +21,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
+/** @class ScheduleEntry
+ *  Schedule activity holder
+ *
+ * @author BG
+ * @author MG
+ *
+ **/
 class ScheduleEntry implements Comparable<ScheduleEntry> {
     public String name;
     public int start;
@@ -43,6 +50,14 @@ class ScheduleEntry implements Comparable<ScheduleEntry> {
         return 0;
     }
 }
+
+/** @class ScheduleActivity
+ *  Activity for showing activities
+ *
+ * @author BG
+ * @author MG
+ *
+ **/
 
 public class ScheduleActivity extends AppCompatActivity {
 

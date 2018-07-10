@@ -33,7 +33,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.peter.a3130project.course.Course;
-
+/** @class MainActivity
+ *
+ * The main activity for the app.
+ *
+ * @author PL
+ * @author MG
+ * @author AC
+ * @author DW
+ * @author BG
+ * @author JB
+ **/
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -72,18 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO this breaks clicking on courses to get detailed information
         // I think it just isn't properly fragmented out, as the implementation was half done
-        /*
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-        */
 
         getCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
 
@@ -150,8 +148,6 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
             return rootView;
         }
     }
@@ -179,14 +175,16 @@ public class MainActivity extends AppCompatActivity {
             return 3;
         }
     }
-
-    /** Called when the user taps a course card */
+    
+    /**  @function viewCourseDetails
+     *
+     *Called when the user taps a course card */
     public void viewCourseDetails(View view) {
         Intent intent = new Intent(this, CourseInfo.class);
         startActivity(intent);
     }
 
-    /**
+    /** @function logOut
     ** Called when user presses logout button in menu.
     **/
     public boolean logOut(MenuItem item){
@@ -204,18 +202,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-                /* Sample way of querying database data
-                // Find all dinosaurs whose height is exactly 25 meters.
-                    var ref = firebase.database().ref("dinosaurs");
-                    ref.orderByChild("height").equalTo(25).on("child_added", function(snapshot) {
-                      console.log(snapshot.key);
-                    });
-                */
 
     // TODO query out only the courses that are the correct semester
     // we would query for the information then pass it into the Course Class
     // The CourseTime part takes an arrayList of all the course times for that course
-
+    /** getCourses
+     *  Retrieves and views the courses in the UI
+    **/
     public void getCourses(final String semester, final String year) {
         Log.d("COURSE", "Creating Course View\n");
 
@@ -273,7 +266,6 @@ public class MainActivity extends AppCompatActivity {
         };
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
-        //myRef.removeEventListener(courseListener);
 
         Log.d("Course", "returning courses");
 
