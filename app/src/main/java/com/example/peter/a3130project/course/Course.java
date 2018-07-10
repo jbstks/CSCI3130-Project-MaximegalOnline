@@ -3,16 +3,14 @@ package com.example.peter.a3130project.course;
 import java.util.ArrayList;
 import java.util.List;
 
-/** @class Course
- * Class for holding course info
+/**
+ * Represents a course
  *
- *
- * @author PL
- * @author MG
- * @author DW
- * @author AC
- *
- **/
+ * @author Peter Lee
+ * @author Megan Gosse
+ * @author Dawson Wilson
+ * @author Aecio Cavalcanti
+ */
 public class Course {
 
     private String code;
@@ -20,10 +18,20 @@ public class Course {
     private String semester;
     private String year;
 
+    /**
+     * Default constructor
+     */
     public Course() {
-        // Default constructor
     }
 
+    /**
+     * Constructor to create a Course object
+     *
+     * @param code      the course code (i.e., CSCI3120)
+     * @param name      the name of the course
+     * @param semester  the semester the course is in (Winter, Summer, Fall)
+     * @param year      the year of the semester
+     */
     public Course(String code, String name, String semester, String year) {
         this.code = code;
         this.name = name;
@@ -31,6 +39,12 @@ public class Course {
         this.year = year;
     }
 
+    /**
+     * Checks if this course and another course are equal
+     *
+     * @param ot the other course
+     * @return boolean, whether or not this course and {@code ot} are equal
+     */
     @Override
     public boolean equals(Object ot) {
 	Course other = (Course) ot;
@@ -41,7 +55,9 @@ public class Course {
 
     }
 
-    /** Get set methods **/
+    /**
+     * Get and set methods for code, name, semester, and year
+     */
     public String getcode(){
         return code;
     }
