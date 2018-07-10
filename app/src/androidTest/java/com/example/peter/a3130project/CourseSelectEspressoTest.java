@@ -86,4 +86,29 @@ public class CourseSelectEspressoTest {
         SystemClock.sleep(1500);
     }
 
+    @Test
+    public void TestSummer2018Algorithms() {
+        onView(withId(R.id.rv)).perform(actionOnItemAtPosition(1, click()));
+        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
+                .check(matches(withText("Summer 2018")));
+        SystemClock.sleep(1500);
+
+        onView(withId(R.id.course_rv))
+                .perform(RecyclerViewActions.actionOnItem(
+                        hasDescendant(withText("Algorithms")), click()));
+        onView(withId(R.id.courseInfo_code)).check(matches(withText("CSCI3110")));
+        onView(withId(R.id.courseInfo_name)).check(matches(withText("Algorithms")));
+        onView(withId(R.id.courseInfo_description)).check(matches(withText("This course covers techniques for the design and analysis of efficient algorithms and data structures.")));
+        onView(withId(R.id.courseInfo_prerequisites)).check(matches(withText("CSCI2110\nCSCI2112\n")));
+
+        onView(withId(R.id.sections_rv))
+                .check(matches(hasDescendant(withText("01"))));
+        onView(withId(R.id.sections_rv))
+                .check(matches(hasDescendant(withText("42343"))));
+        onView(withId(R.id.sections_rv))
+                .check(matches(hasDescendant(withText("Norbert Zeh"))));
+
+        SystemClock.sleep(1500);
+    }
+
 }
