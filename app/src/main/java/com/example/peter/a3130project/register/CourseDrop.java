@@ -14,34 +14,35 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.firebase.database.ValueEventListener;
 
-
-
+/**
+ * Class for dropping registered courses
+ *
+ * @author Aecio Cavalcanti
+ * @author Dawson Wilson
+ */
 public class CourseDrop {
-
 
     private DatabaseReference dbRef;
     private FirebaseUser user;
 
     public String B00;
 
-
+    /**
+     * Sets up the database and gets the logged in user when created
+     */
     public CourseDrop() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         dbRef = db.getReference();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-
-
     }
 
     //query for the key containing that crn in the student current courses, remove the key
     public void drop(final String crn) {
-
-
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //fetch B#, same as   CourseRegistration
+                // fetch B#, same as CourseRegistration
                 String email = user.getEmail();
                 B00 = null;
                 int index = 0;
