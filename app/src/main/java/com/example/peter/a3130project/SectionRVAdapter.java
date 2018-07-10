@@ -1,4 +1,5 @@
 package com.example.peter.a3130project;
+import com.example.peter.a3130project.course.CourseSection;
 
 import android.app.Activity;
 import android.app.Application;
@@ -87,16 +88,16 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
                  **/
                 @Override
                 public void onClick(View v) {
-                    // Here we would make a call to the database to register for a course
+                // Here we would make a call to the database to register for a course
+                int position = getAdapterPosition();
 
-                    int position = getAdapterPosition();
-                    //Update current CourseRegistrationUI
-                    CourseRegistrationUI coursereg = null;
-                    FirebaseUser currentUser= FirebaseAuth.getInstance().getCurrentUser();
+                //Update current CourseRegistrationUI
+                CourseRegistrationUI coursereg = null;
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-		    coursereg = new CourseRegistrationUI(); //TODO change null pointer here
-		    CourseSection cs = sections.get(position);
-		    coursereg.firebaseRegister(currentUser,cs, applicationContext);
+		        coursereg = new CourseRegistrationUI(); //TODO change null pointer here
+		        CourseSection cs = sections.get(position);
+		        coursereg.firebaseRegister(currentUser,cs, applicationContext);
 
                 }
             });
