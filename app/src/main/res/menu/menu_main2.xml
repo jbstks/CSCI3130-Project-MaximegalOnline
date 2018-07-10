@@ -11,12 +11,6 @@
         android:title="@string/logout_name"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_settings2"
-        android:checkable="false"
-        android:orderInCategory="100"
-        android:title="Register"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_settings3"
         android:checkable="false"
         android:onClick="toDrop"
