@@ -50,7 +50,7 @@ import java.util.Map;
  */
 
 import com.example.peter.a3130project.course.Course;
-/** @class MainActivity
+/**  MainActivity
  *
  * The main activity for the app.
  *

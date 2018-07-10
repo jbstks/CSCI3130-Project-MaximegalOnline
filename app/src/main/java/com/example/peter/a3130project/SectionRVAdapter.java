@@ -32,7 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
- * @class SectionRVAdapter
+ *  SectionRVAdapter
  * @author DW
  * @author AC
  * @author PL
@@ -53,7 +53,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
 
 
     }
-    /** @class SectionViewHolder
+    /**  SectionViewHolder
      * provides a way to access data
      **/
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
