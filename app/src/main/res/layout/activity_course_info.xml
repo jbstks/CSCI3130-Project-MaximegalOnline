@@ -12,7 +12,7 @@
         android:id="@+id/courseInfo_code"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="CSCI3136"
+        android:text="COURSE_CODE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,7 +21,7 @@
         android:id="@+id/courseInfo_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Software Engineering"
+        android:text="COURSE_NAME"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
