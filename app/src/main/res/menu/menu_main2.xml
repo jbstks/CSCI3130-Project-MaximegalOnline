@@ -16,4 +16,11 @@
         android:orderInCategory="100"
         android:title="Register"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings3"
+        android:checkable="false"
+        android:onClick="toDrop"
+        android:orderInCategory="100"
+        android:title="Drop"
+        app:showAsAction="never" />
 </menu>

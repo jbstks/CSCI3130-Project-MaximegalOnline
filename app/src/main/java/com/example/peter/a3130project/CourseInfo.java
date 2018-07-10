@@ -37,10 +37,9 @@ import java.util.List;
  * @author DW
  **/
 public class CourseInfo extends AppCompatActivity {
-    private String course_code;
 
+    /* global variables for this activity */
     private Course curr_course;
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +51,14 @@ public class CourseInfo extends AppCompatActivity {
 
         Intent termActivityIntent = getIntent();
         Bundle termActivityBundle = termActivityIntent.getExtras();
-        Log.d("blab", termActivityBundle.toString());
+        Log.d("COURSE", termActivityBundle.toString());
 
 
         if (termActivityBundle != null) {
 
             TextView codeTextView = (TextView) findViewById(R.id.courseInfo_code);
             TextView nameTextView = (TextView) findViewById(R.id.courseInfo_name);
+
 
             String name = (String) termActivityBundle.get("name");
             String code = (String) termActivityBundle.get("code");
@@ -79,22 +79,36 @@ public class CourseInfo extends AppCompatActivity {
         }
     }
 
-
     public void getCourseExtra(String code) {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("course_listings").child(code);
 
+        Log.d("COURSEEXTRA", "getting the course extras of code: " + code);
+
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String description = dataSnapshot.child("description").getValue(String.class);
-                List<String> prerequisites = new ArrayList<>();
+                Log.d("COURSEEXTRA", "Found description: \n" + description);
+                String prerequisites = "";
 
                 for (DataSnapshot course : dataSnapshot.child("prerequisites").getChildren()) {
                     String courseCode = course.getValue(String.class);
-                    prerequisites.add(courseCode);
+                    prerequisites = prerequisites + courseCode + "\n";
+                    Log.d("COURSEEXTRA", "Found prerequisite: " + courseCode);
                 }
+
+                if ( description != null) {
+                    TextView descriptionTextView = findViewById(R.id.courseInfo_description);
+                    descriptionTextView.setText(description);
+                }
+                if ( ! prerequisites.equals("") ) {
+                    TextView prerequisitesTextView = findViewById(R.id.courseInfo_prerequisites);
+                    prerequisitesTextView.setText(prerequisites);
+                }
+
+
             }
 
             @Override
@@ -102,7 +116,10 @@ public class CourseInfo extends AppCompatActivity {
 
             }
         });
+
+        Log.d("COURSEEXTRA", "Done getting extras for: " + code);
     }
+
 
     /**
      * Queries data from the database based upon supplied information name, semester, year
@@ -142,19 +159,18 @@ public class CourseInfo extends AppCompatActivity {
                             String start = time.child("start").getValue(String.class);
                             String end = time.child("end").getValue(String.class);
                             String location = time.child("location").getValue(String.class);
-                            Log.d("sections", "Found values" + day + " " + start + " " + end + " " + location);
+                            Log.d("SECTIONS", "Found values" + day + " " + start + " " + end + " " + location);
                             CourseTime courseTime = new CourseTime(day, start, end, location);
                             courseTimes.add(courseTime);
                         }
 
                         CourseSection courseSection= new CourseSection(sectionNum, crn, professor, curr_course, courseTimes);
                         sections.add(courseSection);
-
-
                     }
 
                     SectionRVAdapter sectionRVAdapter = new SectionRVAdapter(sections);
                     section_rv.setAdapter(sectionRVAdapter);
+
 
                     Log.d("SECTION", "finished");
                 }

@@ -47,4 +47,13 @@
     <!-- formatting string -->
     <string name="time_spacer"> - </string>
 
+    <!-- course info activity default string -->
+    <string name="professor_title">PROFESSOR</string>
+    <string name="professor_default_content">TBD</string>
+    <string name="description_title">DESCRIPTION</string>
+    <string name="description_default_content">No description available.</string>
+    <string name="prerequisites_title">PREREQUISITES</string>
+    <string name="prerequisites_default_content">No prerequisites listed.</string>
+    <string name="sections_title">SECTIONS</string>
+
 </resources>

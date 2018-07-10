@@ -265,6 +265,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         return true;
     }
+    //TODO tire essa bosta
+    public void toDrop(MenuItem item){
+        Intent intent = new Intent(this, DropActivity.class);
+        startActivity(intent);
+    }
 
 
 
@@ -274,7 +279,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Gets courses from the database
-     *
+     * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView
+     * @param semester The semester of the year you want course from
+     * @param year The year that you want courses from
      * @author Dawson Wilson
      * @author Joanna Bistekos
      * @param semester selected semester month
@@ -291,8 +298,15 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("COURSE", "Creating cards\n");
 
+
         // Read from the database
         final ValueEventListener courseListener = new ValueEventListener() {
+
+        /**
+         * Queries the database and fills in the courses ArrayList
+         */
+        ValueEventListener courseListener = new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -343,9 +357,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
 
-        Log.d("Course", "returning courses");
 
-        Log.d("Course", "finished");
+        Log.d("Course", "Getting Courses Complete");
+
     }
 
     /**
