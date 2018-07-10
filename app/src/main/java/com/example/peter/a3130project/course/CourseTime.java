@@ -2,29 +2,13 @@ package com.example.peter.a3130project.course;
 
 import java.util.HashMap;
 /**
- *
- * @class CourseTime:
- *
  * Class for keeping track of course times
  *
- * @attr day: String
- *       Day of the week
- *
- * @attr startTime: String
- *       start of class in 24h format
- *
- * @attr endTime: String
- *       end of class in 24h format
- *
- * @attr location: String
- *       location of class
- *
- * @author PL
- * @author MG
- * @author DW
- * @author AC
-
- **/
+ * @author Peter Lee
+ * @author Megan Gosse
+ * @author Dawson Wilson
+ * @author Aecio Cavalcanti
+ */
 public class CourseTime {
 
     private String day;
@@ -33,6 +17,14 @@ public class CourseTime {
     private String location;
     private HashMap<String, Integer> day_time_conversion;
 
+    /**
+     * Construct to create a CourseTime object
+     *
+     * @param day       day of the week
+     * @param startTime start of class in 24h format
+     * @param endTime   end of class in 24h format
+     * @param location  location of class
+     */
 	public CourseTime(String day, String startTime, String endTime, String location) {
         this.day = day;
         this.startTime = startTime;
@@ -59,10 +51,8 @@ public class CourseTime {
     
 
     /**
-     * get_universal_time:
+     * Converts the string time to user's universal times.
      *
-     * convert's the string time to user's universal times.
-     * --------------
      * @return arr array containing the converted start time and end time
      */
     public int [] get_universal_time() {
@@ -72,13 +62,15 @@ public class CourseTime {
             startime = daymul*2400 + Integer.parseInt(startTime);
             endtime = daymul*2400 + Integer.parseInt(endTime);
         }
-        catch (Exception e) {//change this
+        catch (Exception e) {
+            // TODO: change this
         }
         int arr[] = {startime, endtime};
         return arr;
     }
 
-    /** Get and set methods...
+    /**
+     * Get and set methods for day, startTime, endTime, and location
      */
     public String getday(){
         return day;
