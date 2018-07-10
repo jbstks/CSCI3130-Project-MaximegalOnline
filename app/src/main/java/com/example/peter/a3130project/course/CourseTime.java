@@ -63,9 +63,7 @@ public class CourseTime {
      *
      * convert's the string time to user's universal times.
      * --------------
-     * Parameters:
-     *
-     * None
+     * @return arr array containing the converted start time and end time
      */
     public int [] get_universal_time() {
     	int startime = 0, endtime = 0;
@@ -80,7 +78,8 @@ public class CourseTime {
         return arr;
     }
 
-    /** Get and set methods...**/
+    /** Get and set methods...
+     */
     public String getday(){
         return day;
     }
