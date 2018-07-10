@@ -15,7 +15,7 @@ public class DropActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drop);
     }
-
+    //calls drop()
    public void dropButtonClick(View view){
        EditText editText = findViewById(R.id.crnText);
        String crn = editText.getText().toString();
