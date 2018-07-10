@@ -174,12 +174,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        //Switch to Register Activity
-        if(id == R.id.action_settings2){
-            Intent myIntent = new Intent(this, RegisterActivity.class);
-            startActivity(myIntent);
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -320,19 +315,12 @@ public class MainActivity extends AppCompatActivity {
 
                     courses.add(course);
 
-                    // TODO: delete if getCourseSections work
-                    /*if (course.getsemester().equalsIgnoreCase(semester) && course.getyear().equalsIgnoreCase(year)) {
-                        //courseList.add(course);
-                    }*/
 
                     Log.d("COURSE", "courses size is now: " + courses.size());
 
                     courseRVAdapter.notifyDataSetChanged();
                     // TODO: delete if getCourseSections work
-                    /*if (scheduleFragment != null)
-                        scheduleFragment.update(courses);*/
 
-                    //Log.d("COURSE", "courses list size is now: " + courses.size());
 
                 }
                 Log.d("Course", "returning courses");
@@ -385,9 +373,9 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // TODO: get the email of the logged in user
                 String email = "testing@test.com";
-                //String email = user.getEmail();
+
                 B00 = null;
-                //int index = 0;
+
                 for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
                     Log.d("REGISTEREDCOURSES", "going through list of students");
 
@@ -403,25 +391,16 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 if (B00 == null) {
-                    //Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
+
                     // no course
                     return;
                 }
 
                 registeredCRNs = new ArrayList<>();
-                //setCRN = new HashSet<>();
                 // Getting the CRNs for courses a user has already enrolled in
                 for (DataSnapshot snapshot : dataSnapshot.child("students").child(B00).child("courses").child("current").getChildren()) {
                     Log.d("REGISTEREDCOURSES", "user is registered for this course: " + snapshot.getValue(String.class));
                     registeredCRNs.add(snapshot.getValue(String.class));
-                    /*String key = snapshot.getKey();
-                    if (!setCRN.contains(tmp)) {
-                        CRNs.add(tmp);
-                        setCRN.add(tmp);
-                        if (Integer.parseInt(key) > index ) {
-                            index = Integer.parseInt(key) + 1;
-                        }
-                    }*/
                 }
 
                 i = 0;
@@ -440,7 +419,7 @@ public class MainActivity extends AppCompatActivity {
                             if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
                                 Log.d("REGISTEREDCOURSES", "this section matches the current CRN!");
                                 String sectionNum = sectionSnapshot.getKey();
-                                //String CRN = CRNs.get(i);
+
                                 String prof = sectionSnapshot.child("professor").getValue(String.class);
 
                                 List<CourseTime> courseTimeList = new ArrayList<>();
