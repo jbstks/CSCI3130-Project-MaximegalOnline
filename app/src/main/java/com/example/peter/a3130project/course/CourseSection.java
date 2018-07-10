@@ -34,8 +34,6 @@ public class CourseSection {
      * @param professor
      * @param courseTimeList
      */
-    public CourseSection(String sectionNum, String crn, String professor, List<CourseTime> courseTimeList){
-
     public CourseSection(String sectionNum, String crn, String professor, Course course, List<CourseTime> courseTimeList){
         this.sectionNum = sectionNum;
         this.crn = crn;
