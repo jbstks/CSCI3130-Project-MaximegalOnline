@@ -18,6 +18,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+/** @class TermActivity
+  * Activity for viewing the courses by term.
+  *
+ * @author DW
+ * @author JB
+ *
+ **/
 public class TermActivity extends AppCompatActivity {
 
     @Override
@@ -48,14 +55,6 @@ public class TermActivity extends AppCompatActivity {
         RVAdapter mAdapter = new RVAdapter(terms);
         rv.setAdapter(mAdapter);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
     }
 
     /** Modifies the behaviour of the Back button so that it acts like the home button  */

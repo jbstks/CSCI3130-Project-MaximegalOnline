@@ -13,7 +13,13 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.List;
-
+/** @class RVAdapter
+ * Shows the recycler view for cards
+ *
+ * @author JB
+ * @author DW
+ *
+ **/
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.TermViewHolder>{
 
     private List<Term> terms;

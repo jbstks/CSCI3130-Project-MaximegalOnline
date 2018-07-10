@@ -12,7 +12,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/** @class CourseRVAdapter
+ * Adapter view for holding course selection
+ * 
+ * @author DW
+ * @author JB
+ * @author PL
+ * @author MG
+ **/
 public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.CourseViewHolder>{
 
     List<Course> courses;
