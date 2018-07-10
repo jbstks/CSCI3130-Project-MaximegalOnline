@@ -50,7 +50,17 @@ import java.util.Map;
  */
 
 import com.example.peter.a3130project.course.Course;
-
+/** @class MainActivity
+ *
+ * The main activity for the app.
+ *
+ * @author PL
+ * @author MG
+ * @author AC
+ * @author DW
+ * @author BG
+ * @author JB
+ **/
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -103,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
@@ -173,41 +184,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-   /* public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         *
-
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         *
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*
-            return rootView;
-        }
-    }*/
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -256,7 +232,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
+
+    /** @function viewCourseDetails
      * Called when the user taps a course card
      *
      * @param view
@@ -266,7 +243,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
+
+    /** @function logOut
      * Called when user presses logout button in menu.
      *
      * @author Peter Lee
@@ -288,14 +266,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    // TODO: delete commented code
-    /* Sample way of querying database data
-    // Find all dinosaurs whose height is exactly 25 meters.
-        var ref = firebase.database().ref("dinosaurs");
-        ref.orderByChild("height").equalTo(25).on("child_added", function(snapshot) {
-          console.log(snapshot.key);
-        });
-    */
+
 
     // TODO query out only the courses that are the correct semester
     // we would query for the information then pass it into the Course Class
@@ -371,7 +342,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
-        //myRef.removeEventListener(courseListener);
 
         Log.d("Course", "returning courses");
 

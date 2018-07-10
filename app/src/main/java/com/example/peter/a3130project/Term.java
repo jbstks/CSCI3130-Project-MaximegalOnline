@@ -3,10 +3,12 @@ package com.example.peter.a3130project;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/** @class Term
+ * Datastructure for holding term information
  * @author Joanna Bistekos
  * @author Dawson Wilson
- */
+ *
+ **/
 class Term {
 
     private String semester;

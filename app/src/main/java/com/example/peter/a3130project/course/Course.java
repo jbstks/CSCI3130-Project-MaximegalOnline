@@ -3,6 +3,16 @@ package com.example.peter.a3130project.course;
 import java.util.ArrayList;
 import java.util.List;
 
+/** @class Course
+ * Class for holding course info
+ *
+ *
+ * @author PL
+ * @author MG
+ * @author DW
+ * @author AC
+ *
+ **/
 public class Course {
 
     private String code;

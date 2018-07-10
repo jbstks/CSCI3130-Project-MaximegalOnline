@@ -14,7 +14,7 @@ import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 import java.util.Map;
-
+/** Not used, delete!**/
 
 public class RegisterActivity extends AppCompatActivity {
 

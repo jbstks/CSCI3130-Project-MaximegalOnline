@@ -32,9 +32,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 
-/*
-
- Main entry point for sign-in
+/** @class LoginActivity
+ *
+ * Main entry point for sign-in
+ * @author PL
+ * @author AC
  */
 public class LoginActivity extends AppCompatActivity implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -72,11 +74,11 @@ public class LoginActivity extends AppCompatActivity implements android.support.
     }
 
     public void loginButtonClick(View view) {
-	/* Function loginButtonClick
-	   Called on email_signin_button
-	   ---------
-	   Initiates login.
-	 */
+	/** Function loginButtonClick
+	 *  Called on email_signin_button
+	 *  ---------
+	 *  Initiates login.
+	 **/
         View curview = this.getCurrentFocus();
         if (curview != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -88,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements android.support.
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        /**Check if user is signed in (non-null) and update UI accordingly.**/
 
             FirebaseUser currentUser = mAuth.getCurrentUser();
             updateUI(currentUser);

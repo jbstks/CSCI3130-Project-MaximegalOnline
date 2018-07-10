@@ -27,7 +27,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+/** @class CourseInfo
+ *
+ * Class for showing the course info information
+ *
+ * @author PL
+ * @author AC
+ * @author JB
+ * @author DW
+ **/
 public class CourseInfo extends AppCompatActivity {
     private String course_code;
 
@@ -71,18 +79,6 @@ public class CourseInfo extends AppCompatActivity {
         }
     }
 
-    public void click_RegisterButton(View view) {
-        Course course;
-        //course = construct_course_by_id(course_code); //TODO: implement
-
-        //CourseRegistrationUI crui = new CourseRegistrationUI();
-        //crui.attempt_register(course);
-
-        // check errors
-
-        //if ok
-        //crui.do_register(course);
-    }
 
     public void getCourseExtra(String code) {
 
@@ -153,11 +149,8 @@ public class CourseInfo extends AppCompatActivity {
 
                         CourseSection courseSection= new CourseSection(sectionNum, crn, professor, curr_course, courseTimes);
                         sections.add(courseSection);
-                        /*Iterator<DataSnapshot> iterator=  section.child("times").getChildren().iterator();
-                        //Iterates through each child of the node "times    "
-                        while (iterator.hasNext())
-                            iterator.next();
-                        Log.d("sections","" + iterator.next().getChildrenCount());*/
+
+
                     }
 
                     SectionRVAdapter sectionRVAdapter = new SectionRVAdapter(sections);

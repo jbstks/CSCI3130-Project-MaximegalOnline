@@ -15,6 +15,10 @@ import java.util.List;
  * @attr courseTimeList: List<CourseTime>
  *       list of course times.
  *
+ * @author PL
+ * @author MG
+ * @author DW
+ * @author AC
  **/
 public class CourseSection {
     private String sectionNum;
