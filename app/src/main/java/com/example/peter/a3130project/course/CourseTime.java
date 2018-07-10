@@ -2,10 +2,8 @@ package com.example.peter.a3130project.course;
 
 import java.util.HashMap;
 /**
- * Contributors:
- * PL, MG, DW, AC 
  *
- * CourseTime:
+ * @class CourseTime:
  *
  * Class for keeping track of course times
  *
@@ -21,6 +19,11 @@ import java.util.HashMap;
  * @attr location: String
  *       location of class
  *
+ * @author PL
+ * @author MG
+ * @author DW
+ * @author AC
+
  **/
 public class CourseTime {
 

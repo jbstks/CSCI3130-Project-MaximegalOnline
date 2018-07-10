@@ -56,7 +56,6 @@ public class CourseRegistrationUI extends CourseRegistration{
         user = fuser;
         dbRef = db.getReference();
 
-
         // TODO setup B00 numbers for each user and query for them here
 
 
@@ -75,11 +74,12 @@ public class CourseRegistrationUI extends CourseRegistration{
                         break;
                     }
 
-                }
-                if (B00 == null) {
-                    Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                    }
+                    if (B00 == null) {
+                        Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
 
                 CRNs = new ArrayList<>();
                 setCRN = new HashSet<>();
@@ -94,6 +94,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                             index = Integer.parseInt(key) + 1;
                         }
 
+                        }
                     }
                 }
 
@@ -142,6 +143,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                             }
                         }
                     }
+
                 }
                 setcurrent_courses(currentCourseSections);
                 if (currentCourseSections.size() == 0) {

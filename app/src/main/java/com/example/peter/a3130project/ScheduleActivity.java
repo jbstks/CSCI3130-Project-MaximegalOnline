@@ -21,7 +21,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-/**
+
+/**@class ScheduleEntry
  * Class to create an entry in a users schedule
  *
  * @author Bradley Garagan
@@ -82,9 +83,15 @@ class ScheduleEntry implements Comparable<ScheduleEntry> {
     public void setColor(int color) { this.color = color; }
 }
 
-/**
- * Activity for the schedule
- */
+/** @class ScheduleActivity
+ *  Activity for showing activities
+ *
+ * @author BG
+ * @author MG
+ *
+ **/
+
+
 public class ScheduleActivity extends AppCompatActivity {
 
     /**
