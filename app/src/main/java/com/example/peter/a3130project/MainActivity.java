@@ -202,6 +202,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         return true;
     }
+    //TODO tire essa bosta
+    public void toDrop(MenuItem item){
+        Intent intent = new Intent(this, DropActivity.class);
+        startActivity(intent);
+    }
 
 
     /**
