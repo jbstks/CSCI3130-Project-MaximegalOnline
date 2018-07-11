@@ -37,7 +37,9 @@ public class CourseDrop {
         user = mAuth.getCurrentUser();
     }
 
-    //query for the key containing that crn in the student current courses, remove the key
+    /**
+     * query for the key containing that crn in the student current courses, remove the key
+    **/
     public void drop(final String crn) {
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -58,7 +60,6 @@ public class CourseDrop {
 
                 }
                 if (B00 == null) {
-                    // Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
