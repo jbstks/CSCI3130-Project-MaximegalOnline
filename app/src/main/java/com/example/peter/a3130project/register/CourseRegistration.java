@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
- * Contributors: PL, MG
+ * Deals confirming registration conflicts given courses and requested courses
  *
- * @class CourseRegistration
- * Deals confirming registration conflicts given courses and requested course.
+ * @author Peter Lee
+ * @author Megan Gosse
  **/
 public class CourseRegistration {
     private ArrayList<CourseSection> current_courses;
@@ -20,11 +20,11 @@ public class CourseRegistration {
 
     /**
      * CourseRegistration
-     * 
+     *
      * Constructor for registration
      * --------------
      * Parameters:
-     * 
+     *
      * @param current_courses:
      *       The current courses that the user has.
      **/
@@ -34,64 +34,67 @@ public class CourseRegistration {
 
     /**
      * attempt_register:
-     * 
+     *
      * Attempts to register the course given the user's current courses
      * --------------
      * Parameters:
-     * 
+     *
      * @param course:
      *       The course that is attempted to register with
      **/
     public ArrayList<CourseSection> attempt_register(CourseSection course) {
-	// Steps:
-	// 1. sort current_course by times
-	// 2. see whether course conflicts with any
-	// 3. Give the proper response to which are conflicting.
+        // Steps:
+        // 1. sort current_course by times
+        // 2. see whether course conflicts with any
+        // 3. Give the proper response to which are conflicting.
 
-	/* Check for duplicate course id */
-	for (int i=0;i < current_courses.size(); i++) {
-	    if (course.getcrn().equals(current_courses.get(i).getcrn())){
-		// there is a matching item, therefore return null
-		return null;
-	    }
-            
-	}
-	ArrayList<CourseSection> result = new ArrayList<CourseSection>();
-	HashSet<CourseSection> hashresult = new HashSet<CourseSection>();
+        /* Check for duplicate course id */
+        for (int i=0;i < current_courses.size(); i++) {
+            if (course.getcrn().equals(current_courses.get(i).getcrn())) {
+                // there is a matching item, therefore return null
+                return null;
+            }
+        }
 
-	ArrayList<CourseTime> coursetimes = (ArrayList<CourseTime>) course.getcourseTimeList();
+        ArrayList<CourseSection> result = new ArrayList<CourseSection>();
+        HashSet<CourseSection> hashresult = new HashSet<CourseSection>();
+        ArrayList<CourseTime> coursetimes = (ArrayList<CourseTime>) course.getcourseTimeList();
 
-	for (int a=0; a < coursetimes.size(); a++ ){
-            
-	    // Get a time segment for current course
-	    int [] course_time = coursetimes.get(a).get_universal_time();
+        for (int a=0; a < coursetimes.size(); a++ ) {
+            // Get a time segment for current course
+            int [] course_time = coursetimes.get(a).get_universal_time();
 
-	    for (int i=0;i < current_courses.size(); i++) {
-		CourseSection candidate = current_courses.get(i);
-		ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.getcourseTimeList();
-		if (!(candidate.getcourse().getsemester().equals(course.getcourse().getsemester()) && candidate.getcourse().getyear().equals(course.getcourse().getyear())) || hashresult.contains(candidate)) { //This term and/or year doesn't match. No need to check schedule
-                    continue;
+            for (int i=0;i < current_courses.size(); i++) {
+            CourseSection candidate = current_courses.get(i);
+            ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.getcourseTimeList();
+
+            // This term and/or year doesn't match. No need to check schedule
+            if (!(candidate.getcourse().getsemester().equals(course.getcourse().getsemester()) &&
+                  candidate.getcourse().getyear().equals(course.getcourse().getyear())) ||
+                  hashresult.contains(candidate))
+            {
+                continue;
+            }
+
+            for (int j=0; j < candtimes.size(); j++ ) {
+                int [] cand_time = candtimes.get(j).get_universal_time();
+
+                /* Check for conflict, if there is add it to the list */
+                if ((course_time[0] >= cand_time[0] && course_time[0] <= cand_time[1]) ||
+                    (course_time[1] >= cand_time[0] && course_time[1] <= cand_time[1]) ||
+                    (cand_time[0] >= course_time[0] && cand_time[0] <= course_time[1]) ||
+                    (cand_time[1] >= course_time[0] && cand_time[1] <= course_time[1]))
+                {
+                    result.add(candidate);
+                    hashresult.add(candidate);
                 }
-                
-		for  (int j=0; j < candtimes.size(); j++ ){
-		    int [] cand_time = candtimes.get(j).get_universal_time();
-		    
-		    /* Check for conflict, if there is add it to the list */
-		    if ((course_time[0] >= cand_time[0] && course_time[0] <= cand_time[1])||
-			(course_time[1] >= cand_time[0] && course_time[1] <= cand_time[1])||
-			(cand_time[0] >= course_time[0] && cand_time[0] <= course_time[1])||
-			(cand_time[1] >= course_time[0] && cand_time[1] <= course_time[1])) {
-			result.add(candidate);
-			hashresult.add(candidate);
-		    
-		    }
-		}
-	    }
+            }
+        }
 	}
 	return result;
-	
+
     }
-    
+
 
     public ArrayList<CourseSection> getcurrent_courses(){
         return current_courses;

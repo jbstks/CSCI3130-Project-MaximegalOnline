@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.Map;
 
 
-/**@class ScheduleEntry
+/**ScheduleEntry
  * Class to create an entry in a users schedule
  *
  * @author Bradley Garagan
@@ -66,7 +66,9 @@ class ScheduleEntry implements Comparable<ScheduleEntry> {
         return 0;
     }
 
-    /* getters and setters */
+    /**
+     *  getters and setters for name, start, end, location, and color
+     */
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -83,15 +85,13 @@ class ScheduleEntry implements Comparable<ScheduleEntry> {
     public void setColor(int color) { this.color = color; }
 }
 
-/** @class ScheduleActivity
+/** ScheduleActivity
  *  Activity for showing activities
  *
- * @author BG
- * @author MG
- *
- **/
-
-
+ * @author Joanna Bistekos
+ * @author Bradley Garagan
+ * @author Megan Gosse
+ */
 public class ScheduleActivity extends AppCompatActivity {
 
     /**
@@ -196,5 +196,4 @@ public class ScheduleActivity extends AppCompatActivity {
             }
         });
     }
-
 }

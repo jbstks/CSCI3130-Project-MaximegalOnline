@@ -12,25 +12,31 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-/** @class CourseRVAdapter
+/** CourseRVAdapter
  * Adapter view for holding course selection
  * 
- * @author DW
- * @author JB
- * @author PL
- * @author MG
- **/
+ * @author Dawson Wilson
+ * @author Joanna Bistekos
+ * @author Peter Lee
+ * @author Megan Gosse
+ */
 public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.CourseViewHolder>{
 
     List<Course> courses;
 
-    // constructor
+    /**
+     * Creates a CourseRVAdapter
+     *
+     * @param courses list of courses
+     */
     CourseRVAdapter(List<Course> courses) {
         this.courses = courses;
         Log.d("Course", "called the CourseRVAdapter");
     }
 
-    // provides a way to access data
+    /**
+     * Provides a way to access data
+     */
     public static class CourseViewHolder extends RecyclerView.ViewHolder {
         CardView course_cv;
         TextView course_code;
@@ -44,7 +50,6 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
             course_cv = itemView.findViewById(R.id.course_cv);
             course_code = itemView.findViewById(R.id.course_code);
             course_name = itemView.findViewById(R.id.course_name);
-            // itemView.setOnClickListener(this);
 
             Log.d("COURSE","Creating click function");
 
@@ -98,5 +103,4 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
-
 }
