@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">3130project</string>
+    <string name="app_name">University of Maximegalon</string>
 
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">MaximegalOnline</string>
 
     <string-array name="semesterArray">
         <item>Fall</item>
