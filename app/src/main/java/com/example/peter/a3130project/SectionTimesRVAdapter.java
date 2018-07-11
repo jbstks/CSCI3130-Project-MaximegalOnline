@@ -17,18 +17,16 @@ import java.util.List;
 
 import com.example.peter.a3130project.course.CourseTime;
 
-/**  SectionTimesRVAdapter
+/** SectionTimesRVAdapter
  *
- * Recycler view for section times in calander
+ * Recycler view for section times in calendar
  *
- * @author DW
- * @author JB
- *
- **/
+ * @author Dawson Wilson
+ * @author Joanna Bistekos
+ */
 public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAdapter.SectionTimesViewHolder> {
 
     List<CourseTime> times;
-
 
     /** Constructor
      *
@@ -38,10 +36,9 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
         this.times = times;
     }
 
-
-    /** Assigns data from a CourseTime object in the list to the corresponding UI elements
+    /**
+     * Assigns data from a CourseTime object in the list to the corresponding UI elements
      * of the RecyclerView entry
-     *
      */
     public static class SectionTimesViewHolder extends RecyclerView.ViewHolder {
         TextView times_day;
@@ -52,6 +49,7 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
         List<CourseTime> times;
 
         /**
+         * Constructor
          *
          * @param itemView each item/"row" on the RecyclerView list
          * @param times list containing CourseTime objects
@@ -64,12 +62,12 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
             times_end = itemView.findViewById(R.id.section_times_end);
             times_location = itemView.findViewById(R.id.section_times_location);
 
-            // TODO maybe we do a pop up and ask if they want to register?
-
+            // TODO: maybe we do a pop up and ask if they want to register?
         }
     }
 
-    /** Creates and returns a SectionViewHolder to be used by onBindViewHolder
+    /**
+     * Creates and returns a SectionViewHolder to be used by onBindViewHolder
      *
      * @param viewGroup
      * @param i
@@ -84,9 +82,11 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
     }
 
 
-    /** This method is called by RecyclerView to display the data at the specified position
+    /**
+     * This method is called by RecyclerView to display the data at the specified position
      * it assigns the data from a CourseTime object to the fields on the corresponding RecyclerView
      * row
+     *
      * @param sectionViewHolder
      * @param i the position of a item on the times list
      */
@@ -101,8 +101,9 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
     }
 
     /**
+     * Gets item count
      *
-     * @return number of itens on the RecyclerView
+     * @return number of items on the RecyclerView
      */
     @Override
     public int getItemCount() {
@@ -113,7 +114,6 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
-
 }
 
 
