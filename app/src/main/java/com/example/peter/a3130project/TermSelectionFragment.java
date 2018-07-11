@@ -15,20 +15,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A placeholder fragment containing a simple view.
+ * TermSelectionFragment
+ *
+ * Fragment holding list of terms
+ *
+ * @author Joanna Bistekos
+ * @author Dawson Wilson
  */
 public class TermSelectionFragment extends Fragment {
 
+    /**
+     * Default constructor
+     */
     public TermSelectionFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_term, container, false);
-
         return view;
     }
-
 }

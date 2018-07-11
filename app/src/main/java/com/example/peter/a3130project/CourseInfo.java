@@ -27,14 +27,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-/** @class CourseInfo
+
+/** CourseInfo
  *
  * Class for showing the course info information
  *
- * @author PL
- * @author AC
- * @author JB
- * @author DW
+ * @author Peter Lee
+ * @author Aecio Cavalcanti
+ * @author Joanna Bistekos
+ * @author Dawson Wilson
  **/
 public class CourseInfo extends AppCompatActivity {
 
@@ -55,10 +56,8 @@ public class CourseInfo extends AppCompatActivity {
 
 
         if (termActivityBundle != null) {
-
             TextView codeTextView = (TextView) findViewById(R.id.courseInfo_code);
             TextView nameTextView = (TextView) findViewById(R.id.courseInfo_name);
-
 
             String name = (String) termActivityBundle.get("name");
             String code = (String) termActivityBundle.get("code");
@@ -67,12 +66,12 @@ public class CourseInfo extends AppCompatActivity {
 
             curr_course = new Course(code, name, semester, year);
 
-            // TODO query for the extra course information under the course_listings database
+            // TODO: query for the extra course information under the course_listings database
             getCourseExtra(code);
 
             // Database query for all sections of this course
             getSections(code, semester, year);
-            // TODO build a dynamic place to show all the sections and a button to register for a specific section
+            // TODO: build a dynamic place to show all the sections and a button to register for a specific section
 
             codeTextView.setText(code);
             nameTextView.setText(name);
@@ -107,8 +106,6 @@ public class CourseInfo extends AppCompatActivity {
                     TextView prerequisitesTextView = findViewById(R.id.courseInfo_prerequisites);
                     prerequisitesTextView.setText(prerequisites);
                 }
-
-
             }
 
             @Override
@@ -170,7 +167,6 @@ public class CourseInfo extends AppCompatActivity {
 
                     SectionRVAdapter sectionRVAdapter = new SectionRVAdapter(sections);
                     section_rv.setAdapter(sectionRVAdapter);
-
 
                     Log.d("SECTION", "finished");
                 }
