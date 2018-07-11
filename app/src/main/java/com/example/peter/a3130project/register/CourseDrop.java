@@ -39,7 +39,7 @@ public class CourseDrop {
 
     /**
      * query for the key containing that crn in the student current courses, remove the key
-    **/
+     */
     public void drop(final String crn) {
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -57,23 +57,18 @@ public class CourseDrop {
                         Log.d("B#", B00);
                         break;
                     }
-
                 }
                 if (B00 == null) {
                     return;
                 }
 
-                //dropping the section
+                // dropping the section
                 dbRef.child("students").child(B00).child("courses").child("current").orderByValue().equalTo(crn).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot postsnapshot : dataSnapshot.getChildren()) {
-
                             postsnapshot.getRef().removeValue();
-
-
-
                         }
                     }
 
@@ -81,22 +76,13 @@ public class CourseDrop {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-
-
                 });
-
-
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-
-
-
-
     }
 }
