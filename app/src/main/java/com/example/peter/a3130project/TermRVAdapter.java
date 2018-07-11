@@ -68,10 +68,11 @@ public class TermRVAdapter extends RecyclerView.Adapter<TermRVAdapter.TermViewHo
     }
 
     /**
+     * Constructor
      *
      * @param viewGroup
      * @param i
-     * @return
+     * @return pvh
      */
     @Override
     public TermViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -97,7 +98,7 @@ public class TermRVAdapter extends RecyclerView.Adapter<TermRVAdapter.TermViewHo
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    /* Get and set methods */
+    /* Get and set methods for term */
     public List<Term> getterms(){
         return terms;
     }

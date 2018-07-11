@@ -31,15 +31,15 @@ import com.example.peter.a3130project.register.RegistrationException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-/**
- *  SectionRVAdapter
+/**SectionRVAdapter
+ *
+ * Adapter for handling view for courses.
+ *
  * @author DW
  * @author AC
  * @author PL
  * @author MG
- * Adapter for handling view for courses.
- **/
-
+ */
 public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.SectionViewHolder>{
 
     List<CourseSection> sections;
@@ -50,12 +50,10 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
      */
     SectionRVAdapter(List<CourseSection> sections) {
         this.sections = sections;
-
-
     }
-    /**  SectionViewHolder
+    /** SectionViewHolder
      * provides a way to access data
-     **/
+     */
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
         TextView section_crn;
         TextView section_prof;
@@ -91,7 +89,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
                 // Here we would make a call to the database to register for a course
                 int position = getAdapterPosition();
 
-                //Update current CourseRegistrationUI
+                // Update current CourseRegistrationUI
                 CourseRegistrationUI coursereg = null;
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -106,7 +104,8 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
 
 
 
-    /** Creates and returns a SectionViewHolder to be used by onBindViewHolder
+    /**
+     * Creates and returns a SectionViewHolder to be used by onBindViewHolder
      *
      * @param viewGroup
      * @param i
@@ -120,9 +119,11 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         return pvh;
     }
 
-    /** This method is called by RecyclerView to display the data at the specified position
+    /**
+     * This method is called by RecyclerView to display the data at the specified position
      * it assigns the data from a CourseSection object to the fields on the corresponding RecyclerView
      * row
+     *
      * @param sectionViewHolder
      * @param i the position of a item on the sections list
      */
@@ -146,6 +147,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
     }
 
     /**
+     * Gets item count
      *
      * @return number of items on the RecyclerView
      */
@@ -158,10 +160,4 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
-
-
-
-
-
-
 }

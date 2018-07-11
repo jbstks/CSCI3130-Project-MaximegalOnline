@@ -50,17 +50,18 @@ import java.util.Map;
  */
 
 import com.example.peter.a3130project.course.Course;
-/**  MainActivity
+
+/** MainActivity
  *
- * The main activity for the app.
+ * The main activity for the app
  *
- * @author PL
- * @author MG
- * @author AC
- * @author DW
- * @author BG
- * @author JB
- **/
+ * @author Peter Lee
+ * @author Megan Gosse
+ * @author Aecio Cavalcanti
+ * @author Dawson Wilson
+ * @author Bradley Garagan
+ * @author Joanna Bistekos
+ */
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -113,8 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -151,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
      * @param menu
      * @return true if successful
      */
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main2, menu);
@@ -173,8 +171,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -228,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /** @function viewCourseDetails
+    /** viewCourseDetails
      * Called when the user taps a course card
      *
      * @param view
@@ -239,16 +235,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /** @function logOut
+    /** logOut
      * Called when user presses logout button in menu.
      *
-     * @author Peter Lee
-     * @author Aecio Cavalcanti
      * @param item logout button in the menu
      * @return whether or not the log out was successful
      */
     public boolean logOut(MenuItem item){
-
         try {
             FirebaseAuth.getInstance().signOut();
         }
@@ -260,27 +253,27 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         return true;
     }
-    //TODO tire essa bosta
+
+    // TODO: remove this later
+    /**
+     * Go to drop activity (TEMPORARY)
+     * @param item
+     */
     public void toDrop(MenuItem item){
         Intent intent = new Intent(this, DropActivity.class);
         startActivity(intent);
     }
 
-
-
-    // TODO query out only the courses that are the correct semester
+    // TODO: query out only the courses that are the correct semester
     // we would query for the information then pass it into the Course Class
     // The CourseTime part takes an arrayList of all the course times for that course
 
     /**
      * Gets courses from the database
      * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView
+     *
      * @param semester The semester of the year you want course from
      * @param year The year that you want courses from
-     * @author Dawson Wilson
-     * @author Joanna Bistekos
-     * @param semester selected semester month
-     * @param year     selected semester year
      */
     public void getCourses(final String semester, final String year) {
         Log.d("COURSE", "Creating Course View\n");
@@ -292,9 +285,6 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("available_courses1").child(semester + " " + year);
 
         Log.d("COURSE", "Creating cards\n");
-
-
-        // Read from the database
 
         /**
          * Queries the database and fills in the courses ArrayList
@@ -315,13 +305,9 @@ public class MainActivity extends AppCompatActivity {
 
                     courses.add(course);
 
-
                     Log.d("COURSE", "courses size is now: " + courses.size());
 
                     courseRVAdapter.notifyDataSetChanged();
-                    // TODO: delete if getCourseSections work
-
-
                 }
                 Log.d("Course", "returning courses");
 
@@ -340,22 +326,17 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
 
-
         Log.d("Course", "Getting Courses Complete");
-
     }
 
     /**
      * Gets courses as CourseSections and put them in a list, from the database
-     * Re-used from {@link com.example.peter.a3130project.register.CourseRegistrationUI}'s
+     * Modified from {@link com.example.peter.a3130project.register.CourseRegistrationUI}'s
      * {@code firebaseRegister()} function
      *
-     * @author Joanna Bistekos
-     * @author Bradley Garagan
      * @param semester selected semester month
      * @param year     selected semester year
      */
@@ -363,7 +344,6 @@ public class MainActivity extends AppCompatActivity {
         // Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef  = database.getReference();
-        //DatabaseReference myRef = database.getReference("available_courses1").child(semester + " " + year);
 
         Log.d("REGISTEREDCOURSES", "we called the function\n");
 
@@ -373,7 +353,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // TODO: get the email of the logged in user
                 String email = "testing@test.com";
-
                 B00 = null;
 
                 for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
@@ -388,11 +367,9 @@ public class MainActivity extends AppCompatActivity {
                         B00 = Bcand;
                         break;
                     }
-
                 }
                 if (B00 == null) {
-
-                    // no course
+                    // student doesn't exist
                     return;
                 }
 
@@ -404,26 +381,25 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 i = 0;
-                //get courseSection info from CRNs
+                // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
-                //TODO refactor database structure to avoid nested loops
-                //loop through courses
+                //TODO: refactor database structure to avoid nested loops
+                // loop through courses
                 for (DataSnapshot courseSnapshot : dataSnapshot.child("available_courses1").child(semester + " " + year).getChildren()) {
                     Log.d("REGISTEREDCOURSES", "looping through courses in " + semester + " " + year);
                     Log.d("REGISTEREDCOURSES", "found this course: " + courseSnapshot.getKey());
-                    //loop through sections
+                    // loop through sections
                     for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
                         Log.d("REGISTEREDCOURSES", "found this section: " + sectionSnapshot.getKey());
                         for (String CRN : registeredCRNs) {
                             Log.d("REGISTEREDCOURSES", "found this registered CRN: " + CRN);
                             if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
                                 Log.d("REGISTEREDCOURSES", "this section matches the current CRN!");
+
                                 String sectionNum = sectionSnapshot.getKey();
-
                                 String prof = sectionSnapshot.child("professor").getValue(String.class);
-
                                 List<CourseTime> courseTimeList = new ArrayList<>();
-                                //get CourseTime info
+                                // get CourseTime info
                                 for (DataSnapshot timesSnapshot : sectionSnapshot.child("times").getChildren()) {
                                     String day = timesSnapshot.getKey();
                                     String startTime = timesSnapshot.child("start").getValue(String.class);
@@ -444,9 +420,9 @@ public class MainActivity extends AppCompatActivity {
                                 CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
                                 currentCourseSections.add(section);
 
-                                if (scheduleFragment != null)
-                                    scheduleFragment.update(currentCourseSections);
-                            } else {
+                                if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
+                            }
+                            else {
                                 i++;
                             }
                         }
@@ -466,13 +442,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
-        Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseSectionListener);
-        //myRef.removeEventListener(courseListener);
-
-        Log.d("Course", "returning courses");
-
-        Log.d("Course", "finished");
     }
 }
