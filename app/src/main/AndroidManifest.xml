@@ -59,6 +59,8 @@
         <activity
             android:name=".DropActivity"></activity>
 
+        <activity android:name=".ResetPasswordActivity"></activity>
+
     </application>
 
 </manifest>
