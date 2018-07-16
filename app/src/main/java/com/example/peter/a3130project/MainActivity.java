@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
     // TODO: query out only the courses that are the correct semester
     // we would query for the information then pass it into the Course Class
     // The CourseTime part takes an arrayList of all the course times for that course
-
+    //
     /**
      * Gets courses from the database
      * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView
@@ -395,7 +395,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("REGISTEREDCOURSES", "found this registered CRN: " + CRN);
                             if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
                                 Log.d("REGISTEREDCOURSES", "this section matches the current CRN!");
-
+                                int capacity = sectionSnapshot.child("capacity").getValue(Integer.class);
                                 String sectionNum = sectionSnapshot.getKey();
                                 String prof = sectionSnapshot.child("professor").getValue(String.class);
                                 List<CourseTime> courseTimeList = new ArrayList<>();
@@ -417,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
                                 String year = courseSnapshot.child("year").getValue(String.class);
                                 Course course = new Course(code, name, semester, year);
 
-                                CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
+                                CourseSection section = new CourseSection(capacity, sectionNum, CRN, prof, course, courseTimeList);
                                 currentCourseSections.add(section);
 
                                 if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);

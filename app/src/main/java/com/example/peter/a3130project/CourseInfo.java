@@ -146,6 +146,7 @@ public class CourseInfo extends AppCompatActivity {
                     List<CourseSection> sections = new ArrayList<>();
                     for (DataSnapshot section : dataSnapshot.getChildren()) {
 
+                        int capacity = section.child("capacity").getValue(Integer.class);
                         String sectionNum = section.getKey();
                         String crn = section.child("crn").getValue(String.class);
                         String professor = section.child("professor").getValue(String.class);
@@ -161,7 +162,7 @@ public class CourseInfo extends AppCompatActivity {
                             courseTimes.add(courseTime);
                         }
 
-                        CourseSection courseSection= new CourseSection(sectionNum, crn, professor, curr_course, courseTimes);
+                        CourseSection courseSection= new CourseSection(capacity, sectionNum, crn, professor, curr_course, courseTimes);
                         sections.add(courseSection);
                     }
 

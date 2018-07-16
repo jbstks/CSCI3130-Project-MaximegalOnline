@@ -126,6 +126,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                         for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
                             for (String CRN: CRNs) {
                                 if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
+                                    int capacity = sectionSnapshot.child("professor").getValue(Integer.class);
                                     String sectionNum = sectionSnapshot.getKey();
                                     String prof = sectionSnapshot.child("professor").getValue(String.class);
 
@@ -148,7 +149,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                                     String year = courseSnapshot.child("year").getValue(String.class);
 
                                     Course course = new Course(code, name, semester, year);
-                                    CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
+                                    CourseSection section = new CourseSection(capacity, sectionNum, CRN, prof, course, courseTimeList);
                                     currentCourseSections.add(section);
                                 }
                                 else {
