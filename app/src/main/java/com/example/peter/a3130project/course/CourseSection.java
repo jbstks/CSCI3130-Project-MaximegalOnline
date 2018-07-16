@@ -2,37 +2,40 @@ package com.example.peter.a3130project.course;
 
 import java.util.List;
 /**
- * @class CourseSelection
- * @attr sectionNum: String
- *       name of the section
+ * Represents a course section
  *
- * @attr crn: String
- *       name of course id
- *
- * @attr professor: String
- *       name of professor
- *
- * @attr courseTimeList: List<CourseTime>
- *       list of course times.
- *
- **/
+ * @author Peter Lee
+ * @author Megan Gosse
+ * @author Dawson Wilson
+ * @author Aecio Cavalcanti
+ */
 public class CourseSection {
     private String sectionNum;
     private String crn;
     private String professor;
     private Course course;
     private List<CourseTime> courseTimeList;
-    
+
+    /**
+     * Constructor to create a CourseSection object
+     *
+     * @param sectionNum     the section number of the course
+     * @param crn            the course identification number
+     * @param professor      the name of professor
+     * @param courseTimeList list of course times
+     */
     public CourseSection(String sectionNum, String crn, String professor, Course course, List<CourseTime> courseTimeList){
         this.sectionNum = sectionNum;
         this.crn = crn;
         this.professor = professor;
         this.course = course;
         this.courseTimeList = courseTimeList;
-        
+
     }
 
-    /** Get set methods **/
+    /**
+     * Getters and setters for sectionNum, crn, professor, courseTimeList, and course
+     */
     public String getsectionNum(){
         return this.sectionNum;
     }

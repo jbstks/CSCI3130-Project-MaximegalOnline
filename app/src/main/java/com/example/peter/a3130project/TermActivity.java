@@ -18,12 +18,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Activity for the Term
+/** TermActivity
+ * Activity for viewing the courses by term.
  *
  * @author Joanna Bistekos
  * @author Dawson Wilson
  */
+
 public class TermActivity extends AppCompatActivity {
 
     @Override
@@ -53,28 +54,22 @@ public class TermActivity extends AppCompatActivity {
 
         TermRVAdapter mAdapter = new TermRVAdapter(terms);
         rv.setAdapter(mAdapter);
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
     }
 
-    /** Modifies the behaviour of the Back button so that it acts like the home button  */
+    /**
+     * Modifies the behaviour of the Back button so that it acts like the home button
+     * */
     @Override
     public void onBackPressed() {
         Intent pressHome = new Intent(Intent.ACTION_MAIN);
         pressHome.addCategory(Intent.CATEGORY_HOME);
         pressHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(pressHome);
-
     }
 
-   /** Called when the user taps a course card */
+   /**
+    * Called when the user taps a course card
+    */
     public void viewTermInfo(View view) {
         Intent intent = new Intent(this, MainActivity.class);
 
@@ -112,12 +107,7 @@ public class TermActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_term, container, false);
-            /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
             return rootView;
         }
-
-
     }
-
 }

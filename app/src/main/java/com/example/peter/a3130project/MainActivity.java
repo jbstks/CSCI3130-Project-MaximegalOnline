@@ -51,6 +51,17 @@ import java.util.Map;
 
 import com.example.peter.a3130project.course.Course;
 
+/** MainActivity
+ *
+ * The main activity for the app
+ *
+ * @author Peter Lee
+ * @author Megan Gosse
+ * @author Aecio Cavalcanti
+ * @author Dawson Wilson
+ * @author Bradley Garagan
+ * @author Joanna Bistekos
+ */
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -103,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -140,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
      * @param menu
      * @return true if successful
      */
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main2, menu);
@@ -163,51 +172,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        //Switch to Register Activity
-        if(id == R.id.action_settings2){
-            Intent myIntent = new Intent(this, RegisterActivity.class);
-            startActivity(myIntent);
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-   /* public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         *
-
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         *
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*
-            return rootView;
-        }
-    }*/
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -256,7 +223,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
+
+    /** viewCourseDetails
      * Called when the user taps a course card
      *
      * @param view
@@ -266,16 +234,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
+
+    /** logOut
      * Called when user presses logout button in menu.
      *
-     * @author Peter Lee
-     * @author Aecio Cavalcanti
      * @param item logout button in the menu
      * @return whether or not the log out was successful
      */
     public boolean logOut(MenuItem item){
-
         try {
             FirebaseAuth.getInstance().signOut();
         }
@@ -288,26 +254,26 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    // TODO: delete commented code
-    /* Sample way of querying database data
-    // Find all dinosaurs whose height is exactly 25 meters.
-        var ref = firebase.database().ref("dinosaurs");
-        ref.orderByChild("height").equalTo(25).on("child_added", function(snapshot) {
-          console.log(snapshot.key);
-        });
-    */
+    // TODO: remove this later
+    /**
+     * Go to drop activity (TEMPORARY)
+     * @param item
+     */
+    public void toDrop(MenuItem item){
+        Intent intent = new Intent(this, DropActivity.class);
+        startActivity(intent);
+    }
 
-    // TODO query out only the courses that are the correct semester
+    // TODO: query out only the courses that are the correct semester
     // we would query for the information then pass it into the Course Class
     // The CourseTime part takes an arrayList of all the course times for that course
 
     /**
      * Gets courses from the database
+     * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView
      *
-     * @author Dawson Wilson
-     * @author Joanna Bistekos
-     * @param semester selected semester month
-     * @param year     selected semester year
+     * @param semester The semester of the year you want course from
+     * @param year The year that you want courses from
      */
     public void getCourses(final String semester, final String year) {
         Log.d("COURSE", "Creating Course View\n");
@@ -320,14 +286,17 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("COURSE", "Creating cards\n");
 
-        // Read from the database
-        final ValueEventListener courseListener = new ValueEventListener() {
+        /**
+         * Queries the database and fills in the courses ArrayList
+         */
+        ValueEventListener courseListener = new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Here is the id of the course (CRN)
                     String key = snapshot.getKey();
-                    Log.d("COURSE", "Found course id: " + key );
+                    Log.d("COURSE", "Found course id: " + key);
 
                     Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
                     Course course = new Course(key, (String) values.get("name"), (String) values.get("semester"), (String) values.get("year"));
@@ -336,20 +305,9 @@ public class MainActivity extends AppCompatActivity {
 
                     courses.add(course);
 
-                    // TODO: delete if getCourseSections work
-                    /*if (course.getsemester().equalsIgnoreCase(semester) && course.getyear().equalsIgnoreCase(year)) {
-                        //courseList.add(course);
-                    }*/
-
                     Log.d("COURSE", "courses size is now: " + courses.size());
 
                     courseRVAdapter.notifyDataSetChanged();
-                    // TODO: delete if getCourseSections work
-                    /*if (scheduleFragment != null)
-                        scheduleFragment.update(courses);*/
-
-                    //Log.d("COURSE", "courses list size is now: " + courses.size());
-
                 }
                 Log.d("Course", "returning courses");
 
@@ -368,23 +326,17 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
-        //myRef.removeEventListener(courseListener);
 
-        Log.d("Course", "returning courses");
-
-        Log.d("Course", "finished");
+        Log.d("Course", "Getting Courses Complete");
     }
 
     /**
      * Gets courses as CourseSections and put them in a list, from the database
-     * Re-used from {@link com.example.peter.a3130project.register.CourseRegistrationUI}'s
+     * Modified from {@link com.example.peter.a3130project.register.CourseRegistrationUI}'s
      * {@code firebaseRegister()} function
      *
-     * @author Joanna Bistekos
-     * @author Bradley Garagan
      * @param semester selected semester month
      * @param year     selected semester year
      */
@@ -392,7 +344,6 @@ public class MainActivity extends AppCompatActivity {
         // Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef  = database.getReference();
-        //DatabaseReference myRef = database.getReference("available_courses1").child(semester + " " + year);
 
         Log.d("REGISTEREDCOURSES", "we called the function\n");
 
@@ -402,9 +353,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // TODO: get the email of the logged in user
                 String email = "testing@test.com";
-                //String email = user.getEmail();
                 B00 = null;
-                //int index = 0;
+
                 for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
                     Log.d("REGISTEREDCOURSES", "going through list of students");
 
@@ -417,51 +367,39 @@ public class MainActivity extends AppCompatActivity {
                         B00 = Bcand;
                         break;
                     }
-
                 }
                 if (B00 == null) {
-                    //Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
-                    // no course
+                    // student doesn't exist
                     return;
                 }
 
                 registeredCRNs = new ArrayList<>();
-                //setCRN = new HashSet<>();
                 // Getting the CRNs for courses a user has already enrolled in
                 for (DataSnapshot snapshot : dataSnapshot.child("students").child(B00).child("courses").child("current").getChildren()) {
                     Log.d("REGISTEREDCOURSES", "user is registered for this course: " + snapshot.getValue(String.class));
                     registeredCRNs.add(snapshot.getValue(String.class));
-                    /*String key = snapshot.getKey();
-                    if (!setCRN.contains(tmp)) {
-                        CRNs.add(tmp);
-                        setCRN.add(tmp);
-                        if (Integer.parseInt(key) > index ) {
-                            index = Integer.parseInt(key) + 1;
-                        }
-                    }*/
                 }
 
                 i = 0;
-                //get courseSection info from CRNs
+                // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
-                //TODO refactor database structure to avoid nested loops
-                //loop through courses
+                //TODO: refactor database structure to avoid nested loops
+                // loop through courses
                 for (DataSnapshot courseSnapshot : dataSnapshot.child("available_courses1").child(semester + " " + year).getChildren()) {
                     Log.d("REGISTEREDCOURSES", "looping through courses in " + semester + " " + year);
                     Log.d("REGISTEREDCOURSES", "found this course: " + courseSnapshot.getKey());
-                    //loop through sections
+                    // loop through sections
                     for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
                         Log.d("REGISTEREDCOURSES", "found this section: " + sectionSnapshot.getKey());
                         for (String CRN : registeredCRNs) {
                             Log.d("REGISTEREDCOURSES", "found this registered CRN: " + CRN);
                             if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
                                 Log.d("REGISTEREDCOURSES", "this section matches the current CRN!");
-                                String sectionNum = sectionSnapshot.getKey();
-                                //String CRN = CRNs.get(i);
-                                String prof = sectionSnapshot.child("professor").getValue(String.class);
 
+                                String sectionNum = sectionSnapshot.getKey();
+                                String prof = sectionSnapshot.child("professor").getValue(String.class);
                                 List<CourseTime> courseTimeList = new ArrayList<>();
-                                //get CourseTime info
+                                // get CourseTime info
                                 for (DataSnapshot timesSnapshot : sectionSnapshot.child("times").getChildren()) {
                                     String day = timesSnapshot.getKey();
                                     String startTime = timesSnapshot.child("start").getValue(String.class);
@@ -482,9 +420,9 @@ public class MainActivity extends AppCompatActivity {
                                 CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
                                 currentCourseSections.add(section);
 
-                                if (scheduleFragment != null)
-                                    scheduleFragment.update(currentCourseSections);
-                            } else {
+                                if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
+                            }
+                            else {
                                 i++;
                             }
                         }
@@ -504,13 +442,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
-        Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseSectionListener);
-        //myRef.removeEventListener(courseListener);
-
-        Log.d("Course", "returning courses");
-
-        Log.d("Course", "finished");
     }
 }

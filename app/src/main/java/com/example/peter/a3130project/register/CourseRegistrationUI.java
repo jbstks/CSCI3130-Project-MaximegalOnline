@@ -21,18 +21,16 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * @author PL,
- * @author MG
- *
- * @class CourseRegistrationUI
  * Deals confirming registration conflicts given courses and requested course.
- * Updates firebase if and only if it is a valid addition.
- **/
+ * Updates Firebase if and only if it is a valid addition.
+ *
+ * @author Peter Lee
+ * @author Megan Gosse
+ */
 
 public class CourseRegistrationUI extends CourseRegistration{
 
     private DatabaseReference dbRef;
-
     private ArrayList<String> CRNs;
     private HashSet<String> setCRN;
     private ArrayList<CourseSection> currentCourseSections;
@@ -42,23 +40,29 @@ public class CourseRegistrationUI extends CourseRegistration{
     private FirebaseUser user;
     private int i;
 
-
+    /**
+     * Constructor
+     */
     public CourseRegistrationUI(){
         super();
     }
 
-
+    /**
+     * Checks to see if registration is valid, and then registers course in firebase if it is
+     *
+     * @param fuser holds the information of the user that is logged in
+     * @param cs    course section the user is trying to register for
+     * @param ac    application context
+     */
     public void firebaseRegister(FirebaseUser fuser, CourseSection cs, Context ac) {
         applicationContext = ac;
         coursesection = cs;
-        //  Fills in current_courses with the firebase instance.
+        // Fills in current_courses with the firebase instance.
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         user = fuser;
         dbRef = db.getReference();
 
-
         // TODO setup B00 numbers for each user and query for them here
-
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -70,12 +74,11 @@ public class CourseRegistrationUI extends CourseRegistration{
                     String Bcand = bentry.getKey();
 
                     if (bentry.child("email").getValue(String.class).equals(email)) {
-
                         B00 = Bcand;
                         break;
                     }
-
                 }
+
                 if (B00 == null) {
                     Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
                     return;
@@ -84,34 +87,30 @@ public class CourseRegistrationUI extends CourseRegistration{
                 CRNs = new ArrayList<>();
                 setCRN = new HashSet<>();
                 for (DataSnapshot snapshot : dataSnapshot.child("students").child(B00).child("courses").child("current").getChildren()) {
-
                     String tmp = snapshot.getValue(String.class);
                     String key = snapshot.getKey();
                     if (!setCRN.contains(tmp)) {
                         CRNs.add(tmp);
                         setCRN.add(tmp);
                         if (Integer.parseInt(key) > index ) {
-                            index = Integer.parseInt(key) + 1;
+                            index = Integer.parseInt(key);
                         }
-
                     }
                 }
-
+                index++;
                 i = 0;
-                //get courseSection info from CRNs
+                // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
-                //TODO refactor database structure to avoid nested loops
-                //loop through semesters
+                // TODO: refactor database structure to avoid nested loops
+                // loop through semesters
                 for (DataSnapshot semesterSnapshot : dataSnapshot.child("available_courses1").getChildren()) {
-                    //.//child("courses").child("current").getChildren()) {
-                    //loop through courses
+                    // loop through courses
                     for (DataSnapshot courseSnapshot : semesterSnapshot.getChildren()) {
-                        //loop through sections
+                        // loop through sections
                         for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
                             for (String CRN: CRNs) {
                                 if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
                                     String sectionNum = sectionSnapshot.getKey();
-                                    //String CRN = CRNs.get(i);
                                     String prof = sectionSnapshot.child("professor").getValue(String.class);
 
                                     List<CourseTime> courseTimeList = new ArrayList<>();
@@ -131,8 +130,8 @@ public class CourseRegistrationUI extends CourseRegistration{
                                     String name = courseSnapshot.child("name").getValue(String.class);
                                     String semester = courseSnapshot.child("semester").getValue(String.class);
                                     String year = courseSnapshot.child("year").getValue(String.class);
-                                    Course course = new Course(code, name, semester, year);
 
+                                    Course course = new Course(code, name, semester, year);
                                     CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
                                     currentCourseSections.add(section);
                                 }
@@ -143,6 +142,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                         }
                     }
                 }
+
                 setcurrent_courses(currentCourseSections);
                 if (currentCourseSections.size() == 0) {
                     Log.d("Register", "curcourse is null for some reason");
@@ -152,14 +152,13 @@ public class CourseRegistrationUI extends CourseRegistration{
                 ArrayList<CourseSection> register_result = attempt_register(coursesection);
                 if (register_result == null) { //TODO: define applicationContext
                     Toast.makeText(applicationContext, "Can't register. Course is already registered for you.", Toast.LENGTH_SHORT).show();
-                } else if (register_result.size() != 0) {  //There is a conflicting course. Mention the conflicting course in the output.
+                } else if (register_result.size() != 0) {  // There is a conflicting course. Mention the conflicting course in the output.
                     StringBuilder outputmessage = new StringBuilder("Can't register. Course conflicts with ");
                     for (int i = 0; i < register_result.size(); i++) {
                         outputmessage.append(" " + register_result.get(i).getcrn());
                     }
-
-                    Toast.makeText(applicationContext, outputmessage.toString(),
-                            Toast.LENGTH_SHORT).show();
+            
+                    Toast.makeText(applicationContext, outputmessage.toString(), Toast.LENGTH_SHORT).show();
                 } else { //Otherwise, register
                     try {
                         pushRegister(coursesection, index);
@@ -167,24 +166,22 @@ public class CourseRegistrationUI extends CourseRegistration{
                         Log.d("Reigster", "Something bad happened on register");
                     }
                 }
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
+    
         if (currentCourseSections == null) {
             Log.d("registration","currentcourse is null");
             SystemClock.sleep(100);
         }
-
     }
 
     /** pushRegister
      *-------------
      * @param course_sec:
-     *    course that is desired to be reigstered
+     *    course that is desired to be registered
      **/
     public void pushRegister(CourseSection course_sec, int index) throws RegistrationException {
 

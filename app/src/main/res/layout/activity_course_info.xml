@@ -12,7 +12,7 @@
         android:id="@+id/courseInfo_code"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="CSCI3136"
+        android:text="COURSE_CODE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,7 +21,7 @@
         android:id="@+id/courseInfo_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Software Engineering"
+        android:text="COURSE_NAME"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,27 +46,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/courseInfo_professorDC"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PROFESSOR"
-                tools:layout_editor_absoluteX="24dp"
-                tools:layout_editor_absoluteY="113dp" />
-
-            <TextView
-                android:id="@+id/courseInfo_professor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Juliano Franz"
-                tools:layout_editor_absoluteX="24dp"
-                tools:layout_editor_absoluteY="132dp" />
-
-            <TextView
                 android:id="@+id/courseInfo_descriptionDC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="DESCRIPTION"
+                android:text="@string/description_title"
                 tools:layout_editor_absoluteX="24dp"
                 tools:layout_editor_absoluteY="113dp" />
 
@@ -74,7 +58,7 @@
                 android:id="@+id/courseInfo_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="The course examines the process of software development, from initial planning through implementation and maintenance. A brief survey of available tools and techniques will be presented covering the topics of analysis, planning, estimating, project management, design, testing, and evaluation. Particular emphasis will be given to organizing and planning, team participation and management, top-down design and structure charts, system and information flow diagrams, walk-throughs and peer review, and testing and quality control."
+                android:text="@string/description_default_content"
                 tools:layout_editor_absoluteX="24dp"
                 tools:layout_editor_absoluteY="113dp" />
 
@@ -83,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="PREREQUISITES"
+                android:text="@string/prerequisites_title"
                 tools:layout_editor_absoluteX="24dp"
                 tools:layout_editor_absoluteY="113dp" />
 
@@ -91,7 +75,7 @@
                 android:id="@+id/courseInfo_prerequisites"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CSCI2110\nCSCI2132"
+                android:text="@string/prerequisites_default_content"
                 tools:layout_editor_absoluteX="24dp"
                 tools:layout_editor_absoluteY="113dp" />
 
@@ -100,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="SECTIONS"
+                android:text="@string/sections_title"
                 tools:layout_editor_absoluteX="24dp"
                 tools:layout_editor_absoluteY="113dp" />
 
