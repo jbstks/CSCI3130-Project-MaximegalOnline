@@ -3,6 +3,7 @@ package com.example.peter.a3130project;
 import com.example.peter.a3130project.course.*;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ import java.util.Map;
 public class ScheduleFragment extends Fragment {
 
     private View view;
+    private int selectedDay = 0;
+    private List<CourseSection> courses;
 
     /**
      * Default constructor for ScheduleFragment
@@ -45,7 +48,27 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.schedule, container, false);
+        view = inflater.inflate(R.layout.tab_schedule, container, false);
+        final ScheduleFragment f = this;
+
+        TabLayout tabs = view.findViewById(R.id.schedule_tabs);
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                selectedDay = tab.getPosition();
+                f.update(f.courses);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         return view;
     }
@@ -57,27 +80,20 @@ public class ScheduleFragment extends Fragment {
      */
     public void update(List<CourseSection> registeredCourses) {
 
+        this.courses = registeredCourses;
+
         if (view == null)
             return;
 
-        final LinearLayout[] dayViews = {
-                view.findViewById(R.id.monday),
-                view.findViewById(R.id.tuesday),
-                view.findViewById(R.id.wednesday),
-                view.findViewById(R.id.thursday),
-                view.findViewById(R.id.friday)
-        };
+        final LinearLayout tab = view.findViewById(R.id.schedule_tab);
 
         final ArrayList<String> days = new ArrayList<String>(Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday"));
 
         final String[] colors = { "#ffe8e8", "#f0f0da", "#d3eabb", "#a9c4a0" };
         int colorIndex = 0;
 
-        final ArrayList<ArrayList<ScheduleEntry>> schedule = new ArrayList<>();
-        for (int i = 0; i < 5; ++i) {
-            schedule.add(new ArrayList<ScheduleEntry>());
-            dayViews[i].removeViews(1, dayViews[i].getChildCount() - 1);
-        }
+        final ArrayList<ScheduleEntry> schedule = new ArrayList<>();
+        tab.removeAllViews();
 
         for (CourseSection c : registeredCourses) {
             int color = Color.parseColor(colors[colorIndex++ % colors.length]);
@@ -85,52 +101,46 @@ public class ScheduleFragment extends Fragment {
                 int i = days.indexOf(t.getday());
                 int start = Integer.parseInt(t.getstartTime());
                 int end = Integer.parseInt(t.getendTime());
-                schedule.get(i).add(new ScheduleEntry(c.getcourse().getcode(), start, end, t.getlocation(), color));
+                if (i == selectedDay) {
+                    schedule.add(new ScheduleEntry(c.getcourse().getcode(), start, end, t.getlocation(), color));
+                }
             }
         }
 
-        for (int i = 0; i < 5; ++i) {
-            ArrayList<ScheduleEntry> day = schedule.get(i);
-            Collections.sort(day);
 
-            int time = 805;
+        Collections.sort(schedule);
 
-            for (ScheduleEntry e : day) {
-                TextView tv = new TextView(getActivity().getApplicationContext());
+        int time = 805;
 
-                int duration = 60 * ((e.getEnd() / 100) - (e.getStart() / 100)) + (e.getEnd() % 100 - e.getStart() % 100);
-                int before =  60 * ((e.getStart() / 100) - (time / 100)) + (e.getStart() % 100 - time % 100);
+        for (ScheduleEntry e : schedule) {
+            TextView tv = new TextView(getActivity().getApplicationContext());
 
-                duration = ((duration + 25) / 30) * 30;
-                before = ((before + 25) / 30) * 30;
+            int duration = 60 * ((e.getEnd() / 100) - (e.getStart() / 100)) + (e.getEnd() % 100 - e.getStart() % 100);
+            int before =  60 * ((e.getStart() / 100) - (time / 100)) + (e.getStart() % 100 - time % 100);
 
-                final float scale = getResources().getDisplayMetrics().density;
-                int blockSize = (int) (80 * scale + 0.5f);
-                int height = blockSize * duration / 60;
-                int margin = blockSize * before / 60;
+            duration = ((duration + 25) / 30) * 30;
+            before = ((before + 25) / 30) * 30;
 
-                Log.d("tv", "blockSize = " + blockSize);
-                Log.d("tv", "start = " + e.getStart());
-                Log.d("tv", "end = " + e.getEnd());
-                Log.d("tv", "height = " + height);
-                Log.d("tv", "margin = " + margin);
-                Log.d("tv", "duration = " + duration);
+            final float scale = getResources().getDisplayMetrics().density;
+            int blockSize = (int) (50 * scale + 0.5f);
+            int height = blockSize * duration / 60;
+            int margin = blockSize * before / 60;
 
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, height);
-                LinearLayout.LayoutParams mlp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, margin);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, height);
+            LinearLayout.LayoutParams mlp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, margin);
 
-                View v = new View(getActivity().getApplicationContext());
-                v.setLayoutParams(mlp);
-                dayViews[i].addView(v);
+            View v = new View(getActivity().getApplicationContext());
+            v.setLayoutParams(mlp);
+            tab.addView(v);
 
-                tv.setBackgroundColor(e.getColor());
-                tv.setTextColor(Color.parseColor("#000000"));
-                tv.setLayoutParams(lp);
-                tv.setText(e.getName() + "\n" + e.getLocation());
-                dayViews[i].addView(tv);
+            tv.setBackgroundColor(e.getColor());
+            tv.setTextColor(Color.parseColor("#000000"));
+            tv.setText(e.getName() + "\n" + e.getLocation());
+            Log.d("sched", "adding view with height " + height);
+            tab.addView(tv);
+            tv.setLayoutParams(lp);
 
-                time = e.getEnd();
-            }
+            time = e.getEnd();
         }
     }
 }
