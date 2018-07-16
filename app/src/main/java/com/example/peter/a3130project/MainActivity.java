@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("available_courses1").child(semester + " " + year);
+        DatabaseReference myRef = database.getReference("available_courses2").child(semester + " " + year);
 
         Log.d("COURSE", "Creating cards\n");
 
@@ -299,7 +299,9 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("COURSE", "Found course id: " + key);
 
                     Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
-                    Course course = new Course(key, (String) values.get("name"), (String) values.get("semester"), (String) values.get("year"));
+
+                    // TODO the semester and year probably are not needed (or can just be filled in from the given function values)
+                    Course course = new Course(key, (String) values.get("name"), semester, year);
 
                     Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " + (String) values.get("semester") + " " + (String) values.get("year"));
 
