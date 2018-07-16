@@ -1,24 +1,18 @@
 /* Note, some portions of code are adapted from https://firebase.google.com/docs/auth/android/password-auth */
 package com.example.peter.a3130project;
 
-import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-
 import android.support.annotation.Nullable;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-
 import android.view.inputmethod.EditorInfo;
-
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,7 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
  * @author Peter Lee
  * @author Aecio Cavalcanti
  */
-public class LoginActivity extends AppCompatActivity implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
+public class ResetPasswordActivity extends AppCompatActivity implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
 
     // UI references
     private EditText et_password;
@@ -47,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements android.support.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_resetpass);
 
         mAuth = FirebaseAuth.getInstance();
         et_password = (EditText) findViewById(R.id.et_password);
@@ -79,16 +73,6 @@ public class LoginActivity extends AppCompatActivity implements android.support.
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         attemptLogin();
-    }
-
-    /**resetPassword
-     *  Called on forgot password text field
-     *  Initiates password reset, starts ResetPasswordActivity
-     *  @param view
-     */
-    public void resetPassword(View view) {
-        Intent intent = new Intent(this, ResetPasswordActivity.class);
-        startActivity(intent);
     }
 
     /**
@@ -175,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements android.support.
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("A", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ResetPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     }
