@@ -79,6 +79,7 @@
 
     <Button
         android:id="@+id/bt_signin"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -90,19 +91,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_password" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:onClick="resetPassword"
-        android:paddingLeft="3dp"
-        android:text="Forgot Password?" />
-
   </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
