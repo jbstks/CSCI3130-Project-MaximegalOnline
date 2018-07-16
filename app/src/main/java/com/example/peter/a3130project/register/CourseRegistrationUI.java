@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -64,23 +65,38 @@ public class CourseRegistrationUI extends CourseRegistration{
 
         // TODO setup B00 numbers for each user and query for them here
 
+        final ArrayList<Integer> students = new ArrayList<>(Arrays.asList(0));
+        final String crn = cs.getcrn();
+
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String email = user.getEmail();
+                int students = 0;
                 B00 = null;
                 int index = 0;
                 for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
                     String Bcand = bentry.getKey();
 
+                    for (DataSnapshot course : bentry.child("courses").child("current").getChildren()) {
+                        if (((String)course.getValue()).equals(crn)) {
+                            students += 1;
+                        }
+                    }
+
                     if (bentry.child("email").getValue(String.class).equals(email)) {
                         B00 = Bcand;
-                        break;
                     }
                 }
 
                 if (B00 == null) {
                     Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // TODO: compare students to course capacity
+                if (students >= 60) {
+                    Toast.makeText(applicationContext, "Can't register. Course section is full.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
