@@ -1,6 +1,8 @@
 package com.example.peter.a3130project.register;
 import android.content.Context;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -200,7 +202,7 @@ public class CourseRegistrationUI extends CourseRegistration{
      * @param course_sec:
      *    course that is desired to be registered
      **/
-    public void pushRegister(CourseSection course_sec, int index) throws RegistrationException {
+    public void pushRegister(final CourseSection course_sec, int index) throws RegistrationException {
 
         /* Check to see if the course is valid */
         ArrayList<CourseSection> cs= attempt_register(course_sec);
@@ -214,7 +216,17 @@ public class CourseRegistrationUI extends CourseRegistration{
             throw new RegistrationException("Invalid registration state");
         }
 
+        DatabaseReference.CompletionListener onComplete = new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                if (databaseError == null) {
+                    String code = course_sec.getcourse().getcode();
+                    Toast.makeText(applicationContext, "Successfully registered for " + code + ".", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
         /* Adds the course to the database*/
-        dbRef.child("students").child(B00).child("courses").child("current").child((new Integer(index)).toString()).setValue(course_sec.getcrn());
+        dbRef.child("students").child(B00).child("courses").child("current").child((Integer.toString(index))).setValue(course_sec.getcrn(), onComplete);
     }
 }
