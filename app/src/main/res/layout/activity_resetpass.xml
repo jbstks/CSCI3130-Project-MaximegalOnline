@@ -39,9 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:lines="2"
         android:paddingLeft="3dp"
-        android:text="Enter your University of Maximegalon email " />
+        android:text="Enter your University of Maximegalon email and your new password" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/til_email"
