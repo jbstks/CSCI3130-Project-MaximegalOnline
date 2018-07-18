@@ -1,28 +1,22 @@
 package com.example.peter.a3130project;
 
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /** ResetPasswordActivity
  *
@@ -33,32 +27,94 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private String newPassword, email, oldPassword;
     private FirebaseUser user;
     private EditText et_email, et_password;
-
+    private FirebaseDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resetpass);
-        emailField = (EditText) findViewById(R.id.et_email);
-        passwordField =(EditText) findViewById(R.id.et_password);
+        et_email = (EditText) findViewById(R.id.et_email);
+        et_password =(EditText) findViewById(R.id.et_password);
+        db = FirebaseDatabase.getInstance();
         
     }
     public void clickReset(View view) {
-        newPassword = et_password.getText();
-        email = et_email.getText();
+        newPassword = et_password.getText().toString();
+        email = et_email.getText().toString();
 
-        //TODO: check to make sure user is valid
 
-        //TODO: check to make sure user is in firebase
+        switch(LoginChecker.checkLogin(email,newPassword)) {
 
-        //TODO: check that this password is valid
+        case EMPTY_USER:
+            Log.d("emaillen", "0");
+            
+            et_email.setError((CharSequence) getString(R.string.error_field_required),null);
+            et_email.requestFocus();
+            break;
+            
+        case EMPTY_PASSWORD:
+            et_password.setError((CharSequence) getString(R.string.error_field_required), null);
+            
+            et_password.requestFocus();
+            Log.d("passwlen", "0");
+            break;
+            
+        case SHORT_USER:
+            Log.d("emaillen", "less8");
+            et_email.setError((CharSequence) getString(R.string.error_invalid_email),null);
+            et_email.requestFocus();
+            break;
+            
+        case SHORT_PASSWORD:
+            Log.d("passwlen", "less8");
+            et_password.setError((CharSequence) getString(R.string.error_invalid_password), null);
+            et_password.requestFocus();
+            break;
 
-        //TODO: retrieve old password from database
+        case OK:
+            db.getReference().child("students").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        changePassword();
+                        if (queryNameInDatabase(dataSnapshot)) {
+
+                            changePassword();
+     
+
+                        }
+                        else{
+                            //give feedback
+                            Toast.makeText(ResetPasswordActivity.this, "Not updated. User does not exist.", Toast.LENGTH_SHORT).show();
+                        }
+                       
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError e){
+                    }
+                });
+            
+                    
+
+
+    }
         
     }
+    /** Obtain the password from the database 
+        returns true if name is found; false otherwise
+**/
+    private boolean queryNameInDatabase(DataSnapshot dataSnapshot) {
+        Log.d("query","start");
+        for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
+            Log.d("query","thang");
+            if (bentry.child("email").getValue(String.class).equals(email)) {
+                oldPassword = bentry.child("password").getValue(String.class);
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void changePassword() {
-        user.updatePassword(newPassword);
+
         AuthCredential cred = EmailAuthProvider.getCredential(email, oldPassword); //todo oldtask
         user.reauthenticate(cred).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -66,6 +122,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 public void onComplete(Task<Void> task) {
+                                    Toast.makeText(ResetPasswordActivity.this, "Password updated successfully.", Toast.LENGTH_SHORT).show();
                                 }
                             });
                     }
