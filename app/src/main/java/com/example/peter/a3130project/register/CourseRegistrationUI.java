@@ -67,6 +67,7 @@ public class CourseRegistrationUI extends CourseRegistration{
 
         final ArrayList<Integer> students = new ArrayList<>(Arrays.asList(0));
         final String crn = cs.getcrn();
+        final int capacity = cs.getcapacity();
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -94,8 +95,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                     return;
                 }
 
-                // TODO: compare students to course capacity
-                if (students >= 60) {
+                if (students >= capacity) {
                     Toast.makeText(applicationContext, "Can't register. Course section is full.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -126,7 +126,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                         for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
                             for (String CRN: CRNs) {
                                 if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
-                                    int capacity = sectionSnapshot.child("professor").getValue(Integer.class);
+                                    int capacity = sectionSnapshot.child("capacity").getValue(Integer.class);
                                     String sectionNum = sectionSnapshot.getKey();
                                     String prof = sectionSnapshot.child("professor").getValue(String.class);
 
