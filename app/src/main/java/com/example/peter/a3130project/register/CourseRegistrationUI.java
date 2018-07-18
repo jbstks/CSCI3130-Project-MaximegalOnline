@@ -101,7 +101,6 @@ public class CourseRegistrationUI extends CourseRegistration{
                 for (DataSnapshot crnSnapshot : dataSnapshot.child("crn").getChildren()) {
                     for (String CRN: CRNs) {
                         if (crnSnapshot.getKey().equals(CRN)) {
-                            //for (DataSnapshot courseSnapshot : crnSnapshot.getChildren()) {
                             String sectionNum = crnSnapshot.child("section").getValue(String.class);
                             String prof = crnSnapshot.child("professor").getValue(String.class);
 
