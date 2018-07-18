@@ -65,7 +65,8 @@
           android:layout_weight="1"
           android:ems="10"
           android:hint="Email"
-          android:inputType="textEmailAddress" />
+          android:inputType="textEmailAddress"
+          android:text="testing@test.com" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -90,7 +91,8 @@
           android:layout_weight="1"
           android:ems="10"
           android:hint="Password"
-          android:inputType="textPassword" />
+          android:inputType="textPassword"
+          android:text="testing123" />
     </android.support.design.widget.TextInputLayout>
 
     <Button

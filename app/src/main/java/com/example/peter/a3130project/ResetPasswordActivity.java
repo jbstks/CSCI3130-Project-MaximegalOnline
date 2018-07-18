@@ -11,7 +11,9 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +30,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private FirebaseUser user;
     private EditText et_email, et_password;
     private FirebaseDatabase db;
+    private FirebaseAuth mAuth;
+    private String b00;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
         et_email = (EditText) findViewById(R.id.et_email);
         et_password =(EditText) findViewById(R.id.et_password);
         db = FirebaseDatabase.getInstance();
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
         
     }
     public void clickReset(View view) {
@@ -71,11 +78,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
             break;
 
         case OK:
-            db.getReference().child("students").addListenerForSingleValueEvent(new ValueEventListener() {
+            db.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        if (queryNameInDatabase(dataSnapshot)) {
+                        b00 = queryNameInDatabase(dataSnapshot);
+                        if (b00!=null) {
 
                             changePassword();
      
@@ -101,33 +108,38 @@ public class ResetPasswordActivity extends AppCompatActivity {
     /** Obtain the password from the database 
         returns true if name is found; false otherwise
 **/
-    private boolean queryNameInDatabase(DataSnapshot dataSnapshot) {
+    private String queryNameInDatabase(DataSnapshot dataSnapshot) {
         Log.d("query","start");
         for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
             Log.d("query","thang");
             if (bentry.child("email").getValue(String.class).equals(email)) {
                 oldPassword = bentry.child("password").getValue(String.class);
-                return true;
+                return bentry.getKey();
             }
         }
-        return false;
+        return null;
     }
     
     public void changePassword() {
-
+        Log.d("change poassword", oldPassword);
         AuthCredential cred = EmailAuthProvider.getCredential(email, oldPassword); //todo oldtask
-        user.reauthenticate(cred).addOnCompleteListener(new OnCompleteListener<Void>() {
+        //user.reauthenticate(cred).addOnCompleteListener(new OnCompleteListener<Void>() {
+        mAuth.signInWithEmailAndPassword(email, oldPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
-                public void onComplete(Task<Void> task ) {
+                public void onComplete(Task<AuthResult> task ) {
                     if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        db.getReference().child("students").child(b00).child("password").setValue(newPassword);
                         user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 public void onComplete(Task<Void> task) {
                                     Toast.makeText(ResetPasswordActivity.this, "Password updated successfully.", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                        mAuth.signOut();
                     }
                 }
             });
+        
         
         
     }
