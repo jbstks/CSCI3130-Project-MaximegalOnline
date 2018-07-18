@@ -38,7 +38,6 @@ public class CourseRegistrationUI extends CourseRegistration{
     private CourseSection coursesection;
     private String B00;
     private FirebaseUser user;
-    private int i;
 
     /**
      * Constructor
@@ -97,48 +96,36 @@ public class CourseRegistrationUI extends CourseRegistration{
                         }
                     }
                 }
-                index++;
-                i = 0;
                 // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
-                // TODO: refactor database structure to avoid nested loops
-                // loop through semesters
-                for (DataSnapshot semesterSnapshot : dataSnapshot.child("available_courses1").getChildren()) {
-                    // loop through courses
-                    for (DataSnapshot courseSnapshot : semesterSnapshot.getChildren()) {
-                        // loop through sections
-                        for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
-                            for (String CRN: CRNs) {
-                                if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
-                                    String sectionNum = sectionSnapshot.getKey();
-                                    String prof = sectionSnapshot.child("professor").getValue(String.class);
+                for (DataSnapshot crnSnapshot : dataSnapshot.child("crn").getChildren()) {
+                    for (String CRN: CRNs) {
+                        if (crnSnapshot.getKey().equals(CRN)) {
+                            //for (DataSnapshot courseSnapshot : crnSnapshot.getChildren()) {
+                            String sectionNum = crnSnapshot.child("section").getValue(String.class);
+                            String prof = crnSnapshot.child("professor").getValue(String.class);
 
-                                    List<CourseTime> courseTimeList = new ArrayList<>();
-                                    //get CourseTime info
-                                    for (DataSnapshot timesSnapshot : sectionSnapshot.child("times").getChildren()) {
-                                        String day = timesSnapshot.getKey();
-                                        String startTime = timesSnapshot.child("start").getValue(String.class);
-                                        String endTime = timesSnapshot.child("end").getValue(String.class);
-                                        String location = timesSnapshot.child("location").getValue(String.class);
+                            List<CourseTime> courseTimeList = new ArrayList<>();
+                            //get CourseTime info
+                            for (DataSnapshot timesSnapshot : crnSnapshot.child("times").getChildren()) {
+                                String day = timesSnapshot.getKey();
+                                String startTime = timesSnapshot.child("start").getValue(String.class);
+                                String endTime = timesSnapshot.child("end").getValue(String.class);
+                                String location = timesSnapshot.child("location").getValue(String.class);
 
-                                        CourseTime courseTime = new CourseTime(day, startTime, endTime, location);
-                                        courseTimeList.add(courseTime);
-                                    }
-
-                                    //get Course info
-                                    String code = courseSnapshot.getKey();
-                                    String name = courseSnapshot.child("name").getValue(String.class);
-                                    String semester = courseSnapshot.child("semester").getValue(String.class);
-                                    String year = courseSnapshot.child("year").getValue(String.class);
-
-                                    Course course = new Course(code, name, semester, year);
-                                    CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
-                                    currentCourseSections.add(section);
-                                }
-                                else {
-                                    i++;
-                                }
+                                CourseTime courseTime = new CourseTime(day, startTime, endTime, location);
+                                courseTimeList.add(courseTime);
                             }
+
+                            //get Course info
+                            String code = crnSnapshot.child("code").getValue(String.class);
+                            String name = crnSnapshot.child("name").getValue(String.class);
+                            String semester = crnSnapshot.child("semester").getValue(String.class);
+                            String year = crnSnapshot.child("year").getValue(String.class);
+
+                            Course course = new Course(code, name, semester, year);
+                            CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
+                            currentCourseSections.add(section);
                         }
                     }
                 }
