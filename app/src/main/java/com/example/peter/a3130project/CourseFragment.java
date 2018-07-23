@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import java.util.List;
 
@@ -16,10 +18,12 @@ import java.util.List;
  *
  * @author Joanna Bistekos
  * @author Dawson Wilson
+ * @author Peter Lee
  */
 public class CourseFragment extends Fragment {
 
     private CourseRVAdapter courseRVAdapter;
+    private Spinner sortByFacultySpinner;
 
     /**
      * Default constructor
@@ -62,6 +66,15 @@ public class CourseFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         course_rv.setLayoutManager(llm);
         course_rv.setAdapter(courseRVAdapter);
+
+        // Grabbed from documentation https://developer.android.com/guide/topics/ui/controls/spinner
+        String[] faculties = new String[] {"Business", "Chemistry", "Computer Science", "Mathematics", "Statistics"};
+        sortByFacultySpinner = (Spinner) view.findViewById(R.id.sortByFacultySpinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> sortByFacultyAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, faculties);
+        sortByFacultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        sortByFacultySpinner.setAdapter(sortByFacultyAdapter);
 
         return view;
     }
