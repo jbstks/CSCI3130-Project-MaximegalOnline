@@ -34,6 +34,7 @@ public class SubjectSort {
             for (String s : categories) {
                 if (c.getcode().startsWith(s)) {
                     ret.get(s).add(c);
+                    break;
                 }
             }
         }
