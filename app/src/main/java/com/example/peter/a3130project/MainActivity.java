@@ -394,13 +394,13 @@ public class MainActivity extends AppCompatActivity {
                 for (i = 0; i < registeredCRNs.size(); i++) {
                     String crn = registeredCRNs.get(i);
                     Log.d("REGISTEREDCOURSES", "Looking up the crn" + " " + crn + " hi");
-                    String professor = dataSnapshot.child("52243").child("professor").getValue(String.class);
-                    String sectionNum = dataSnapshot.child(crn).child("section").getValue(String.class);
+                    String professor = dataSnapshot.child("crn").child(crn).child("professor").getValue(String.class);
+                    String sectionNum = dataSnapshot.child("crn").child(crn).child("section").getValue(String.class);
                     List<CourseTime> courseTimes = new ArrayList<>();
 
                     Log.d("REGISTEREDCOURSES", "going into times with " + crn + " " + professor + " " + sectionNum);
 
-                    for(DataSnapshot time : dataSnapshot.child(crn).child("times").getChildren()) {
+                    for(DataSnapshot time : dataSnapshot.child("crn").child(crn).child("times").getChildren()) {
                         String day = time.getKey();
                         String start = time.child("start").getValue(String.class);
                         String end = time.child("end").getValue(String.class);
@@ -411,10 +411,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     //get Course info
-                    String code = dataSnapshot.child(crn).child("code").getValue(String.class);
-                    String name = dataSnapshot.child(crn).child("name").getValue(String.class);
-                    String semester = dataSnapshot.child(crn).child("semester").getValue(String.class);
-                    String year = dataSnapshot.child(crn).child("year").getValue(String.class);
+                    String code = dataSnapshot.child("crn").child(crn).child("code").getValue(String.class);
+                    String name = dataSnapshot.child("crn").child(crn).child("name").getValue(String.class);
+                    String semester = dataSnapshot.child("crn").child(crn).child("semester").getValue(String.class);
+                    String year = dataSnapshot.child("crn").child(crn).child("year").getValue(String.class);
                     Course course = new Course(code, name, semester, year);
 
                     CourseSection section = new CourseSection(sectionNum, crn, professor, course, courseTimes);
