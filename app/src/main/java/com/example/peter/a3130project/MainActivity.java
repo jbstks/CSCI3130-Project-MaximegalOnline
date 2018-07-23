@@ -25,17 +25,21 @@ import android.view.ViewGroup;
 
 import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.course.CourseTime;
+import com.example.peter.a3130project.subject.SubjectSort;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private final List<Course> courses = new ArrayList<>();
+    private final List<Course> allcourses = new ArrayList<>();
     private final List<CourseSection> courseList = new ArrayList<>();
     private CourseRVAdapter courseRVAdapter;
     private ScheduleFragment scheduleFragment;
@@ -89,8 +94,10 @@ public class MainActivity extends AppCompatActivity {
     private CourseSection coursesection;
     private String B00;
     private FirebaseUser user;
-    private int i;
+    private int i;      
+    private SubjectSort subsort;
 
+    private Spinner subjectSpinner;
     /**
      * Things to be done on activity creation
      *
@@ -142,6 +149,10 @@ public class MainActivity extends AppCompatActivity {
 
         getCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
         getRegisteredCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
+        // make subject sorting object
+        subsort = new SubjectSort(subjects);
+        subjectSpinner = findViewById(R.id.sortByFacultySpinner);
+
     }
 
     /**
@@ -303,15 +314,26 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " + (String) values.get("semester") + " " + (String) values.get("year"));
 
-                    courses.add(course);
+                    //courses.add(course);
+                    allcourses.add(course);
 
-                    Log.d("COURSE", "courses size is now: " + courses.size());
+                    Log.d("COURSE", "courses size is now: " + allcourses.size());
 
                     courseRVAdapter.notifyDataSetChanged();
                 }
+                
                 Log.d("Course", "returning courses");
 
                 Log.d("Course", "finished");
+                
+                String selectedSubject;
+                subjectSpinner = findViewById(R.id.sortByFacultySpinner);
+                selectedSubject = subjectSpinner.getItemAtPosition(subjectSpinner.getSelectedItemPosition()).toString();
+
+                ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
+                courseRVAdapter.setcourses(sortCourseList);
+                courseRVAdapter.notifyDataSetChanged();
+
             }
 
             /**
@@ -443,5 +465,21 @@ public class MainActivity extends AppCompatActivity {
         };
 
         myRef.addListenerForSingleValueEvent(courseSectionListener);
+    }
+
+    /**
+     * changelistener for spinner. Changes sorting by faculty/subject
+     * 
+     * 
+     **/
+    public void changeSubjectSpinner(View view) {
+        String selectedSubject;
+        subjectSpinner = findViewById(R.id.sortByFacultySpinner);
+        selectedSubject = subjectSpinner.getItemAtPosition(subjectSpinner.getSelectedItemPosition()).toString();
+
+        ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
+        courseRVAdapter.setcourses(sortCourseList);
+        courseRVAdapter.notifyDataSetChanged();
+
     }
 }
