@@ -3,6 +3,7 @@ package com.example.peter.a3130project.subject;
 import com.example.peter.a3130project.course.Course;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /** 
  * July 23, 2018
@@ -13,8 +14,8 @@ import java.util.HashMap;
  * Class for handling sorting of classes by subject
  **/
 public class SubjectSort {
-    private ArrayList<String> categories;
-    public SubjectSort(ArrayList<String> categories) {
+    private List<String> categories;
+    public SubjectSort(List<String> categories) {
         this.categories = categories;
     }
 
@@ -22,7 +23,7 @@ public class SubjectSort {
      * @param courses
      * @return Hashset for each course identifier
      **/
-    public HashMap<String,ArrayList<Course>> doSort(ArrayList<Course> courses) {
+    public HashMap<String,ArrayList<Course>> doSort(List<Course> courses) {
         HashMap<String,ArrayList<Course>> ret = new HashMap<String,ArrayList<Course>>();
         /* Initialize hashset */
         for (String s : categories) {
@@ -43,9 +44,9 @@ public class SubjectSort {
     }
 
         
-    public ArrayList<String> getcategories(){
+    public List<String> getcategories(){
         return this.categories;
     }
-    public void setcategories(ArrayList<String> val){
+    public void setcategories(List<String> val){
          this.categories = val;
     }}
