@@ -21,7 +21,7 @@ import java.util.List;
  * @author Peter Lee
  */
 public class CourseFragment extends Fragment {
-
+    public static String[] faculties = new String[] {"Business", "Chemistry", "Computer Science", "Mathematics", "Statistics"};
     private CourseRVAdapter courseRVAdapter;
     private Spinner sortByFacultySpinner;
 
@@ -68,7 +68,7 @@ public class CourseFragment extends Fragment {
         course_rv.setAdapter(courseRVAdapter);
 
         // Grabbed from documentation https://developer.android.com/guide/topics/ui/controls/spinner
-        String[] faculties = new String[] {"Business", "Chemistry", "Computer Science", "Mathematics", "Statistics"};
+
         sortByFacultySpinner = (Spinner) view.findViewById(R.id.sortByFacultySpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> sortByFacultyAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, faculties);

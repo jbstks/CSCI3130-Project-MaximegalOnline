@@ -39,6 +39,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private SubjectSort subsort;
 
     private Spinner subjectSpinner;
+    private ArrayList<String> subjects;
     /**
      * Things to be done on activity creation
      *
@@ -150,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
         getCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
         getRegisteredCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
         // make subject sorting object
+        subjects = new ArrayList<String>(Arrays.asList(CourseFragment.faculties));
         subsort = new SubjectSort(subjects);
         subjectSpinner = findViewById(R.id.sortByFacultySpinner);
 
