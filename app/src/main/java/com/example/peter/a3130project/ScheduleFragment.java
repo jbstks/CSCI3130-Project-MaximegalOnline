@@ -89,7 +89,8 @@ public class ScheduleFragment extends Fragment {
 
         final ArrayList<String> days = new ArrayList<String>(Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday"));
 
-        final String[] colors = { "#ffe8e8", "#f0f0da", "#d3eabb", "#a9c4a0" };
+        //final String[] colors = { "#ffe8e8", "#f0f0da", "#d3eabb", "#a9c4a0" };
+        final String[] colors = { "#40f44336", "#40ffc107", "#404caf50", "#402196f3" };
         int colorIndex = 0;
 
         final ArrayList<ScheduleEntry> schedule = new ArrayList<>();
@@ -134,7 +135,7 @@ public class ScheduleFragment extends Fragment {
             tab.addView(v);
 
             tv.setBackgroundColor(e.getColor());
-            tv.setTextColor(Color.parseColor("#000000"));
+            //tv.setTextColor(Color.parseColor("#000000"));
             tv.setText(e.getName() + "\n" + e.getLocation());
             Log.d("sched", "adding view with height " + height);
             tab.addView(tv);
