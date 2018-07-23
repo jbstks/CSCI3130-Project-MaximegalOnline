@@ -27,14 +27,14 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.AllOf.allOf;
 
-public class SectionSortEspressoTest {
+public class SubjectSortEspressoTest {
 
     @Rule
     public ActivityTestRule<TermActivity> activityrule =
             new ActivityTestRule<>(TermActivity.class);
 
     @Test
-    public void switchSectionTest() {
+    public void switchSubjectTest() {
         assert(false);
     }
 

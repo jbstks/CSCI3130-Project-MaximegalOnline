@@ -13,11 +13,11 @@ import static org.junit.Assert.*;
  *
  * Tests for register business logic
  */
-public class SectionSortTest {
+public class SubjectSortTest {
     
     /** Tests **/
     @Test
-    public void sortClassesBySection() {
+    public void sortClassesBySubject() {
 	
 	assertTrue(false);
 	
