@@ -30,8 +30,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
-
 /** LoginActivity
  *
  * Main entry point for sign-in
@@ -81,6 +79,16 @@ public class LoginActivity extends AppCompatActivity implements android.support.
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         attemptLogin();
+    }
+
+    /**resetPassword
+     *  Called on forgot password text field
+     *  Initiates password reset, starts ResetPasswordActivity
+     *  @param view
+     */
+    public void resetPassword(View view) {
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
+        startActivity(intent);
     }
 
     /**
