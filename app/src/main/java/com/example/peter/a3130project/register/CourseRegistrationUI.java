@@ -33,7 +33,10 @@ public class CourseRegistrationUI extends CourseRegistration{
     private DatabaseReference dbRef;
     private ArrayList<String> CRNs;
     private HashSet<String> setCRN;
+    private ArrayList<String> completeCRNs;
+    private HashSet<String> setcompleteCRN;
     private ArrayList<CourseSection> currentCourseSections;
+    private ArrayList<CourseSection> completeCourseSections;
     private Context applicationContext;
     private CourseSection coursesection;
     private String B00;
@@ -56,7 +59,7 @@ public class CourseRegistrationUI extends CourseRegistration{
     public void firebaseRegister(FirebaseUser fuser, CourseSection cs, Context ac) {
         applicationContext = ac;
         coursesection = cs;
-        // Fills in current_courses with the firebase instance.
+        // Fills in current_courses and complete_courses with the firebase instance.
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         user = fuser;
         dbRef = db.getReference();
@@ -96,8 +99,23 @@ public class CourseRegistrationUI extends CourseRegistration{
                         }
                     }
                 }
+                //get CRNs for complete courses
+                completeCRNs = new ArrayList<>();
+                setcompleteCRN = new HashSet<>();
+                for (DataSnapshot snapshot : dataSnapshot.child("students").child(B00).child("courses").child("complete").getChildren()) {
+                    String tmp = snapshot.getValue(String.class);
+                    String key = snapshot.getKey();
+                    if (!setcompleteCRN.contains(tmp)) {
+                        completeCRNs.add(tmp);
+                        setcompleteCRN.add(tmp);
+                        if (Integer.parseInt(key) > index ) {
+                            index = Integer.parseInt(key);
+                        }
+                    }
+                }
                 // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
+                completeCourseSections = new ArrayList<>();
                 for (DataSnapshot crnSnapshot : dataSnapshot.child("crn").getChildren()) {
                     for (String CRN: CRNs) {
                         if (crnSnapshot.getKey().equals(CRN)) {
@@ -127,9 +145,38 @@ public class CourseRegistrationUI extends CourseRegistration{
                             currentCourseSections.add(section);
                         }
                     }
+                    for (String CRN: completeCRNs) {
+                        if (crnSnapshot.getKey().equals(CRN)) {
+                            String sectionNum = crnSnapshot.child("section").getValue(String.class);
+                            String prof = crnSnapshot.child("professor").getValue(String.class);
+
+                            List<CourseTime> courseTimeList = new ArrayList<>();
+                            //get CourseTime info
+                            for (DataSnapshot timesSnapshot : crnSnapshot.child("times").getChildren()) {
+                                String day = timesSnapshot.getKey();
+                                String startTime = timesSnapshot.child("start").getValue(String.class);
+                                String endTime = timesSnapshot.child("end").getValue(String.class);
+                                String location = timesSnapshot.child("location").getValue(String.class);
+
+                                CourseTime courseTime = new CourseTime(day, startTime, endTime, location);
+                                courseTimeList.add(courseTime);
+                            }
+
+                            //get Course info
+                            String code = crnSnapshot.child("code").getValue(String.class);
+                            String name = crnSnapshot.child("name").getValue(String.class);
+                            String semester = crnSnapshot.child("semester").getValue(String.class);
+                            String year = crnSnapshot.child("year").getValue(String.class);
+
+                            Course course = new Course(code, name, semester, year);
+                            CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
+                            completeCourseSections.add(section);
+                        }
+                    }
                 }
 
                 setcurrent_courses(currentCourseSections);
+                setcomplete_courses(completeCourseSections);
                 if (currentCourseSections.size() == 0) {
                     Log.d("Register", "curcourse is null for some reason");
                 }

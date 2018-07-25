@@ -14,6 +14,7 @@ import java.util.HashSet;
  **/
 public class CourseRegistration {
     private ArrayList<CourseSection> current_courses;
+    private ArrayList<CourseSection> complete_courses;
 
     public CourseRegistration() {
     }
@@ -101,6 +102,13 @@ public class CourseRegistration {
     }
     public void setcurrent_courses(ArrayList<CourseSection> val){
          this.current_courses = val;
+    }
+
+    public ArrayList<CourseSection> getcomplete_courses(){
+        return complete_courses;
+    }
+    public void setcomplete_courses(ArrayList<CourseSection> val){
+        this.complete_courses = val;
     }
 
     public boolean equals(CourseRegistration cr) {
