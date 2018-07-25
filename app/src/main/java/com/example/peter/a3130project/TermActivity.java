@@ -72,7 +72,7 @@ public class TermActivity extends AppCompatActivity {
     }
 
    /**
-    * Called when the user taps a course card
+    * Called when the user taps a term card
     */
     public void viewTermInfo(View view) {
         Intent intent = new Intent(this, MainActivity.class);

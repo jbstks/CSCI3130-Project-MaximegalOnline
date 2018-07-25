@@ -39,6 +39,7 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -68,7 +69,7 @@ import com.example.peter.a3130project.course.Course;
  * @author Bradley Garagan
  * @author Joanna Bistekos
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Serializable{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
@@ -83,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private String semester;
+    private String year;
     private final List<Course> courses = new ArrayList<>();
     private final List<Course> allcourses = new ArrayList<>();
     private final List<CourseSection> courseList = new ArrayList<>();
@@ -96,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
     private CourseSection coursesection;
     private String B00;
     private FirebaseUser user;
-    private int i;      
-    private SubjectSort subsort;
+    private int i;
 
+    private SubjectSort subsort;
     private Spinner subjectSpinner;
     private ArrayList<String> subjects;
     /**
@@ -117,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
         Bundle termActivityBundle = termActivityIntent.getExtras();
 
         if (termActivityBundle != null) {
-            String semester = (String) termActivityBundle.get("semester");
-            String year = (String) termActivityBundle.get("year");
+            semester = (String) termActivityBundle.get("semester");
+            year = (String) termActivityBundle.get("year");
             setTitle(semester+" "+year);
         }
 
@@ -150,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        getCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
-        getRegisteredCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
+        getCourses(semester, year);
+        getRegisteredCourses(semester, year);
         // make subject sorting object
         subjects = new ArrayList<String>(Arrays.asList(CourseFragment.faculties));
         subsort = new SubjectSort(subjects);
@@ -255,6 +258,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void viewAvailableCourses(View view) {
         Intent intent = new Intent(this, AvailableCoursesActivity.class);
+        intent.putExtra("semester", semester);
+        intent.putExtra("year", year);
         startActivity(intent);
     }
 
@@ -286,6 +291,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DropActivity.class);
         startActivity(intent);
     }
+
+    // TODO: this probably doesn't need to be here anymore, it is in AvailableCoursesActivity
+    // I don't think it's used for anything in MainActivity anymore.
 
     /**
      * Gets courses from the database
@@ -340,7 +348,8 @@ public class MainActivity extends AppCompatActivity {
 
                 ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
                 //courseRVAdapter.setcourses(sortCourseList);
-                //courseRVAdapter.notifyDataSetChanged();
+                courseRVAdapter.setcourses(allcourses);
+                courseRVAdapter.notifyDataSetChanged();
             }
 
             /**

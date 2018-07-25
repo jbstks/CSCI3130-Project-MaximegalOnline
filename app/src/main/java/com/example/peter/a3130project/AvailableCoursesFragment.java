@@ -52,8 +52,8 @@ public class AvailableCoursesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.content_availcourses, container, false);
-        final RecyclerView course_rv = view.findViewById(R.id.course_rv);
+        View view = inflater.inflate(R.layout.fragment_availcourses, container, false);
+        /*final RecyclerView course_rv = view.findViewById(R.id.course_rv);
         course_rv.setHasFixedSize(false);
 
         course_rv.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +74,7 @@ public class AvailableCoursesFragment extends Fragment {
         ArrayAdapter<String> sortByFacultyAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, faculties);
         sortByFacultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        sortByFacultySpinner.setAdapter(sortByFacultyAdapter);
+        sortByFacultySpinner.setAdapter(sortByFacultyAdapter);*/
 
         return view;
     }

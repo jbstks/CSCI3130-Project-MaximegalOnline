@@ -54,14 +54,23 @@
             android:name=".TermActivity"
             android:label="@string/title_activity_term"
             android:theme="@style/AppTheme"></activity>
+
+        <!--remove these-->
         <activity
             android:name=".ScheduleActivity"></activity>
-        <!--remove this-->
         <activity
             android:name=".DropActivity"></activity>
 
         <activity
-            android:name=".AvailableCoursesActivity"></activity>
+            android:name=".AvailableCoursesActivity">
+            android:parentActivityName=".MainActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <activity
             android:name=".ResetPasswordActivity"
             android:parentActivityName=".LoginActivity"
