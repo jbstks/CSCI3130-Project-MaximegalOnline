@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.view.View;
@@ -155,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
         subjects = new ArrayList<String>(Arrays.asList(CourseFragment.faculties));
         subsort = new SubjectSort(subjects);
         subjectSpinner = findViewById(R.id.sortByFacultySpinner);
-
     }
 
     /**
@@ -248,6 +248,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /** viewAvailableCourses
+     * Called when the user taps the register button
+     *
+     * @param view
+     */
+    public void viewAvailableCourses(View view) {
+        Intent intent = new Intent(this, AvailableCoursesActivity.class);
+        startActivity(intent);
+    }
 
     /** logOut
      * Called when user presses logout button in menu.
@@ -277,10 +286,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DropActivity.class);
         startActivity(intent);
     }
-
-    // TODO: query out only the courses that are the correct semester
-    // we would query for the information then pass it into the Course Class
-    // The CourseTime part takes an arrayList of all the course times for that course
 
     /**
      * Gets courses from the database
@@ -322,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.d("COURSE", "courses size is now: " + allcourses.size());
 
-                    courseRVAdapter.notifyDataSetChanged();
+                    //courseRVAdapter.notifyDataSetChanged();
                 }
                 
                 Log.d("Course", "returning courses");
@@ -334,9 +339,8 @@ public class MainActivity extends AppCompatActivity {
                 selectedSubject = subjectSpinner.getItemAtPosition(subjectSpinner.getSelectedItemPosition()).toString();
 
                 ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
-                courseRVAdapter.setcourses(sortCourseList);
-                courseRVAdapter.notifyDataSetChanged();
-
+                //courseRVAdapter.setcourses(sortCourseList);
+                //courseRVAdapter.notifyDataSetChanged();
             }
 
             /**
@@ -435,7 +439,7 @@ public class MainActivity extends AppCompatActivity {
                                     courseTimeList.add(courseTime);
                                 }
 
-                                //get Course info
+                                // get Course info
                                 String code = courseSnapshot.getKey();
                                 String name = courseSnapshot.child("name").getValue(String.class);
                                 String semester = courseSnapshot.child("semester").getValue(String.class);
@@ -444,8 +448,11 @@ public class MainActivity extends AppCompatActivity {
 
                                 CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
                                 currentCourseSections.add(section);
+                                courses.add(course);
 
                                 if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
+                                courseRVAdapter.setcourses(courses);
+                                courseRVAdapter.notifyDataSetChanged();
                             }
                             else {
                                 i++;
@@ -481,8 +488,7 @@ public class MainActivity extends AppCompatActivity {
         selectedSubject = subjectSpinner.getItemAtPosition(subjectSpinner.getSelectedItemPosition()).toString();
 
         ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
-        courseRVAdapter.setcourses(sortCourseList);
-        courseRVAdapter.notifyDataSetChanged();
-
+        //courseRVAdapter.setcourses(sortCourseList);
+        //courseRVAdapter.notifyDataSetChanged();
     }
 }

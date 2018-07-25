@@ -9,18 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
-import java.util.List;
 
 /**
  * A fragment containing a list of courses
+ * A duplicate of CourseFragment that instead shows all courses instead of the courses a user has
+ * registered for
  *
  * @author Joanna Bistekos
  * @author Dawson Wilson
  * @author Peter Lee
  */
-public class CourseFragment extends Fragment {
+public class AvailableCoursesFragment extends Fragment {
     public static String[] faculties = new String[] {"Business", "Chemistry", "Computer Science", "Mathematics", "Statistics"};
     private CourseRVAdapter courseRVAdapter;
     private Spinner sortByFacultySpinner;
@@ -28,7 +28,7 @@ public class CourseFragment extends Fragment {
     /**
      * Default constructor
      */
-    public CourseFragment() {
+    public AvailableCoursesFragment() {
     }
 
     /**
@@ -36,7 +36,7 @@ public class CourseFragment extends Fragment {
      *
      * @param courseRVAdapter RecyclerView adapter for the course list
      */
-    public CourseFragment(CourseRVAdapter courseRVAdapter) {
+    public AvailableCoursesFragment(CourseRVAdapter courseRVAdapter) {
         this.courseRVAdapter = courseRVAdapter;
     }
 
@@ -49,9 +49,10 @@ public class CourseFragment extends Fragment {
      * @return created view
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_courses, container, false);
+        View view = inflater.inflate(R.layout.content_availcourses, container, false);
         final RecyclerView course_rv = view.findViewById(R.id.course_rv);
         course_rv.setHasFixedSize(false);
 
@@ -67,15 +68,13 @@ public class CourseFragment extends Fragment {
         course_rv.setAdapter(courseRVAdapter);
 
         // Grabbed from documentation https://developer.android.com/guide/topics/ui/controls/spinner
+
         sortByFacultySpinner = (Spinner) view.findViewById(R.id.sortByFacultySpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> sortByFacultyAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, faculties);
         sortByFacultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         sortByFacultySpinner.setAdapter(sortByFacultyAdapter);
-
-        Button registerButton = (Button) view.findViewById(R.id.registerButton);
-        if (courseRVAdapter.getcourses().size() > 4) registerButton.setEnabled(false);
 
         return view;
     }

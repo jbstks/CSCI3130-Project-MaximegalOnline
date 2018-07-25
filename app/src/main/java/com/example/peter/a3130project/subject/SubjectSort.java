@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/** 
- * July 23, 2018
+/**
+ * Class for handling sorting of classes by subject
  *
  * @author Peter Lee
  * @author Joanna Bistekos
- *
- * Class for handling sorting of classes by subject
+ * @date July 23, 2018
  **/
 public class SubjectSort {
     private List<String> categories;

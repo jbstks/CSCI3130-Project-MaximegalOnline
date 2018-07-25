@@ -61,6 +61,8 @@
             android:name=".DropActivity"></activity>
 
         <activity
+            android:name=".AvailableCoursesActivity"></activity>
+        <activity
             android:name=".ResetPasswordActivity"
             android:parentActivityName=".LoginActivity"
             android:label="@string/title_activity_resetpass">

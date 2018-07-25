@@ -111,5 +111,4 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     public void setcourses(List<Course> val){
          this.courses = val;
     }
-
 }
