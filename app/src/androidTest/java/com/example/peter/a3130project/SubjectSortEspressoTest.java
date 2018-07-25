@@ -35,6 +35,20 @@ public class SubjectSortEspressoTest {
 
     @Test
     public void switchSubjectTest() {
+        SystemClock.sleep(1500);
+        onView(withId(R.id.rv)).perform(actionOnItemAtPosition(1, click()));
+        SystemClock.sleep(1500);
+        onView(withText("REGISTER")).perform(click());
+                                                      
+
+        //onView(withId(R.id.sections_rv)).perform(matches(hasDescendant(withText("REGISTER"))),click());
+        SystemClock.sleep(1500);
+        // onView(withId(R.id.course_rv))
+        //     .check(RecyclerViewActions.actionOnItem(
+        //                                             hasDescendant(withText("Business for kids"))));
+        onView(withId(R.id.course_cv))
+                .check(matches(hasDescendant(withText("Business for kids"))));
+
         assert(false);
     }
 
