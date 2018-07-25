@@ -342,10 +342,10 @@ public class MainActivity extends AppCompatActivity {
      * Modified from {@link com.example.peter.a3130project.register.CourseRegistrationUI}'s
      * {@code firebaseRegister()} function
      *
-     * @param semester selected semester month
-     * @param year     selected semester year
+     * @param inSemester selected semester month
+     * @param inYear     selected semester year
      */
-    public void getRegisteredCourses(final String semester, final String year) {
+    public void getRegisteredCourses(final String inSemester, final String inYear) {
         // Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef  = database.getReference();
@@ -417,10 +417,11 @@ public class MainActivity extends AppCompatActivity {
                     String year = dataSnapshot.child("crn").child(crn).child("year").getValue(String.class);
                     Course course = new Course(code, name, semester, year);
 
-                    CourseSection section = new CourseSection(sectionNum, crn, professor, course, courseTimes);
-                    currentCourseSections.add(section);
-
-                    if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
+                    if (inYear.equalsIgnoreCase(year) && inSemester.equalsIgnoreCase(semester)) {
+                        CourseSection section = new CourseSection(sectionNum, crn, professor, course, courseTimes);
+                        currentCourseSections.add(section);
+                        if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
+                    }
                 }
             }
 
