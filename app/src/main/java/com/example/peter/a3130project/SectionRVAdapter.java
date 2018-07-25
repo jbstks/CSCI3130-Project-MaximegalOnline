@@ -93,10 +93,10 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
                 CourseRegistrationUI coursereg = null;
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-		        coursereg = new CourseRegistrationUI(); //TODO change null pointer here
-		        CourseSection cs = sections.get(position);
-		        coursereg.firebaseRegister(currentUser,cs, applicationContext);
-
+		coursereg = new CourseRegistrationUI(); //TODO change null pointer here
+                CourseSection cs = sections.get(position);
+                coursereg.firebaseRegister(currentUser,cs, applicationContext);
+                
                 }
             });
         }
