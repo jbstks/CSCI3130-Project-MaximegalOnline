@@ -12,12 +12,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.peter.a3130project.course.Course;
 import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.course.CourseTime;
+import com.example.peter.a3130project.subject.SubjectSort;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,10 +28,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** AvailableCoursesActivity
+/**  July 24, 2018
+ * AvailableCoursesActivity
  * Activity for viewing the courses by term.
  *
  * @author Joanna Bistekos
@@ -39,8 +44,11 @@ import java.util.Map;
 public class AvailableCoursesActivity extends AppCompatActivity {
 
     public static String[] faculties = new String[] {"Business", "Chemistry", "Computer Science", "Mathematics", "Statistics"};
+    public static String[] faccodes = new String[] {"BUSI", "CHEM", "CSCI", "MATH", "STAT"};
+    private HashMap<String, String> facmap;
     private CourseRVAdapter courseRVAdapter;
     private Spinner sortByFacultySpinner;
+    private SubjectSort subsort;
 
     private final List<Course> allcourses = new ArrayList<>();
 
@@ -48,6 +56,15 @@ public class AvailableCoursesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availcourses);
+
+        subsort = new SubjectSort(Arrays.asList(faccodes));
+        facmap = new HashMap<String, String>();
+        facmap.put("Business","BUSI");
+        facmap.put("Chemistry","CHEM");
+        facmap.put("Computer Science","CSCI");
+        facmap.put("Mathematics","MATH");
+        facmap.put("Statistics","STAT");
+        
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -77,14 +94,30 @@ public class AvailableCoursesActivity extends AppCompatActivity {
         course_rv.setAdapter(courseRVAdapter);
 
         getCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
+        
         // Grabbed from documentation https://developer.android.com/guide/topics/ui/controls/spinner
-
         sortByFacultySpinner = (Spinner) findViewById(R.id.sortByFacultySpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> sortByFacultyAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, faculties);
         sortByFacultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         sortByFacultySpinner.setAdapter(sortByFacultyAdapter);
+
+        sortByFacultySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    // Check to see if courses are null first
+                    if (allcourses == null) return;
+                    updateSorting();
+
+                }
+                
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // your code here
+                }
+                
+            });
     }
 
     /**
@@ -183,14 +216,7 @@ public class AvailableCoursesActivity extends AppCompatActivity {
                 Log.d("Course", "returning courses");
 
                 Log.d("Course", "finished");
-
-                /*String selectedSubject;
-                subjectSpinner = findViewById(R.id.sortByFacultySpinner);
-                selectedSubject = subjectSpinner.getItemAtPosition(subjectSpinner.getSelectedItemPosition()).toString();
-
-                ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);*/
-                courseRVAdapter.setcourses(allcourses);
-                courseRVAdapter.notifyDataSetChanged();
+                updateSorting();
             }
 
             /**
@@ -209,5 +235,25 @@ public class AvailableCoursesActivity extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(courseListener);
 
         Log.d("Course", "Getting Courses Complete");
+    }
+
+    /**
+     * updateSorting()
+     *
+     * Updates the courses based on faculty.
+     *
+     * @param None
+     *
+     **/
+    public void updateSorting() {
+        String selectedSubject;
+        sortByFacultySpinner = findViewById(R.id.sortByFacultySpinner);
+        selectedSubject = facmap.get(sortByFacultySpinner.getItemAtPosition(sortByFacultySpinner.getSelectedItemPosition()).toString());
+
+        
+        ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
+        courseRVAdapter.setcourses(sortCourseList);
+        courseRVAdapter.notifyDataSetChanged();
+        
     }
 }

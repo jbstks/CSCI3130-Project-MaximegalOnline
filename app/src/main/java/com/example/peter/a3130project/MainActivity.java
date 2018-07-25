@@ -342,11 +342,11 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
                 Log.d("Course", "finished");
                 
-                String selectedSubject;
-                subjectSpinner = findViewById(R.id.sortByFacultySpinner);
-                selectedSubject = subjectSpinner.getItemAtPosition(subjectSpinner.getSelectedItemPosition()).toString();
+                //String selectedSubject;
+                //subjectSpinner = findViewById(R.id.sortByFacultySpinner);
+                //selectedSubject = subjectSpinner.getItemAtPosition(subjectSpinner.getSelectedItemPosition()).toString();
 
-                ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
+                //ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
                 //courseRVAdapter.setcourses(sortCourseList);
                 courseRVAdapter.setcourses(allcourses);
                 courseRVAdapter.notifyDataSetChanged();
