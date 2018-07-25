@@ -2,20 +2,26 @@ package com.example.peter.a3130project.register;
 import android.content.Context;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+<<<<<<< HEAD
 import android.support.annotation.Nullable;
+=======
+>>>>>>> origin/AC_BG
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.peter.a3130project.CourseInfo;
 import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.course.Course;
 
 import com.example.peter.a3130project.course.CourseTime;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -42,6 +48,7 @@ public class CourseRegistrationUI extends CourseRegistration{
     private String B00;
     private FirebaseUser user;
     private int i;
+
 
     /**
      * Constructor
@@ -92,15 +99,28 @@ public class CourseRegistrationUI extends CourseRegistration{
                     }
                 }
 
+
+                String fullterm = coursesection.getcourse().getsemester()+ " " + coursesection.getcourse().getyear();
+
+                int enrolled = dataSnapshot.child("available_courses1")
+                        .child(fullterm).child(coursesection.getcourse().getcode()).child("sections")
+                        .child(coursesection.getsectionNum()).child("enrolled").getValue(Integer.class);
+
+
+
+
                 if (B00 == null) {
                     Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (students >= capacity) {
+
+                if (enrolled >= capacity) {
                     Toast.makeText(applicationContext, "Can't register. Course section is full.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+
 
                 CRNs = new ArrayList<>();
                 setCRN = new HashSet<>();
@@ -227,6 +247,26 @@ public class CourseRegistrationUI extends CourseRegistration{
         };
 
         /* Adds the course to the database*/
-        dbRef.child("students").child(B00).child("courses").child("current").child((Integer.toString(index))).setValue(course_sec.getcrn(), onComplete);
+        dbRef.child("students").child(B00).child("courses").child("current").child(Integer.toString(index)).setValue(course_sec.getcrn(), onComplete);
+
+        //increments the number of students enrolled at course
+
+        String fullterm = course_sec.getcourse().getsemester()+ " " + course_sec.getcourse().getyear();
+
+        dbRef.child("available_courses1")
+                .child(fullterm).child(course_sec.getcourse().getcode()).child("sections")
+                .child(course_sec.getsectionNum()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.child("enrolled").getRef().setValue(dataSnapshot.child("enrolled").getValue(Integer.class) + 1);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
+
+
 }
