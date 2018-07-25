@@ -28,13 +28,9 @@ public class CourseRegistration {
      *
      * @param current_courses:
      *       The current courses that the user has.
-     *
-     * @param current_courses:
-     *       The completed courses that the user has.
      **/
-    public CourseRegistration(ArrayList<CourseSection> current_courses, ArrayList<CourseSection> complete_courses){
+    public CourseRegistration(ArrayList<CourseSection> current_courses){
         this.current_courses = current_courses;
-        this.complete_courses = complete_courses;
     }
 
     /**
