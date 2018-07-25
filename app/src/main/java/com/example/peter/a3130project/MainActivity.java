@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
     private String semester;
     private String year;
-    private final List<Course> courses = new ArrayList<>();
+    private final List<Course> registeredCourses = new ArrayList<>();
     private final List<Course> allcourses = new ArrayList<>();
     private final List<CourseSection> courseList = new ArrayList<>();
     private CourseRVAdapter courseRVAdapter;
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        courseRVAdapter = new CourseRVAdapter(courses);
+        courseRVAdapter = new CourseRVAdapter(registeredCourses);
 
         Intent termActivityIntent = getIntent();
         Bundle termActivityBundle = termActivityIntent.getExtras();
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
             }
         });
 
-        getCourses(semester, year);
+        //getCourses(semester, year);
         getRegisteredCourses(semester, year);
         // make subject sorting object
         subjects = new ArrayList<String>(Arrays.asList(CourseFragment.faculties));
@@ -397,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                     Log.d("REGISTEREDCOURSES", "going through list of students");
 
                     String Bcand = bentry.getKey();
-                    Log.d("REGISTEREDCOURSES", "current student b00: " + Bcand);
+                    Log.d("REGISTEREDCOURSES", "current student B00: " + Bcand);
 
                     // if this student matches the currently logged in user
                     if (bentry.child("email").getValue(String.class).equals(email)) {
@@ -457,10 +457,10 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
                                 CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
                                 currentCourseSections.add(section);
-                                courses.add(course);
+                                registeredCourses.add(course);
 
                                 if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
-                                courseRVAdapter.setcourses(courses);
+                                courseRVAdapter.setcourses(registeredCourses);
                                 courseRVAdapter.notifyDataSetChanged();
                             }
                             else {
