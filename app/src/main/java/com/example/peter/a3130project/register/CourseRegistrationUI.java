@@ -1,22 +1,28 @@
 package com.example.peter.a3130project.register;
 import android.content.Context;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.peter.a3130project.CourseInfo;
 import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.course.Course;
 
 import com.example.peter.a3130project.course.CourseTime;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -38,6 +44,7 @@ public class CourseRegistrationUI extends CourseRegistration{
     private CourseSection coursesection;
     private String B00;
     private FirebaseUser user;
+
 
     /**
      * Constructor
@@ -63,25 +70,50 @@ public class CourseRegistrationUI extends CourseRegistration{
 
         // TODO setup B00 numbers for each user and query for them here
 
+        final ArrayList<Integer> students = new ArrayList<>(Arrays.asList(0));
+        final String crn = cs.getcrn();
+        final int capacity = cs.getcapacity();
+
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String email = user.getEmail();
+                int students = 0;
                 B00 = null;
                 int index = 0;
                 for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
                     String Bcand = bentry.getKey();
 
+                    for (DataSnapshot course : bentry.child("courses").child("current").getChildren()) {
+                        if (((String)course.getValue()).equals(crn)) {
+                            students += 1;
+                        }
+                    }
+
                     if (bentry.child("email").getValue(String.class).equals(email)) {
                         B00 = Bcand;
-                        break;
                     }
                 }
+
+
+                String fullterm = coursesection.getcourse().getsemester()+ " " + coursesection.getcourse().getyear();
+
+
+                int enrolled = dataSnapshot.child("crn").child(crn).child("enrolled").getValue(Integer.class);
+
 
                 if (B00 == null) {
                     Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+
+                if (enrolled >= capacity) {
+                    Toast.makeText(applicationContext, "Can't register. Course section is full.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
 
                 CRNs = new ArrayList<>();
                 setCRN = new HashSet<>();
@@ -121,9 +153,10 @@ public class CourseRegistrationUI extends CourseRegistration{
                             String name = crnSnapshot.child("name").getValue(String.class);
                             String semester = crnSnapshot.child("semester").getValue(String.class);
                             String year = crnSnapshot.child("year").getValue(String.class);
+                            int capacity = crnSnapshot.child("capacity").getValue(Integer.class);
 
                             Course course = new Course(code, name, semester, year);
-                            CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
+                            CourseSection section = new CourseSection(capacity, sectionNum, CRN, prof, course, courseTimeList);
                             currentCourseSections.add(section);
                         }
                     }
@@ -169,7 +202,7 @@ public class CourseRegistrationUI extends CourseRegistration{
      * @param course_sec:
      *    course that is desired to be registered
      **/
-    public void pushRegister(CourseSection course_sec, int index) throws RegistrationException {
+    public void pushRegister(final CourseSection course_sec, int index) throws RegistrationException {
 
         /* Check to see if the course is valid */
         ArrayList<CourseSection> cs= attempt_register(course_sec);
@@ -183,7 +216,35 @@ public class CourseRegistrationUI extends CourseRegistration{
             throw new RegistrationException("Invalid registration state");
         }
 
+        DatabaseReference.CompletionListener onComplete = new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                if (databaseError == null) {
+                    String code = course_sec.getcourse().getcode();
+                    Toast.makeText(applicationContext, "Successfully registered for " + code + ".", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
         /* Adds the course to the database*/
-        dbRef.child("students").child(B00).child("courses").child("current").child((new Integer(index)).toString()).setValue(course_sec.getcrn());
+        dbRef.child("students").child(B00).child("courses").child("current").child(Integer.toString(index)).setValue(course_sec.getcrn(), onComplete);
+
+        //increments the number of students enrolled at course
+
+        String fullterm = course_sec.getcourse().getsemester()+ " " + course_sec.getcourse().getyear();
+
+        dbRef.child("crn").child(course_sec.getcrn()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.child("enrolled").getRef().setValue(dataSnapshot.child("enrolled").getValue(Integer.class) + 1);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
+
+
 }

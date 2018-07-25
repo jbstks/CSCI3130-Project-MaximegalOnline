@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
     // TODO: query out only the courses that are the correct semester
     // we would query for the information then pass it into the Course Class
     // The CourseTime part takes an arrayList of all the course times for that course
-
+    //
     /**
      * Gets courses from the database
      * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView
@@ -388,9 +388,6 @@ public class MainActivity extends AppCompatActivity {
                 i = 0;
                 // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
-                //TODO: refactor database structure to avoid nested loops
-                // loop through courses
-
                 for (i = 0; i < registeredCRNs.size(); i++) {
                     String crn = registeredCRNs.get(i);
                     Log.d("REGISTEREDCOURSES", "Looking up the crn" + " " + crn + " hi");
@@ -415,10 +412,11 @@ public class MainActivity extends AppCompatActivity {
                     String name = dataSnapshot.child("crn").child(crn).child("name").getValue(String.class);
                     String semester = dataSnapshot.child("crn").child(crn).child("semester").getValue(String.class);
                     String year = dataSnapshot.child("crn").child(crn).child("year").getValue(String.class);
+                    int capacity = dataSnapshot.child("crn").child(crn).child("capacity").getValue(Integer.class);
                     Course course = new Course(code, name, semester, year);
 
                     if (inYear.equalsIgnoreCase(year) && inSemester.equalsIgnoreCase(semester)) {
-                        CourseSection section = new CourseSection(sectionNum, crn, professor, course, courseTimes);
+                        CourseSection section = new CourseSection(capacity, sectionNum, crn, professor, course, courseTimes);
                         currentCourseSections.add(section);
                         if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
                     }

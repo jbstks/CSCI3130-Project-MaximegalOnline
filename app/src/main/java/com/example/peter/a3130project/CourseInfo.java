@@ -149,7 +149,6 @@ public class CourseInfo extends AppCompatActivity {
 
                     // List<CourseSection> sections = new ArrayList<>();
                     for (DataSnapshot section : dataSnapshot.getChildren()) {
-
                         String sectionNum = section.getKey();
                         String crn = section.getValue(String.class);
 
@@ -185,6 +184,7 @@ public class CourseInfo extends AppCompatActivity {
                         String crn = sectionCrns.get(i).getcrn();
                         Log.d("SECTIONS", "Looking up the crn" + " " + crn);
                         String professor = dataSnapshot.child(crn).child("professor").getValue(String.class);
+                        int capacity = dataSnapshot.child(crn).child("capacity").getValue(Integer.class);
                         List<CourseTime> courseTimes = new ArrayList<>();
 
                         for(DataSnapshot time : dataSnapshot.child(crn).child("times").getChildren()) {
@@ -197,7 +197,7 @@ public class CourseInfo extends AppCompatActivity {
                             courseTimes.add(courseTime);
                         }
 
-                        CourseSection courseSection= new CourseSection(sectionNum, crn, professor, curr_course, courseTimes);
+                        CourseSection courseSection= new CourseSection(capacity, sectionNum, crn, professor, curr_course, courseTimes);
                         sections.add(courseSection);
                     }
 
