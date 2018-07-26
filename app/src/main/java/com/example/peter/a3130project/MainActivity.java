@@ -402,8 +402,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         final ValueEventListener courseSectionListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // TODO: get the email of the logged in user
-                String email = "testing@test.com";
+                String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                 B00 = null;
 
                 for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
