@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Deals confirming registration conflicts given courses and requested course.
@@ -80,7 +81,8 @@ public class CourseRegistrationUI extends CourseRegistration{
                 String email = user.getEmail();
                 int students = 0;
                 B00 = null;
-                int index = 0;
+                UUID uuid = UUID.randomUUID();
+                String index = uuid.toString();
                 for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
                     String Bcand = bentry.getKey();
 
@@ -119,13 +121,9 @@ public class CourseRegistrationUI extends CourseRegistration{
                 setCRN = new HashSet<>();
                 for (DataSnapshot snapshot : dataSnapshot.child("students").child(B00).child("courses").child("current").getChildren()) {
                     String tmp = snapshot.getValue(String.class);
-                    String key = snapshot.getKey();
                     if (!setCRN.contains(tmp)) {
                         CRNs.add(tmp);
                         setCRN.add(tmp);
-                        if (Integer.parseInt(key) > index ) {
-                            index = Integer.parseInt(key);
-                        }
                     }
                 }
                 // get courseSection info from CRNs
@@ -208,7 +206,7 @@ public class CourseRegistrationUI extends CourseRegistration{
      * @param course_sec:
      *    course that is desired to be registered
      **/
-    public void pushRegister(final CourseSection course_sec, int index) throws RegistrationException {
+    public void pushRegister(final CourseSection course_sec, String index) throws RegistrationException {
 
         /* Check to see if the course is valid */
         ArrayList<CourseSection> cs= attempt_register(course_sec);
@@ -233,7 +231,7 @@ public class CourseRegistrationUI extends CourseRegistration{
         };
 
         /* Adds the course to the database*/
-        dbRef.child("students").child(B00).child("courses").child("current").child(Integer.toString(index)).setValue(course_sec.getcrn(), onComplete);
+        dbRef.child("students").child(B00).child("courses").child("current").child(index).setValue(course_sec.getcrn(), onComplete);
 
         //increments the number of students enrolled at course
 
