@@ -135,15 +135,16 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         sectionViewHolder.section_prof.setText(sections.get(i).getprofessor());
         sectionViewHolder.section_id.setText(sections.get(i).getsectionNum());
 
+        // TODO: We don't need this anymore, it's done in the XML
         //Get the context from the view in the constructor
-        LinearLayoutManager layoutManager = new LinearLayoutManager(sectionViewHolder.itemView.getContext());
-        sectionViewHolder.times_rv.setLayoutManager(layoutManager);
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(sectionViewHolder.itemView.getContext());
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(sectionViewHolder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, true);
+        //sectionViewHolder.times_rv.setLayoutManager(layoutManager);
 
         //Setting up the inner recycler view
-        SectionTimesRVAdapter adapter=new SectionTimesRVAdapter(sections.get(i).getcourseTimeList());
+        SectionTimesRVAdapter adapter = new SectionTimesRVAdapter(sections.get(i).getcourseTimeList());
         sectionViewHolder.times_rv.setAdapter(adapter);
         sectionViewHolder.times_rv.setHasFixedSize(true);
-
     }
 
     /**
