@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.peter.a3130project.course.CourseCrnList;
 import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.course.CourseTime;
 import com.example.peter.a3130project.subject.SubjectSort;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import android.widget.Button;
@@ -222,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                     return courseTab;
                 case 1:
                     scheduleFragment = new ScheduleFragment();
+                    // TODO should this be the courseList or currentCourseList?
                     scheduleFragment.update(courseList);
                     return scheduleFragment;
                 default:
@@ -292,8 +295,10 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         startActivity(intent);
     }
 
-    // TODO: this probably doesn't need to be here anymore, it is in AvailableCoursesActivity
-    // I don't think it's used for anything in MainActivity anymore.
+    // TODO: query out only the courses that are the correct semester
+    // we would query for the information then pass it into the Course Class
+    // The CourseTime part takes an arrayList of all the course times for that course
+    //
 
     /**
      * Gets courses from the database
@@ -309,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
         // Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("available_courses1").child(semester + " " + year);
+        DatabaseReference myRef = database.getReference("available_courses2").child(semester + " " + year);
 
         Log.d("COURSE", "Creating cards\n");
 
@@ -326,7 +331,9 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                     Log.d("COURSE", "Found course id: " + key);
 
                     Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
-                    Course course = new Course(key, (String) values.get("name"), (String) values.get("semester"), (String) values.get("year"));
+
+                    // TODO the semester and year probably are not needed (or can just be filled in from the given function values)
+                    Course course = new Course(key, (String) values.get("name"), semester, year);
 
                     Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " + (String) values.get("semester") + " " + (String) values.get("year"));
 
@@ -375,10 +382,10 @@ public class MainActivity extends AppCompatActivity implements Serializable{
      * Modified from {@link com.example.peter.a3130project.register.CourseRegistrationUI}'s
      * {@code firebaseRegister()} function
      *
-     * @param semester selected semester month
-     * @param year     selected semester year
+     * @param inSemester selected semester month
+     * @param inYear     selected semester year
      */
-    public void getRegisteredCourses(final String semester, final String year) {
+    public void getRegisteredCourses(final String inSemester, final String inYear) {
         // Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef  = database.getReference();
@@ -421,52 +428,39 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                 i = 0;
                 // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
-                //TODO: refactor database structure to avoid nested loops
-                // loop through courses
-                for (DataSnapshot courseSnapshot : dataSnapshot.child("available_courses1").child(semester + " " + year).getChildren()) {
-                    Log.d("REGISTEREDCOURSES", "looping through courses in " + semester + " " + year);
-                    Log.d("REGISTEREDCOURSES", "found this course: " + courseSnapshot.getKey());
-                    // loop through sections
-                    for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
-                        Log.d("REGISTEREDCOURSES", "found this section: " + sectionSnapshot.getKey());
-                        for (String CRN : registeredCRNs) {
-                            Log.d("REGISTEREDCOURSES", "found this registered CRN: " + CRN);
-                            if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
-                                Log.d("REGISTEREDCOURSES", "this section matches the current CRN!");
 
-                                String sectionNum = sectionSnapshot.getKey();
-                                String prof = sectionSnapshot.child("professor").getValue(String.class);
-                                List<CourseTime> courseTimeList = new ArrayList<>();
-                                // get CourseTime info
-                                for (DataSnapshot timesSnapshot : sectionSnapshot.child("times").getChildren()) {
-                                    String day = timesSnapshot.getKey();
-                                    String startTime = timesSnapshot.child("start").getValue(String.class);
-                                    String endTime = timesSnapshot.child("end").getValue(String.class);
-                                    String location = timesSnapshot.child("location").getValue(String.class);
+                for (i = 0; i < registeredCRNs.size(); i++) {
+                    String crn = registeredCRNs.get(i);
+                    Log.d("REGISTEREDCOURSES", "Looking up the crn" + " " + crn + " hi");
+                    String professor = dataSnapshot.child("crn").child(crn).child("professor").getValue(String.class);
+                    String sectionNum = dataSnapshot.child("crn").child(crn).child("section").getValue(String.class);
+                    List<CourseTime> courseTimes = new ArrayList<>();
 
-                                    CourseTime courseTime = new CourseTime(day, startTime, endTime, location);
-                                    courseTimeList.add(courseTime);
-                                }
+                    Log.d("REGISTEREDCOURSES", "going into times with " + crn + " " + professor + " " + sectionNum);
 
-                                // get Course info
-                                String code = courseSnapshot.getKey();
-                                String name = courseSnapshot.child("name").getValue(String.class);
-                                String semester = courseSnapshot.child("semester").getValue(String.class);
-                                String year = courseSnapshot.child("year").getValue(String.class);
-                                Course course = new Course(code, name, semester, year);
+                    for(DataSnapshot time : dataSnapshot.child("crn").child(crn).child("times").getChildren()) {
+                        String day = time.getKey();
+                        String start = time.child("start").getValue(String.class);
+                        String end = time.child("end").getValue(String.class);
+                        String location = time.child("location").getValue(String.class);
+                        Log.d("REGISTEREDCOURSES", "Found values" + day + " " + start + " " + end + " " + location);
+                        CourseTime courseTime = new CourseTime(day, start, end, location);
+                        courseTimes.add(courseTime);
+                    }
 
-                                CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
-                                currentCourseSections.add(section);
-                                registeredCourses.add(course);
+                    //get Course info
+                    String code = dataSnapshot.child("crn").child(crn).child("code").getValue(String.class);
+                    String name = dataSnapshot.child("crn").child(crn).child("name").getValue(String.class);
+                    String semester = dataSnapshot.child("crn").child(crn).child("semester").getValue(String.class);
+                    String year = dataSnapshot.child("crn").child(crn).child("year").getValue(String.class);
+                    int capacity = dataSnapshot.child("crn").child(crn).child("capacity").getValue(Integer.class);
+                    Course course = new Course(code, name, semester, year);
 
-                                if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
-                                courseRVAdapter.setcourses(registeredCourses);
-                                courseRVAdapter.notifyDataSetChanged();
-                            }
-                            else {
-                                i++;
-                            }
-                        }
+                    if (inYear.equalsIgnoreCase(year) && inSemester.equalsIgnoreCase(semester)) {
+                        CourseSection section = new CourseSection(capacity, sectionNum, crn, professor, course, courseTimes);
+                        currentCourseSections.add(section);
+                        if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
+
                     }
                 }
             }

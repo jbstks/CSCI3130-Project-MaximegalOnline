@@ -12,6 +12,8 @@ import android.view.View;
 import android.util.Log;
 
 import android.widget.TextView;
+
+import com.example.peter.a3130project.course.CourseCrnList;
 import com.example.peter.a3130project.register.CourseRegistrationUI;
 import com.example.peter.a3130project.course.Course;
 import com.example.peter.a3130project.course.CourseTime;
@@ -133,9 +135,11 @@ public class CourseInfo extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef =
-                database.getReference("available_courses1").child(semester + " " + year).child(code);
+                database.getReference("available_courses2").child(semester + " " + year).child(code);
 
         Query query = myRef.child("sections");
+
+        final List<CourseCrnList> sectionCrns = new ArrayList<>();
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -143,15 +147,47 @@ public class CourseInfo extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
-                    List<CourseSection> sections = new ArrayList<>();
+                    // List<CourseSection> sections = new ArrayList<>();
                     for (DataSnapshot section : dataSnapshot.getChildren()) {
-
                         String sectionNum = section.getKey();
-                        String crn = section.child("crn").getValue(String.class);
-                        String professor = section.child("professor").getValue(String.class);
+                        String crn = section.getValue(String.class);
+
+                        CourseCrnList sectionCrn = new CourseCrnList(sectionNum, crn);
+                        sectionCrns.add(sectionCrn);
+
+                    }
+
+                    Log.d("SECTION", "getting crns finished");
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference myRef2 =
+                database.getReference("crn");
+
+        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    List<CourseSection> sections = new ArrayList<>();
+                    for (int i=0; i<sectionCrns.size(); i++) {
+
+                        String sectionNum = sectionCrns.get(i).getSection();
+                        String crn = sectionCrns.get(i).getcrn();
+                        Log.d("SECTIONS", "Looking up the crn" + " " + crn);
+                        String professor = dataSnapshot.child(crn).child("professor").getValue(String.class);
+                        int capacity = dataSnapshot.child(crn).child("capacity").getValue(Integer.class);
                         List<CourseTime> courseTimes = new ArrayList<>();
 
-                        for(DataSnapshot time : section.child("times").getChildren()) {
+                        for(DataSnapshot time : dataSnapshot.child(crn).child("times").getChildren()) {
                             String day = time.getKey();
                             String start = time.child("start").getValue(String.class);
                             String end = time.child("end").getValue(String.class);
@@ -161,7 +197,7 @@ public class CourseInfo extends AppCompatActivity {
                             courseTimes.add(courseTime);
                         }
 
-                        CourseSection courseSection= new CourseSection(sectionNum, crn, professor, curr_course, courseTimes);
+                        CourseSection courseSection= new CourseSection(capacity, sectionNum, crn, professor, curr_course, courseTimes);
                         sections.add(courseSection);
                     }
 
@@ -169,6 +205,8 @@ public class CourseInfo extends AppCompatActivity {
                     section_rv.setAdapter(sectionRVAdapter);
 
                     Log.d("SECTION", "finished");
+
+
                 }
             }
 
@@ -176,6 +214,9 @@ public class CourseInfo extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
+
+
     }
 }

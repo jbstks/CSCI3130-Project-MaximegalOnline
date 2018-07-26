@@ -15,6 +15,7 @@ public class Course {
 
     private String code;
     private String name;
+    // TODO this probably is not needed (semester and year)
     private String semester;
     private String year;
 

@@ -55,6 +55,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
      * provides a way to access data
      */
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
+        TextView section_capacity;
         TextView section_crn;
         TextView section_prof;
         TextView section_id;
@@ -71,6 +72,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         SectionViewHolder(View itemView, final List<CourseSection> sections) {
             super(itemView);
             this.sections = sections;
+            section_capacity = itemView.findViewById(R.id.section_capacity);
             section_crn = itemView.findViewById(R.id.section_crn);
             section_prof = itemView.findViewById(R.id.section_professor);
             section_id = itemView.findViewById(R.id.section_id);
@@ -132,6 +134,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         // This refers to the public class Courses
         Log.d("SECTION","Section will have these values: " + sections.get(i).getcrn() + " " + sections.get(i).getprofessor());
         sectionViewHolder.section_crn.setText(sections.get(i).getcrn());
+        sectionViewHolder.section_capacity.setText(sections.get(i).getcapacity() +"");
         sectionViewHolder.section_prof.setText(sections.get(i).getprofessor());
         sectionViewHolder.section_id.setText(sections.get(i).getsectionNum());
 
