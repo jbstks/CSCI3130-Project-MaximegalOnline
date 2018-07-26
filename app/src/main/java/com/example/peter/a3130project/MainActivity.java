@@ -461,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                     int capacity = dataSnapshot.child("crn").child(crn).child("capacity").getValue(Integer.class);
                     Course course = new Course(code, name, semester, year);
 
-                    if (inYear.equalsIgnoreCase(inYear) && inSemester.equalsIgnoreCase(inSemester)) {
+                    if (year.equalsIgnoreCase(inYear) && semester.equalsIgnoreCase(inSemester)) {
                         Log.d("REGISTEREDCOURSES", "This course " + crn + " was found to be in this semester");
                         CourseSection section = new CourseSection(capacity, sectionNum, crn, professor, course, courseTimeList);
                         currentCourseSections.add(section);
