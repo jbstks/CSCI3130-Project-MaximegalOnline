@@ -409,7 +409,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                     Log.d("REGISTEREDCOURSES", "going through list of students");
 
                     String Bcand = bentry.getKey();
-                    Log.d("REGISTEREDCOURSES", "current student B00: " + Bcand);
+                    Log.d("REGISTEREDCOURSES", "current student b00: " + Bcand);
 
                     // if this student matches the currently logged in user
                     if (bentry.child("email").getValue(String.class).equals(email)) {
@@ -433,58 +433,44 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                 i = 0;
                 // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
+                for (i = 0; i < registeredCRNs.size(); i++) {
+                    String crn = registeredCRNs.get(i);
+                    Log.d("REGISTEREDCOURSES", "Looking up the crn" + " " + crn );
+                    String professor = dataSnapshot.child("crn").child(crn).child("professor").getValue(String.class);
+                    String sectionNum = dataSnapshot.child("crn").child(crn).child("section").getValue(String.class);
+                    List<CourseTime> courseTimeList = new ArrayList<>();
 
-                //TODO: refactor database structure to avoid nested loops
-                // loop through courses
-                for (DataSnapshot courseSnapshot : dataSnapshot.child("available_courses1").child(semester + " " + year).getChildren()) {
-                    Log.d("REGISTEREDCOURSES", "looping through courses in " + semester + " " + year);
-                    Log.d("REGISTEREDCOURSES", "found this course: " + courseSnapshot.getKey());
-                    // loop through sections
-                    for (DataSnapshot sectionSnapshot : courseSnapshot.child("sections").getChildren()) {
-                        Log.d("REGISTEREDCOURSES", "found this section: " + sectionSnapshot.getKey());
-                        for (String CRN : registeredCRNs) {
-                            Log.d("REGISTEREDCOURSES", "found this registered CRN: " + CRN);
-                            if (sectionSnapshot.child("crn").getValue(String.class).equals(CRN)) {
-                                Log.d("REGISTEREDCOURSES", "this section matches the current CRN!");
+                    Log.d("REGISTEREDCOURSES", "going into times with " + crn + " " + professor + " " + sectionNum);
 
-                                String sectionNum = sectionSnapshot.getKey();
-                                String prof = sectionSnapshot.child("professor").getValue(String.class);
-                                List<CourseTime> courseTimeList = new ArrayList<>();
-                                // get CourseTime info
-                                for (DataSnapshot timesSnapshot : sectionSnapshot.child("times").getChildren()) {
-                                    String day = timesSnapshot.getKey();
-                                    String startTime = timesSnapshot.child("start").getValue(String.class);
-                                    String endTime = timesSnapshot.child("end").getValue(String.class);
-                                    String location = timesSnapshot.child("location").getValue(String.class);
+                    for(DataSnapshot time : dataSnapshot.child("crn").child(crn).child("times").getChildren()) {
+                        String day = time.getKey();
+                        String start = time.child("start").getValue(String.class);
+                        String end = time.child("end").getValue(String.class);
+                        String location = time.child("location").getValue(String.class);
+                        Log.d("REGISTEREDCOURSES", "Found values " + day + " " + start + " " + end + " " + location);
+                        CourseTime courseTime = new CourseTime(day, start, end, location);
+                        courseTimeList.add(courseTime);
+                    }
 
-                                    CourseTime courseTime = new CourseTime(day, startTime, endTime, location);
-                                    courseTimeList.add(courseTime);
-                                }
+                    //get Course info
+                    String code = dataSnapshot.child("crn").child(crn).child("code").getValue(String.class);
+                    String name = dataSnapshot.child("crn").child(crn).child("name").getValue(String.class);
+                    String semester = dataSnapshot.child("crn").child(crn).child("semester").getValue(String.class);
+                    String year = dataSnapshot.child("crn").child(crn).child("year").getValue(String.class);
+                    int capacity = dataSnapshot.child("crn").child(crn).child("capacity").getValue(Integer.class);
+                    Course course = new Course(code, name, semester, year);
 
-                                // get Course info
-                                String code = courseSnapshot.getKey();
-                                String name = courseSnapshot.child("name").getValue(String.class);
-                                String semester = courseSnapshot.child("semester").getValue(String.class);
-                                String year = courseSnapshot.child("year").getValue(String.class);
-                                Course course = new Course(code, name, semester, year);
-
-                                CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
-                                currentCourseSections.add(section);
-                                registeredCourses.add(course);
-
-                                if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
-                                courseRVAdapter.setcourses(registeredCourses);
-                                courseRVAdapter.notifyDataSetChanged();
-                            }
-                            else {
-                                i++;
-                            }
-                        }
-
+                    if (inYear.equalsIgnoreCase(inYear) && inSemester.equalsIgnoreCase(inSemester)) {
+                        Log.d("REGISTEREDCOURSES", "This course " + crn + " was found to be in this semester");
+                        CourseSection section = new CourseSection(capacity, sectionNum, crn, professor, course, courseTimeList);
+                        currentCourseSections.add(section);
+                        registeredCourses.add(course);
+                        courseRVAdapter.setcourses(registeredCourses);
+                        courseRVAdapter.notifyDataSetChanged();
+                        if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
                     }
                 }
             }
-
             /**
              * Prints error if there was a problem getting data from the database
              *

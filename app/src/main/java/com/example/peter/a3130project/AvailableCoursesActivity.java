@@ -178,6 +178,13 @@ public class AvailableCoursesActivity extends AppCompatActivity {
      * @param semester The semester of the year you want course from
      * @param year The year that you want courses from
      */
+    /**
+     * Gets courses from the database
+     * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView
+     *
+     * @param semester The semester of the year you want course from
+     * @param year The year that you want courses from
+     */
     public void getCourses(final String semester, final String year) {
         Log.d("COURSE", "Creating Course View\n");
 
@@ -185,7 +192,7 @@ public class AvailableCoursesActivity extends AppCompatActivity {
 
         // Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("available_courses1").child(semester + " " + year);
+        DatabaseReference myRef = database.getReference("available_courses2").child(semester + " " + year);
 
         Log.d("COURSE", "Creating cards\n");
 
@@ -202,7 +209,9 @@ public class AvailableCoursesActivity extends AppCompatActivity {
                     Log.d("COURSE", "Found course id: " + key);
 
                     Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
-                    Course course = new Course(key, (String) values.get("name"), (String) values.get("semester"), (String) values.get("year"));
+
+                    // TODO the semester and year probably are not needed (or can just be filled in from the given function values)
+                    Course course = new Course(key, (String) values.get("name"), semester, year);
 
                     Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " + (String) values.get("semester") + " " + (String) values.get("year"));
 
@@ -210,13 +219,11 @@ public class AvailableCoursesActivity extends AppCompatActivity {
 
                     Log.d("COURSE", "courses size is now: " + allcourses.size());
 
-                    //courseRVAdapter.notifyDataSetChanged();
+                    courseRVAdapter.notifyDataSetChanged();
                 }
-
                 Log.d("Course", "returning courses");
 
                 Log.d("Course", "finished");
-                updateSorting();
             }
 
             /**
@@ -241,8 +248,6 @@ public class AvailableCoursesActivity extends AppCompatActivity {
      * updateSorting()
      *
      * Updates the courses based on faculty.
-     *
-     * @param None
      *
      **/
     public void updateSorting() {
