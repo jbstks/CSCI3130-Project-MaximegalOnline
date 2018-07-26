@@ -170,29 +170,21 @@ public class AvailableCoursesActivity extends AppCompatActivity {
         return true;
     }
 
-    // TODO: Adjust for refactored database (will be in MainActivity)
     /**
      * Gets courses from the database
      * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView
      *
-     * @param semester The semester of the year you want course from
-     * @param year The year that you want courses from
+     * @param inSemester The semester of the year you want course from
+     * @param inYear The year that you want courses from
      */
-    /**
-     * Gets courses from the database
-     * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView
-     *
-     * @param semester The semester of the year you want course from
-     * @param year The year that you want courses from
-     */
-    public void getCourses(final String semester, final String year) {
-        Log.d("COURSE", "Creating Course View\n");
+    public void getCourses(final String inSemester, final String inYear) {
+        Log.d("COURSE", "Creating Course View for " + inSemester + " " + inYear + "\n");
 
         Log.d("COURSE", "Creating Linear Layout\n");
 
         // Database setup
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("available_courses2").child(semester + " " + year);
+        DatabaseReference myRef = database.getReference("available_courses2").child(inSemester + " " + inYear);
 
         Log.d("COURSE", "Creating cards\n");
 
@@ -211,9 +203,9 @@ public class AvailableCoursesActivity extends AppCompatActivity {
                     Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
 
                     // TODO the semester and year probably are not needed (or can just be filled in from the given function values)
-                    Course course = new Course(key, (String) values.get("name"), semester, year);
+                    Course course = new Course(key, (String) values.get("name"), inSemester, inYear);
 
-                    Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " + (String) values.get("semester") + " " + (String) values.get("year"));
+                    Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " +  inSemester + " " + inYear);
 
                     allcourses.add(course);
 

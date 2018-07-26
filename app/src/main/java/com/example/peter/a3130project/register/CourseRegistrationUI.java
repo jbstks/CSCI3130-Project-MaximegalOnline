@@ -136,6 +136,8 @@ public class CourseRegistrationUI extends CourseRegistration{
                             String sectionNum = crnSnapshot.child("section").getValue(String.class);
                             String prof = crnSnapshot.child("professor").getValue(String.class);
 
+                            Log.d("registration", "Looking up the crn " + CRN);
+
                             List<CourseTime> courseTimeList = new ArrayList<>();
                             //get CourseTime info
                             for (DataSnapshot timesSnapshot : crnSnapshot.child("times").getChildren()) {
@@ -155,6 +157,8 @@ public class CourseRegistrationUI extends CourseRegistration{
                             String year = crnSnapshot.child("year").getValue(String.class);
                             int capacity = crnSnapshot.child("capacity").getValue(Integer.class);
 
+                            Log.d("registration", "semester: " + semester + " year: " + year);
+
                             Course course = new Course(code, name, semester, year);
                             CourseSection section = new CourseSection(capacity, sectionNum, CRN, prof, course, courseTimeList);
                             currentCourseSections.add(section);
@@ -164,10 +168,17 @@ public class CourseRegistrationUI extends CourseRegistration{
 
                 setcurrent_courses(currentCourseSections);
                 if (currentCourseSections.size() == 0) {
-                    Log.d("Register", "curcourse is null for some reason");
+                    Log.d("registration", "current course is 0 for some reason");
+                }
+
+                if (currentCourseSections == null) {
+                    Log.d("registration","current course is null");
+                    SystemClock.sleep(100);
                 }
 
                 /* Try registration */
+                Log.d("registration","values of sometimes broken if " + coursesection.getcourse().getsemester()
+                        + " " + coursesection.getcourse().getyear());
                 ArrayList<CourseSection> register_result = attempt_register(coursesection);
                 if (register_result == null) { //TODO: define applicationContext
                     Toast.makeText(applicationContext, "Can't register. Course is already registered for you.", Toast.LENGTH_SHORT).show();
@@ -182,7 +193,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                     try {
                         pushRegister(coursesection, index);
                     } catch (RegistrationException e) {
-                        Log.d("Reigster", "Something bad happened on register");
+                        Log.d("Register", "Something bad happened on register");
                     }
                 }
             }
@@ -190,11 +201,6 @@ public class CourseRegistrationUI extends CourseRegistration{
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-    
-        if (currentCourseSections == null) {
-            Log.d("registration","currentcourse is null");
-            SystemClock.sleep(100);
-        }
     }
 
     /** pushRegister

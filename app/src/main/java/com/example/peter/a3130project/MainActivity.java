@@ -261,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
      */
     public void viewAvailableCourses(View view) {
         Intent intent = new Intent(this, AvailableCoursesActivity.class);
+        Log.d("IntentCall", "semester: " + semester + " and year: " + year);
         intent.putExtra("semester", semester);
         intent.putExtra("year", year);
         startActivity(intent);
