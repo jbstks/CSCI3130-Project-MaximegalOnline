@@ -1,7 +1,10 @@
 package com.example.peter.a3130project.register;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.example.peter.a3130project.course.CourseSection;
@@ -24,17 +27,19 @@ public class CourseDrop {
 
     private DatabaseReference dbRef;
     private FirebaseUser user;
+    private Context applicationContext;
 
     public String B00;
 
     /**
      * Sets up the database and gets the logged in user when created
      */
-    public CourseDrop() {
+    public CourseDrop(Context context) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         dbRef = db.getReference();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        applicationContext = context;
     }
 
     /**
@@ -68,7 +73,12 @@ public class CourseDrop {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot postsnapshot : dataSnapshot.getChildren()) {
-                            postsnapshot.getRef().removeValue();
+                            postsnapshot.getRef().removeValue(new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                    Toast.makeText(applicationContext, "Successfully dropped course " + crn + ".", Toast.LENGTH_SHORT);
+                                }
+                            });
                         }
                     }
 
