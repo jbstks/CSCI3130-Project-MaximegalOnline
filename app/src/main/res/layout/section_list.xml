@@ -6,20 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    app:cardCornerRadius="7dp">
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:padding="16dp">
 
-        <Button
-            android:id="@+id/register_button"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -34,7 +34,7 @@
             android:id="@+id/section_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4424234"
+            android:text="01"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -56,22 +56,74 @@
             android:text="CSCI 3130"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/section_professor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/section_crn"
-            android:text="Juliano Franz"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/section_times_rv"
-            android:layout_width="158dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/section_professor">
+            <TextView
+                android:id="@+id/section_crn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/section_id"
+                android:text="12345"
+                android:textSize="14sp" />
 
-        </android.support.v7.widget.RecyclerView>
-    </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/section_prof_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/section_crn"
+                android:text="INSTRUCTOR"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="113dp" />
+
+            <TextView
+                android:id="@+id/section_professor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/section_prof_label"
+                android:text="Juliano Franz"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/section_times"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/section_professor"
+                android:layout_marginTop="16dp"
+                android:text="TIMES"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="24dp"
+                tools:layout_editor_absoluteY="113dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/section_times_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/section_times"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/register_button"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/section_times_rv"
+                android:layout_alignTop="@+id/section_id"
+                android:layout_marginTop="16dp"
+                android:text="Register" />
+
+        </LinearLayout>
+
+
 
 </android.support.v7.widget.CardView>

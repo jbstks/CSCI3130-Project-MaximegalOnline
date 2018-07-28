@@ -296,7 +296,6 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         startActivity(intent);
     }
 
-
     // TODO: query out only the courses that are the correct semester
     // we would query for the information then pass it into the Course Class
     // The CourseTime part takes an arrayList of all the course times for that course
@@ -304,6 +303,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
     // TODO: this probably doesn't need to be here anymore, it is in AvailableCoursesActivity
     // I don't think it's used for anything in MainActivity anymore.
+
 
 
     /**
