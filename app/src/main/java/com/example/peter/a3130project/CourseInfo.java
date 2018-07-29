@@ -187,6 +187,7 @@ public class CourseInfo extends AppCompatActivity {
                         Log.d("SECTIONS", "Looking up the crn" + " " + crn);
                         String professor = dataSnapshot.child(crn).child("professor").getValue(String.class);
                         int capacity = dataSnapshot.child(crn).child("capacity").getValue(Integer.class);
+                        int enrolled = dataSnapshot.child(crn).child("enrolled").getValue(Integer.class);
                         List<CourseTime> courseTimes = new ArrayList<>();
 
                         for(DataSnapshot time : dataSnapshot.child(crn).child("times").getChildren()) {
@@ -199,7 +200,7 @@ public class CourseInfo extends AppCompatActivity {
                             courseTimes.add(courseTime);
                         }
 
-                        CourseSection courseSection= new CourseSection(capacity, sectionNum, crn, professor, curr_course, courseTimes);
+                        CourseSection courseSection= new CourseSection(enrolled, capacity, sectionNum, crn, professor, curr_course, courseTimes);
                         Log.d("COURSEINFO","values of sometimes broken if " + courseSection.getcourse().getsemester()
                                 + " " + courseSection.getcourse().getyear());
                         sections.add(courseSection);

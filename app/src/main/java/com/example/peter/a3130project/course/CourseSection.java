@@ -8,9 +8,11 @@ import java.util.List;
  * @author Megan Gosse
  * @author Dawson Wilson
  * @author Aecio Cavalcanti
+ * @author Joanna Bistekos
  */
 public class CourseSection {
     private int capacity;
+    private int enrolled;
     private String sectionNum;
     private String crn;
     private String professor;
@@ -20,27 +22,34 @@ public class CourseSection {
     /**
      * Constructor to create a CourseSection object
      *
+     * @param enrolled       number of students who are enrolled
+     * @param capacity       maximum number of students who can enroll
      * @param sectionNum     the section number of the course
      * @param crn            the course identification number
      * @param professor      the name of professor
      * @param courseTimeList list of course times
-     * @param capacity       maximum number of students who can enroll
      */
-    public CourseSection(int capacity, String sectionNum, String crn, String professor, Course course, List<CourseTime> courseTimeList){
+    public CourseSection(int enrolled, int capacity, String sectionNum, String crn, String professor, Course course, List<CourseTime> courseTimeList){
 
+        this.enrolled = enrolled;
         this.capacity = capacity;
         this.sectionNum = sectionNum;
         this.crn = crn;
         this.professor = professor;
         this.course = course;
         this.courseTimeList = courseTimeList;
-
-
     }
 
     /**
-     * Getters and setters for sectionNum, crn, professor, courseTimeList, and course
+     * Getters and setters for enrolled, capacity, sectionNum, crn, professor, courseTimeList, and course
      */
+    public int getenrolled(){
+        return this.enrolled;
+    }
+    public void setenrolled(int val){
+        this.enrolled = val;
+    }
+
     public int getcapacity(){
         return this.capacity;
     }
@@ -82,6 +91,4 @@ public class CourseSection {
     public void setcourse(Course val){
          this.course = val;
     }
-
-
 }

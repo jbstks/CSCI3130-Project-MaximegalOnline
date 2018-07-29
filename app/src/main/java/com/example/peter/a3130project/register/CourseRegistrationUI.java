@@ -33,6 +33,7 @@ import java.util.UUID;
  *
  * @author Peter Lee
  * @author Megan Gosse
+ * @author Joanna Bistekos
  */
 
 public class CourseRegistrationUI extends CourseRegistration{
@@ -158,7 +159,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                             Log.d("registration", "semester: " + semester + " year: " + year);
 
                             Course course = new Course(code, name, semester, year);
-                            CourseSection section = new CourseSection(capacity, sectionNum, CRN, prof, course, courseTimeList);
+                            CourseSection section = new CourseSection(enrolled, capacity, sectionNum, CRN, prof, course, courseTimeList);
                             currentCourseSections.add(section);
                         }
                     }

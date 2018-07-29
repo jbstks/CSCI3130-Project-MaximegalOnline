@@ -36,10 +36,11 @@ import com.google.firebase.auth.FirebaseUser;
  *
  * Adapter for handling view for courses.
  *
- * @author DW
- * @author AC
- * @author PL
- * @author MG
+ * @author Dawson Wilson
+ * @author Aecio Cavalcanti
+ * @author Peter Lee
+ * @author Megan Gosse
+ * @author Joanna Bistekos
  */
 public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.SectionViewHolder>{
 
@@ -57,11 +58,12 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
      */
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
         TextView section_capacity;
+        TextView section_enrolled;
         TextView section_crn;
         TextView section_prof;
         TextView section_id;
         Button register_button;
-	Button drop_button;
+	    Button drop_button;
         RecyclerView times_rv;
         List<CourseSection> sections;
         Context applicationContext;
@@ -74,12 +76,13 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         SectionViewHolder(View itemView, final List<CourseSection> sections) {
             super(itemView);
             this.sections = sections;
+            section_enrolled = itemView.findViewById(R.id.section_enrolled);
             section_capacity = itemView.findViewById(R.id.section_capacity);
             section_crn = itemView.findViewById(R.id.section_crn);
             section_prof = itemView.findViewById(R.id.section_professor);
             section_id = itemView.findViewById(R.id.section_id);
             register_button = itemView.findViewById(R.id.register_button);
-	    drop_button = itemView.findViewById(R.id.drop_button);
+	        drop_button = itemView.findViewById(R.id.drop_button);
             times_rv = (RecyclerView) itemView.findViewById(R.id.section_times_rv);
 
             applicationContext = itemView.getContext().getApplicationContext();
@@ -98,7 +101,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
                 CourseRegistrationUI coursereg = null;
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-		coursereg = new CourseRegistrationUI(); //TODO change null pointer here
+		        coursereg = new CourseRegistrationUI(); //TODO change null pointer here
                 CourseSection cs = sections.get(position);
                 Log.d("SECTIONRV","values of sometimes broken if " + cs.getcourse().getsemester()
                             + " " + cs.getcourse().getyear());
@@ -107,18 +110,19 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
                 
                 }
             });
-	    drop_button.setOnClickListener(new View.OnClickListener() {
-		    /**
-		     * manager for clicking on drop button
-		     **/
-		    @Override
-		    public void onClick(View v) {
-			int position = getAdapterPosition();
-			CourseSection cs = sections.get(position);
-			CourseDrop cd = new CourseDrop(applicationContext);
-			cd.drop(cs.getcrn());
-		    }
-		});
+
+            drop_button.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * manager for clicking on drop button
+                 **/
+                @Override
+                public void onClick(View v) {
+                int position = getAdapterPosition();
+                CourseSection cs = sections.get(position);
+                CourseDrop cd = new CourseDrop(applicationContext);
+                cd.drop(cs.getcrn());
+                }
+            });
         }
     }
 
@@ -152,7 +156,8 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         // This refers to the public class Courses
         Log.d("SECTION","Section will have these values: " + sections.get(i).getcrn() + " " + sections.get(i).getprofessor());
         sectionViewHolder.section_crn.setText(sections.get(i).getcrn());
-        sectionViewHolder.section_capacity.setText(sections.get(i).getcapacity() +"");
+        sectionViewHolder.section_enrolled.setText(sections.get(i).getenrolled()+"");
+        sectionViewHolder.section_capacity.setText(sections.get(i).getcapacity()+"");
         sectionViewHolder.section_prof.setText(sections.get(i).getprofessor());
         sectionViewHolder.section_id.setText(sections.get(i).getsectionNum());
 
