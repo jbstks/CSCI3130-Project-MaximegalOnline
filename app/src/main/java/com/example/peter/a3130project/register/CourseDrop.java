@@ -1,7 +1,9 @@
 package com.example.peter.a3130project.register;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.example.peter.a3130project.course.CourseSection;
@@ -25,13 +27,15 @@ public class CourseDrop {
     private DatabaseReference dbRef;
     private FirebaseUser user;
 
+    private Context applicationContext;
     public String B00;
 
     /**
      * Sets up the database and gets the logged in user when created
      */
-    public CourseDrop() {
+    public CourseDrop(Context ac) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
+	applicationContext = ac;
         dbRef = db.getReference();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -66,7 +70,13 @@ public class CourseDrop {
                 dbRef.child("students").child(B00).child("courses").child("current").orderByValue().equalTo(crn).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
+			if (!dataSnapshot.exists()) {
+			    Log.d("drop", "notfound");
+			    Toast.makeText(applicationContext, "Can't drop course. Not registered.", Toast.LENGTH_SHORT).show();
+			}
+			else {
+			    Toast.makeText(applicationContext, "Course successfully dropped.", Toast.LENGTH_SHORT).show();
+			}
                         for (DataSnapshot postsnapshot : dataSnapshot.getChildren()) {
                             postsnapshot.getRef().removeValue();
                         }

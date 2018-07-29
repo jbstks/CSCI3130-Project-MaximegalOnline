@@ -29,7 +29,7 @@ public class DropActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.crnText);
         String crn = editText.getText().toString();
 
-        CourseDrop cd = new CourseDrop();
+        CourseDrop cd = new CourseDrop(this.getApplicationContext());
         cd.drop(crn);
     }
 }
