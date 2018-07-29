@@ -26,6 +26,7 @@ import static java.security.AccessController.getContext;
  */
 
 import com.example.peter.a3130project.course.CourseSection;
+import com.example.peter.a3130project.register.CourseDrop;
 import com.example.peter.a3130project.register.CourseRegistrationUI;
 import com.example.peter.a3130project.register.RegistrationException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,6 +61,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         TextView section_prof;
         TextView section_id;
         Button register_button;
+	Button drop_button;
         RecyclerView times_rv;
         List<CourseSection> sections;
         Context applicationContext;
@@ -77,6 +79,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
             section_prof = itemView.findViewById(R.id.section_professor);
             section_id = itemView.findViewById(R.id.section_id);
             register_button = itemView.findViewById(R.id.register_button);
+	    drop_button = itemView.findViewById(R.id.drop_button);
             times_rv = (RecyclerView) itemView.findViewById(R.id.section_times_rv);
 
             applicationContext = itemView.getContext().getApplicationContext();
@@ -104,6 +107,18 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
                 
                 }
             });
+	    drop_button.setOnClickListener(new View.OnClickListener() {
+		    /**
+		     * manager for clicking on drop button
+		     **/
+		    @Override
+		    public void onClick(View v) {
+			int position = getAdapterPosition();
+			CourseSection cs = sections.get(position);
+			CourseDrop cd = new CourseDrop(applicationContext);
+			cd.drop(cs.getcrn());
+		    }
+		});
         }
     }
 
