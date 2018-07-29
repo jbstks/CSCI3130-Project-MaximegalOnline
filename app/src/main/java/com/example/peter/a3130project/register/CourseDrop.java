@@ -35,7 +35,7 @@ public class CourseDrop {
      */
     public CourseDrop(Context ac) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-	applicationContext = ac;
+        applicationContext = ac;
         dbRef = db.getReference();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -70,13 +70,15 @@ public class CourseDrop {
                 dbRef.child("students").child(B00).child("courses").child("current").orderByValue().equalTo(crn).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-			if (!dataSnapshot.exists()) {
-			    Log.d("drop", "notfound");
-			    Toast.makeText(applicationContext, "Can't drop course. Not registered.", Toast.LENGTH_SHORT).show();
-			}
-			else {
-			    Toast.makeText(applicationContext, "Course successfully dropped.", Toast.LENGTH_SHORT).show();
-			}
+                        if (!dataSnapshot.exists()) {
+                            Log.d("drop", "notfound");
+                            Toast.makeText(applicationContext, "Can't drop course. Not registered.", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            
+                            Toast.makeText(applicationContext, "Course successfully dropped.", Toast.LENGTH_SHORT).show();
+                            decrementCourse(crn);
+                        }
                         for (DataSnapshot postsnapshot : dataSnapshot.getChildren()) {
                             postsnapshot.getRef().removeValue();
                         }
@@ -87,6 +89,7 @@ public class CourseDrop {
 
                     }
                 });
+                        
             }
 
             @Override
@@ -94,5 +97,26 @@ public class CourseDrop {
 
             }
         });
+    }
+
+    /** decrementCourse
+     *
+     * decreases the enroll count bc someone dropped.
+     *
+     **/
+    public void decrementCourse(String crn) {
+        dbRef.child("crn").child(crn).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    dataSnapshot.child("enrolled").getRef().setValue(dataSnapshot.child("enrolled").getValue(Integer.class) - 1);
+                    
+                }
+                
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    
+                }
+            });
+       
     }
 }
