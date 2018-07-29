@@ -42,6 +42,7 @@ public class CourseRegistrationUI extends CourseRegistration{
     private ArrayList<String> CRNs;
     private HashSet<String> setCRN;
     private ArrayList<CourseSection> currentCourseSections;
+    private ArrayList<String> completeCourseCodes;
     private Context applicationContext;
     private CourseSection coursesection;
     private String B00;
@@ -65,7 +66,7 @@ public class CourseRegistrationUI extends CourseRegistration{
     public void firebaseRegister(FirebaseUser fuser, CourseSection cs, Context ac) {
         applicationContext = ac;
         coursesection = cs;
-        // Fills in current_courses with the firebase instance.
+        // Fills in current_courses and complete_courses with the firebase instance.
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         user = fuser;
         dbRef = db.getReference();
@@ -127,6 +128,14 @@ public class CourseRegistrationUI extends CourseRegistration{
                         setCRN.add(tmp);
                     }
                 }
+                //get Codes for complete courses
+                completeCourseCodes = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.child("students").child(B00).child("courses").child("complete").getChildren()) {
+                    String tmp = snapshot.getValue(String.class);
+                    if (!completeCourseCodes.contains(tmp)) {
+                        completeCourseCodes.add(tmp);
+                    }
+                }
                 // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
                 for (DataSnapshot crnSnapshot : dataSnapshot.child("crn").getChildren()) {
@@ -166,6 +175,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                 }
 
                 setcurrent_courses(currentCourseSections);
+                setcomplete_courses(completeCourseCodes);
                 if (currentCourseSections.size() == 0) {
                     Log.d("registration", "current course is 0 for some reason");
                 }
@@ -175,6 +185,22 @@ public class CourseRegistrationUI extends CourseRegistration{
                     SystemClock.sleep(100);
                 }
 
+                /* Get Prerequisites and if required prerequisites are achieved then attempt a register */
+                ArrayList<String> prerequisites = new ArrayList<>();
+                DataSnapshot prerequisitesSnapshot = dataSnapshot.child("course_listings").child(coursesection.getcourse().getcode()).child("prerequisites");
+                if (prerequisitesSnapshot.exists()) {
+                    /* Check Prerequisites */
+                    for (DataSnapshot prereqChildren : prerequisitesSnapshot.getChildren()) {
+                        prerequisites.add(prereqChildren.getValue(String.class));
+                    }
+
+                    Log.d("registration", "Started checking prerequisites");
+                    ArrayList<String> prereq_result = checkPrerequisites(prerequisites);
+                    Log.d("registration", "Finished checking prerequisites");
+                    if (prereq_result.size() > 0) {
+                        Toast.makeText(applicationContext, "Can't register. You do not have the required prerequisites", Toast.LENGTH_SHORT).show();
+                    }
+                }
                 /* Try registration */
                 Log.d("registration","values of sometimes broken if " + coursesection.getcourse().getsemester()
                         + " " + coursesection.getcourse().getyear());
@@ -186,7 +212,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                     for (int i = 0; i < register_result.size(); i++) {
                         outputmessage.append(" " + register_result.get(i).getcrn());
                     }
-            
+
                     Toast.makeText(applicationContext, outputmessage.toString(), Toast.LENGTH_SHORT).show();
                 } else { //Otherwise, register
                     try {
@@ -195,6 +221,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                         Log.d("Register", "Something bad happened on register");
                     }
                 }
+
             }
 
             @Override
