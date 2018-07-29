@@ -57,6 +57,10 @@ public class CourseRegistration {
                 // there is a matching item, therefore return null
                 return null;
             }
+            if (course.getcourse().getcode().equals(current_courses.get(i).getcourse().getcode())) {
+                // there is a matching item, therefore return null
+                return null;
+            }
         }
 
         ArrayList<CourseSection> result = new ArrayList<CourseSection>();
