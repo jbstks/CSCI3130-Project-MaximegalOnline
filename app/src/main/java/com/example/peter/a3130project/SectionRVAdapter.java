@@ -97,7 +97,10 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
 
 		coursereg = new CourseRegistrationUI(); //TODO change null pointer here
                 CourseSection cs = sections.get(position);
-                coursereg.firebaseRegister(currentUser,cs, applicationContext);
+                Log.d("SECTIONRV","values of sometimes broken if " + cs.getcourse().getsemester()
+                            + " " + cs.getcourse().getyear());
+
+                coursereg.firebaseRegister(currentUser, cs, applicationContext);
                 
                 }
             });

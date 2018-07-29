@@ -33,7 +33,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     CourseRVAdapter(List<Course> courses) {
         this.courses = courses;
 
-        Log.d("Course", "called the CourseRVAdapter");
+        Log.d("COURSERV", "called the CourseRVAdapter");
     }
 
     /**
@@ -53,7 +53,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
             course_code = itemView.findViewById(R.id.course_code);
             course_name = itemView.findViewById(R.id.course_name);
 
-            Log.d("COURSE","Creating click function");
+            Log.d("COURSERV","Creating click function");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,7 +72,9 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
                     intent.putExtra("semester", semester);
                     intent.putExtra("year", year);
 
-                    Log.d("COURSE", "Course click found" + code);
+                    Log.d("COURSERV", "semester: " + semester + " year: " + year);
+
+                    Log.d("COURSERV", "Course click found" + code);
 
                     v.getContext().startActivity(intent);
                 }

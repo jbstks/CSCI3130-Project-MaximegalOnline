@@ -261,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
      */
     public void viewAvailableCourses(View view) {
         Intent intent = new Intent(this, AvailableCoursesActivity.class);
+        Log.d("IntentCall", "semester: " + semester + " and year: " + year);
         intent.putExtra("semester", semester);
         intent.putExtra("year", year);
         startActivity(intent);
@@ -299,6 +300,11 @@ public class MainActivity extends AppCompatActivity implements Serializable{
     // we would query for the information then pass it into the Course Class
     // The CourseTime part takes an arrayList of all the course times for that course
     //
+
+    // TODO: this probably doesn't need to be here anymore, it is in AvailableCoursesActivity
+    // I don't think it's used for anything in MainActivity anymore.
+
+
 
     /**
      * Gets courses from the database
@@ -396,15 +402,14 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         final ValueEventListener courseSectionListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // TODO: get the email of the logged in user
-                String email = "testing@test.com";
+                String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                 B00 = null;
 
                 for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
                     Log.d("REGISTEREDCOURSES", "going through list of students");
 
                     String Bcand = bentry.getKey();
-                    Log.d("REGISTEREDCOURSES", "current student B00: " + Bcand);
+                    Log.d("REGISTEREDCOURSES", "current student b00: " + Bcand);
 
                     // if this student matches the currently logged in user
                     if (bentry.child("email").getValue(String.class).equals(email)) {
@@ -428,13 +433,12 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                 i = 0;
                 // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
-
                 for (i = 0; i < registeredCRNs.size(); i++) {
                     String crn = registeredCRNs.get(i);
-                    Log.d("REGISTEREDCOURSES", "Looking up the crn" + " " + crn + " hi");
+                    Log.d("REGISTEREDCOURSES", "Looking up the crn" + " " + crn );
                     String professor = dataSnapshot.child("crn").child(crn).child("professor").getValue(String.class);
                     String sectionNum = dataSnapshot.child("crn").child(crn).child("section").getValue(String.class);
-                    List<CourseTime> courseTimes = new ArrayList<>();
+                    List<CourseTime> courseTimeList = new ArrayList<>();
 
                     Log.d("REGISTEREDCOURSES", "going into times with " + crn + " " + professor + " " + sectionNum);
 
@@ -443,9 +447,9 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                         String start = time.child("start").getValue(String.class);
                         String end = time.child("end").getValue(String.class);
                         String location = time.child("location").getValue(String.class);
-                        Log.d("REGISTEREDCOURSES", "Found values" + day + " " + start + " " + end + " " + location);
+                        Log.d("REGISTEREDCOURSES", "Found values " + day + " " + start + " " + end + " " + location);
                         CourseTime courseTime = new CourseTime(day, start, end, location);
-                        courseTimes.add(courseTime);
+                        courseTimeList.add(courseTime);
                     }
 
                     //get Course info
@@ -456,15 +460,17 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                     int capacity = dataSnapshot.child("crn").child(crn).child("capacity").getValue(Integer.class);
                     Course course = new Course(code, name, semester, year);
 
-                    if (inYear.equalsIgnoreCase(year) && inSemester.equalsIgnoreCase(semester)) {
-                        CourseSection section = new CourseSection(capacity, sectionNum, crn, professor, course, courseTimes);
+                    if (year.equalsIgnoreCase(inYear) && semester.equalsIgnoreCase(inSemester)) {
+                        Log.d("REGISTEREDCOURSES", "This course " + crn + " was found to be in this semester");
+                        CourseSection section = new CourseSection(capacity, sectionNum, crn, professor, course, courseTimeList);
                         currentCourseSections.add(section);
+                        registeredCourses.add(course);
+                        courseRVAdapter.setcourses(registeredCourses);
+                        courseRVAdapter.notifyDataSetChanged();
                         if (scheduleFragment != null) scheduleFragment.update(currentCourseSections);
-
                     }
                 }
             }
-
             /**
              * Prints error if there was a problem getting data from the database
              *
