@@ -1,4 +1,6 @@
 package com.example.peter.a3130project.register;
+import android.util.Log;
+
 import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.course.CourseTime;
 import com.example.peter.a3130project.course.CourseSection;
@@ -68,6 +70,11 @@ public class CourseRegistration {
             for (int i=0;i < current_courses.size(); i++) {
             CourseSection candidate = current_courses.get(i);
             ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.getcourseTimeList();
+
+            Log.d("registration","values of sometimes broken if " + candidate.getcourse().getsemester()
+                    + " " + course.getcourse().getsemester()
+                    + " " + candidate.getcourse().getyear()
+                    + " " + course.getcourse().getyear());
 
             // This term and/or year doesn't match. No need to check schedule
             if (!(candidate.getcourse().getsemester().equals(course.getcourse().getsemester()) &&

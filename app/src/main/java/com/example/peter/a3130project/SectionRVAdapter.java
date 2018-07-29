@@ -55,6 +55,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
      * provides a way to access data
      */
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
+        TextView section_capacity;
         TextView section_crn;
         TextView section_prof;
         TextView section_id;
@@ -71,6 +72,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         SectionViewHolder(View itemView, final List<CourseSection> sections) {
             super(itemView);
             this.sections = sections;
+            section_capacity = itemView.findViewById(R.id.section_capacity);
             section_crn = itemView.findViewById(R.id.section_crn);
             section_prof = itemView.findViewById(R.id.section_professor);
             section_id = itemView.findViewById(R.id.section_id);
@@ -95,7 +97,10 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
 
 		coursereg = new CourseRegistrationUI(); //TODO change null pointer here
                 CourseSection cs = sections.get(position);
-                coursereg.firebaseRegister(currentUser,cs, applicationContext);
+                Log.d("SECTIONRV","values of sometimes broken if " + cs.getcourse().getsemester()
+                            + " " + cs.getcourse().getyear());
+
+                coursereg.firebaseRegister(currentUser, cs, applicationContext);
                 
                 }
             });
@@ -132,18 +137,20 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         // This refers to the public class Courses
         Log.d("SECTION","Section will have these values: " + sections.get(i).getcrn() + " " + sections.get(i).getprofessor());
         sectionViewHolder.section_crn.setText(sections.get(i).getcrn());
+        sectionViewHolder.section_capacity.setText(sections.get(i).getcapacity() +"");
         sectionViewHolder.section_prof.setText(sections.get(i).getprofessor());
         sectionViewHolder.section_id.setText(sections.get(i).getsectionNum());
 
+        // TODO: We don't need this anymore, it's done in the XML
         //Get the context from the view in the constructor
-        LinearLayoutManager layoutManager = new LinearLayoutManager(sectionViewHolder.itemView.getContext());
-        sectionViewHolder.times_rv.setLayoutManager(layoutManager);
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(sectionViewHolder.itemView.getContext());
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(sectionViewHolder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, true);
+        //sectionViewHolder.times_rv.setLayoutManager(layoutManager);
 
         //Setting up the inner recycler view
-        SectionTimesRVAdapter adapter=new SectionTimesRVAdapter(sections.get(i).getcourseTimeList());
+        SectionTimesRVAdapter adapter = new SectionTimesRVAdapter(sections.get(i).getcourseTimeList());
         sectionViewHolder.times_rv.setAdapter(adapter);
         sectionViewHolder.times_rv.setHasFixedSize(true);
-
     }
 
     /**

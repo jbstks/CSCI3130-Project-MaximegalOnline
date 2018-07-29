@@ -66,6 +66,8 @@ public class CourseInfo extends AppCompatActivity {
             String semester = (String) termActivityBundle.get("semester");
             String year = (String) termActivityBundle.get("year");
 
+            Log.d("COURSEINFO", "semester: " + semester + " year: " + year);
+
             curr_course = new Course(code, name, semester, year);
 
             // TODO: query for the extra course information under the course_listings database
@@ -123,7 +125,7 @@ public class CourseInfo extends AppCompatActivity {
     /**
      * Queries data from the database based upon supplied information name, semester, year
      */
-    public void getSections(String code, String semester, String year) {
+    public void getSections(String code, String inSemester, String inYear) {
 
         final RecyclerView section_rv = findViewById(R.id.sections_rv);
         section_rv.setHasFixedSize(true);
@@ -135,7 +137,7 @@ public class CourseInfo extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef =
-                database.getReference("available_courses2").child(semester + " " + year).child(code);
+                database.getReference("available_courses2").child(inSemester + " " + inYear).child(code);
 
         Query query = myRef.child("sections");
 
@@ -149,7 +151,6 @@ public class CourseInfo extends AppCompatActivity {
 
                     // List<CourseSection> sections = new ArrayList<>();
                     for (DataSnapshot section : dataSnapshot.getChildren()) {
-
                         String sectionNum = section.getKey();
                         String crn = section.getValue(String.class);
 
@@ -185,6 +186,7 @@ public class CourseInfo extends AppCompatActivity {
                         String crn = sectionCrns.get(i).getcrn();
                         Log.d("SECTIONS", "Looking up the crn" + " " + crn);
                         String professor = dataSnapshot.child(crn).child("professor").getValue(String.class);
+                        int capacity = dataSnapshot.child(crn).child("capacity").getValue(Integer.class);
                         List<CourseTime> courseTimes = new ArrayList<>();
 
                         for(DataSnapshot time : dataSnapshot.child(crn).child("times").getChildren()) {
@@ -197,7 +199,9 @@ public class CourseInfo extends AppCompatActivity {
                             courseTimes.add(courseTime);
                         }
 
-                        CourseSection courseSection= new CourseSection(sectionNum, crn, professor, curr_course, courseTimes);
+                        CourseSection courseSection= new CourseSection(capacity, sectionNum, crn, professor, curr_course, courseTimes);
+                        Log.d("COURSEINFO","values of sometimes broken if " + courseSection.getcourse().getsemester()
+                                + " " + courseSection.getcourse().getyear());
                         sections.add(courseSection);
                     }
 

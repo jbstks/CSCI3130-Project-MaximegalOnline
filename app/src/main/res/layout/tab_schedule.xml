@@ -8,9 +8,10 @@
     tools:context=".ScheduleActivity">
 
     <android.support.design.widget.TabLayout
+        android:id="@+id/schedule_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/schedule_tabs">
+        app:tabSelectedTextColor="@color/primary">
 
         <android.support.design.widget.TabItem
             android:id="@+id/monday"

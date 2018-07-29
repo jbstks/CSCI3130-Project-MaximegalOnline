@@ -202,5 +202,8 @@ public class LoginActivity extends AppCompatActivity implements android.support.
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
 
     }
+    @Override
+    public void onBackPressed() {
+    }
 }
 

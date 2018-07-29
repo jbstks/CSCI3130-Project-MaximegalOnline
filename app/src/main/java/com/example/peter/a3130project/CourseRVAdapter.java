@@ -1,6 +1,7 @@
 package com.example.peter.a3130project;
 
 import com.example.peter.a3130project.course.Course;
+import com.example.peter.a3130project.subject.SubjectSort;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.CourseViewHolder>{
 
-    List<Course> courses;
+    private List<Course> courses;
 
     /**
      * Creates a CourseRVAdapter
@@ -31,7 +32,8 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
      */
     CourseRVAdapter(List<Course> courses) {
         this.courses = courses;
-        Log.d("Course", "called the CourseRVAdapter");
+
+        Log.d("COURSERV", "called the CourseRVAdapter");
     }
 
     /**
@@ -51,7 +53,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
             course_code = itemView.findViewById(R.id.course_code);
             course_name = itemView.findViewById(R.id.course_name);
 
-            Log.d("COURSE","Creating click function");
+            Log.d("COURSERV","Creating click function");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,7 +72,9 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
                     intent.putExtra("semester", semester);
                     intent.putExtra("year", year);
 
-                    Log.d("COURSE", "Course click found" + code);
+                    Log.d("COURSERV", "semester: " + semester + " year: " + year);
+
+                    Log.d("COURSERV", "Course click found" + code);
 
                     v.getContext().startActivity(intent);
                 }
@@ -102,5 +106,11 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+    public List<Course> getcourses(){
+        return this.courses;
+    }
+    public void setcourses(List<Course> val){
+         this.courses = val;
     }
 }
