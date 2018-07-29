@@ -40,10 +40,8 @@ public class CourseRegistrationUI extends CourseRegistration{
     private DatabaseReference dbRef;
     private ArrayList<String> CRNs;
     private HashSet<String> setCRN;
-    private ArrayList<String> completeCRNs;
-    private HashSet<String> setcompleteCRN;
     private ArrayList<CourseSection> currentCourseSections;
-    private ArrayList<CourseSection> completeCourseSections;
+    private ArrayList<String> completeCourseCodes;
     private Context applicationContext;
     private CourseSection coursesection;
     private String B00;
@@ -129,23 +127,16 @@ public class CourseRegistrationUI extends CourseRegistration{
                         setCRN.add(tmp);
                     }
                 }
-                //get CRNs for complete courses
-                completeCRNs = new ArrayList<>();
-                setcompleteCRN = new HashSet<>();
+                //get Codes for complete courses
+                completeCourseCodes = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.child("students").child(B00).child("courses").child("complete").getChildren()) {
                     String tmp = snapshot.getValue(String.class);
-                    String key = snapshot.getKey();
-                    if (!setcompleteCRN.contains(tmp)) {
-                        completeCRNs.add(tmp);
-                        setcompleteCRN.add(tmp);
-                        if (Integer.parseInt(key) > index ) {
-                            index = Integer.parseInt(key);
-                        }
+                    if (!completeCourseCodes.contains(tmp)) {
+                        completeCourseCodes.add(tmp);
                     }
                 }
                 // get courseSection info from CRNs
                 currentCourseSections = new ArrayList<>();
-                completeCourseSections = new ArrayList<>();
                 for (DataSnapshot crnSnapshot : dataSnapshot.child("crn").getChildren()) {
                     for (String CRN: CRNs) {
                         if (crnSnapshot.getKey().equals(CRN)) {
@@ -180,38 +171,10 @@ public class CourseRegistrationUI extends CourseRegistration{
                             currentCourseSections.add(section);
                         }
                     }
-                    for (String CRN: completeCRNs) {
-                        if (crnSnapshot.getKey().equals(CRN)) {
-                            String sectionNum = crnSnapshot.child("section").getValue(String.class);
-                            String prof = crnSnapshot.child("professor").getValue(String.class);
-
-                            List<CourseTime> courseTimeList = new ArrayList<>();
-                            //get CourseTime info
-                            for (DataSnapshot timesSnapshot : crnSnapshot.child("times").getChildren()) {
-                                String day = timesSnapshot.getKey();
-                                String startTime = timesSnapshot.child("start").getValue(String.class);
-                                String endTime = timesSnapshot.child("end").getValue(String.class);
-                                String location = timesSnapshot.child("location").getValue(String.class);
-
-                                CourseTime courseTime = new CourseTime(day, startTime, endTime, location);
-                                courseTimeList.add(courseTime);
-                            }
-
-                            //get Course info
-                            String code = crnSnapshot.child("code").getValue(String.class);
-                            String name = crnSnapshot.child("name").getValue(String.class);
-                            String semester = crnSnapshot.child("semester").getValue(String.class);
-                            String year = crnSnapshot.child("year").getValue(String.class);
-
-                            Course course = new Course(code, name, semester, year);
-                            CourseSection section = new CourseSection(sectionNum, CRN, prof, course, courseTimeList);
-                            completeCourseSections.add(section);
-                        }
-                    }
                 }
 
                 setcurrent_courses(currentCourseSections);
-                setcomplete_courses(completeCourseSections);
+                setcomplete_courses(completeCourseCodes);
                 if (currentCourseSections.size() == 0) {
                     Log.d("registration", "current course is 0 for some reason");
                 }
@@ -221,24 +184,40 @@ public class CourseRegistrationUI extends CourseRegistration{
                     SystemClock.sleep(100);
                 }
 
-                /* Try registration */
-                Log.d("registration","values of sometimes broken if " + coursesection.getcourse().getsemester()
-                        + " " + coursesection.getcourse().getyear());
-                ArrayList<CourseSection> register_result = attempt_register(coursesection);
-                if (register_result == null) { //TODO: define applicationContext
-                    Toast.makeText(applicationContext, "Can't register. Course is already registered for you.", Toast.LENGTH_SHORT).show();
-                } else if (register_result.size() != 0) {  // There is a conflicting course. Mention the conflicting course in the output.
-                    StringBuilder outputmessage = new StringBuilder("Can't register. Course conflicts with ");
-                    for (int i = 0; i < register_result.size(); i++) {
-                        outputmessage.append(" " + register_result.get(i).getcrn());
+                /* Get Prerequisites and if required prerequisites are achieved then attempt a register */
+                ArrayList<String> prerequisites = new ArrayList<>();
+                DataSnapshot prerequisitesSnapshot = dataSnapshot.child("course_listings").child(coursesection.getcourse().getcode()).child("prerequisites");
+                if (prerequisitesSnapshot.exists()){
+                    /* Check Prerequisites */
+                    for (DataSnapshot prereqChildren : prerequisitesSnapshot.getChildren()) {
+                        prerequisites.add(prereqChildren.getValue(String.class));
                     }
-            
-                    Toast.makeText(applicationContext, outputmessage.toString(), Toast.LENGTH_SHORT).show();
-                } else { //Otherwise, register
-                    try {
-                        pushRegister(coursesection, index);
-                    } catch (RegistrationException e) {
-                        Log.d("Register", "Something bad happened on register");
+                    
+                    ArrayList<String> prereq_result = checkPrerequisites(prerequisites);
+                    if(prereq_result.size() > 0) {
+                        Toast.makeText(applicationContext, "Can't register. You do not have the required prerequisites", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        /* Try registration */
+                        Log.d("registration","values of sometimes broken if " + coursesection.getcourse().getsemester()
+                                + " " + coursesection.getcourse().getyear());
+                        ArrayList<CourseSection> register_result = attempt_register(coursesection);
+                        if (register_result == null) { //TODO: define applicationContext
+                            Toast.makeText(applicationContext, "Can't register. Course is already registered for you.", Toast.LENGTH_SHORT).show();
+                        } else if (register_result.size() != 0) {  // There is a conflicting course. Mention the conflicting course in the output.
+                            StringBuilder outputmessage = new StringBuilder("Can't register. Course conflicts with ");
+                            for (int i = 0; i < register_result.size(); i++) {
+                                outputmessage.append(" " + register_result.get(i).getcrn());
+                            }
+
+                            Toast.makeText(applicationContext, outputmessage.toString(), Toast.LENGTH_SHORT).show();
+                        } else { //Otherwise, register
+                            try {
+                                pushRegister(coursesection, index);
+                            } catch (RegistrationException e) {
+                                Log.d("Register", "Something bad happened on register");
+                            }
+                        }
                     }
                 }
             }
