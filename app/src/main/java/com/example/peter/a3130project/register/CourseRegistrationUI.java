@@ -199,6 +199,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                     Log.d("registration", "Finished checking prerequisites");
                     if (prereq_result.size() > 0) {
                         Toast.makeText(applicationContext, "Can't register. You do not have the required prerequisites", Toast.LENGTH_SHORT).show();
+                        return;
                     }
                 }
                 /* Try registration */
