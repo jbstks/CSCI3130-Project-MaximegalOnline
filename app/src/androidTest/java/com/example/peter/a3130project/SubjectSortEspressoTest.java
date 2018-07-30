@@ -47,7 +47,7 @@ public class SubjectSortEspressoTest {
         //     .check(RecyclerViewActions.actionOnItem(
         //                                             hasDescendant(withText("Business for kids"))));
         onView(withId(R.id.course_cv))
-                .check(matches(hasDescendant(withText("Business for kids"))));
+                .check(matches(hasDescendant(withText("BUSI 1000"))));
 
         assert(false);
     }
