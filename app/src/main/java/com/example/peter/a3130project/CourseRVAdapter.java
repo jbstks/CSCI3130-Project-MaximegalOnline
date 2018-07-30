@@ -44,11 +44,11 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
         TextView course_code;
         TextView course_name;
 
-        List<Course> courses = new ArrayList<>();
+        CourseRVAdapter adapter;
 
-        CourseViewHolder(View itemView, final List<Course> courses) {
+        CourseViewHolder(View itemView, final CourseRVAdapter adapter) {
             super(itemView);
-            this.courses = courses;
+            this.adapter = adapter;
             course_cv = itemView.findViewById(R.id.course_cv);
             course_code = itemView.findViewById(R.id.course_code);
             course_name = itemView.findViewById(R.id.course_name);
@@ -61,7 +61,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
                     Intent intent = new Intent(v.getContext(), CourseInfo.class);
                     int position = getAdapterPosition();
 
-                    Course intentCourse = courses.get(position);
+                    Course intentCourse = adapter.courses.get(position);
                     String name = intentCourse.getname();
                     String code = intentCourse.getcode();
                     String semester = intentCourse.getsemester();
@@ -88,7 +88,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     public CourseViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         Log.d("COURSE", "Creating card");
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.course_card_list, viewGroup, false);
-        CourseViewHolder pvh = new CourseViewHolder(v, this.courses);
+        CourseViewHolder pvh = new CourseViewHolder(v, this);
         return pvh;
     }
 
@@ -112,7 +112,5 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     public List<Course> getcourses(){
         return this.courses;
     }
-    public void setcourses(List<Course> val){
-         this.courses = val;
-    }
+    public void setcourses(List<Course> val) { this.courses = val; }
 }
