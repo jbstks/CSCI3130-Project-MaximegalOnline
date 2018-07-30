@@ -286,26 +286,13 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         return true;
     }
 
-    // TODO: remove this later
-    /**
-     * Go to drop activity (TEMPORARY)
-     * @param item
-     */
-    public void toDrop(MenuItem item){
-        Intent intent = new Intent(this, DropActivity.class);
-        startActivity(intent);
-    }
-
     // TODO: query out only the courses that are the correct semester
     // we would query for the information then pass it into the Course Class
     // The CourseTime part takes an arrayList of all the course times for that course
-    //
+
 
     // TODO: this probably doesn't need to be here anymore, it is in AvailableCoursesActivity
     // I don't think it's used for anything in MainActivity anymore.
-
-
-
     /**
      * Gets courses from the database
      * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView

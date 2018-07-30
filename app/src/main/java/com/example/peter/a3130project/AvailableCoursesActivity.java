@@ -216,6 +216,7 @@ public class AvailableCoursesActivity extends AppCompatActivity {
                 Log.d("Course", "returning courses");
 
                 Log.d("Course", "finished");
+                updateSorting();
             }
 
             /**
@@ -232,6 +233,7 @@ public class AvailableCoursesActivity extends AppCompatActivity {
 
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
+
 
         Log.d("Course", "Getting Courses Complete");
     }
