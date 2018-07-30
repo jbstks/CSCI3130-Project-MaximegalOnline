@@ -70,12 +70,12 @@ public class AvailableCoursesActivity extends AppCompatActivity {
 
         courseRVAdapter = new CourseRVAdapter(allcourses);
 
-        Intent termActivityIntent = getIntent();
-        Bundle termActivityBundle = termActivityIntent.getExtras();
+        Intent mainActivityIntent = getIntent();
+        Bundle mainActivityBundle = mainActivityIntent.getExtras();
 
-        if (termActivityBundle != null) {
-            String semester = (String) termActivityBundle.get("semester");
-            String year = (String) termActivityBundle.get("year");
+        if (mainActivityBundle != null) {
+            String semester = (String) mainActivityBundle.get("semester");
+            String year = (String) mainActivityBundle.get("year");
             setTitle(semester+" "+year);
         }
 
@@ -93,7 +93,7 @@ public class AvailableCoursesActivity extends AppCompatActivity {
         course_rv.setLayoutManager(llm);
         course_rv.setAdapter(courseRVAdapter);
 
-        getCourses((String) termActivityBundle.get("semester"), (String) termActivityBundle.get("year"));
+        getCourses((String) mainActivityBundle.get("semester"), (String) mainActivityBundle.get("year"));
         
         // Grabbed from documentation https://developer.android.com/guide/topics/ui/controls/spinner
         sortByFacultySpinner = (Spinner) findViewById(R.id.sortByFacultySpinner);

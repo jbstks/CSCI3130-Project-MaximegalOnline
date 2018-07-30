@@ -75,7 +75,9 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
                     Log.d("COURSERV", "semester: " + semester + " year: " + year);
 
                     Log.d("COURSERV", "Course click found" + code);
-
+                    Log.d("COURSERV", "getSimpleName" + v.getContext().getClass().getSimpleName());
+                    if (v.getContext().getClass().getSimpleName().equals("MainActivity")) intent.putExtra("prevActivity", "Main");
+                    else intent.putExtra("prevActivity", "AvailCourses");
                     v.getContext().startActivity(intent);
                 }
             });

@@ -53,29 +53,6 @@ public class AvailableCoursesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_availcourses, container, false);
-        /*final RecyclerView course_rv = view.findViewById(R.id.course_rv);
-        course_rv.setHasFixedSize(false);
-
-        course_rv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("courses", "course list clicked");
-            }
-        });
-
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        course_rv.setLayoutManager(llm);
-        course_rv.setAdapter(courseRVAdapter);
-
-        // Grabbed from documentation https://developer.android.com/guide/topics/ui/controls/spinner
-
-        sortByFacultySpinner = (Spinner) view.findViewById(R.id.sortByFacultySpinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<String> sortByFacultyAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, faculties);
-        sortByFacultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        sortByFacultySpinner.setAdapter(sortByFacultyAdapter);*/
-
         return view;
     }
 }

@@ -4,6 +4,8 @@ import com.example.peter.a3130project.course.CourseSection;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -123,6 +125,13 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
                 cd.drop(cs.getcrn());
                 }
             });
+
+            Intent courseRVIntent = ((Activity) itemView.getContext()).getIntent();
+            Bundle courseRVBundle = courseRVIntent.getExtras();
+            if (courseRVBundle != null) {
+                if (courseRVBundle.get("prevActivity").equals("Main")) register_button.setVisibility(View.GONE);
+                else if (courseRVBundle.get("prevActivity").equals("AvailCourses")) drop_button.setVisibility(View.GONE);
+            }
         }
     }
 
