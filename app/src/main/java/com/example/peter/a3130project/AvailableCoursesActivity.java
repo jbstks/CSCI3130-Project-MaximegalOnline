@@ -242,17 +242,14 @@ public class AvailableCoursesActivity extends AppCompatActivity {
      * updateSorting()
      *
      * Updates the courses based on faculty.
-     *
      **/
     public void updateSorting() {
         String selectedSubject;
         sortByFacultySpinner = findViewById(R.id.sortByFacultySpinner);
         selectedSubject = facmap.get(sortByFacultySpinner.getItemAtPosition(sortByFacultySpinner.getSelectedItemPosition()).toString());
 
-        
         ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
         courseRVAdapter.setcourses(sortCourseList);
         courseRVAdapter.notifyDataSetChanged();
-        
     }
 }

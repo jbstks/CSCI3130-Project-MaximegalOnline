@@ -2,6 +2,7 @@ package com.example.peter.a3130project;
 
 import com.example.peter.a3130project.course.*;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import static android.graphics.Color.valueOf;
 
 /**
  * A fragment containing the user's schedule.
@@ -87,7 +90,9 @@ public class ScheduleFragment extends Fragment {
 
         final LinearLayout tab = view.findViewById(R.id.schedule_tab);
 
-        final ArrayList<String> days = new ArrayList<String>(Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday"));
+        // TODO: Clear out commented code
+        //final ArrayList<String> days = new ArrayList<String>(Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday"));
+        final ArrayList<String> days = new ArrayList<String>(Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"));
 
         //final String[] colors = { "#ffe8e8", "#f0f0da", "#d3eabb", "#a9c4a0" };
         final String[] colors = { "#40f44336", "#40ffc107", "#404caf50", "#402196f3" };
@@ -114,7 +119,8 @@ public class ScheduleFragment extends Fragment {
         int time = 805;
 
         for (ScheduleEntry e : schedule) {
-            TextView tv = new TextView(getActivity().getApplicationContext());
+            TextView classtv = new TextView(getActivity().getApplicationContext());
+            TextView locationtv = new TextView(getActivity().getApplicationContext());
 
             int duration = 60 * ((e.getEnd() / 100) - (e.getStart() / 100)) + (e.getEnd() % 100 - e.getStart() % 100);
             int before =  60 * ((e.getStart() / 100) - (time / 100)) + (e.getStart() % 100 - time % 100);
@@ -127,19 +133,41 @@ public class ScheduleFragment extends Fragment {
             int height = blockSize * duration / 60;
             int margin = blockSize * before / 60;
 
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, height);
-            LinearLayout.LayoutParams mlp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, margin);
+            // TODO: Clear out commented code
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+            //LinearLayout.LayoutParams mlp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, margin);
 
-            View v = new View(getActivity().getApplicationContext());
+            /*View v = new View(getActivity().getApplicationContext());
             v.setLayoutParams(mlp);
-            tab.addView(v);
+            tab.addView(v);*/
 
-            tv.setBackgroundColor(e.getColor());
-            //tv.setTextColor(Color.parseColor("#000000"));
-            tv.setText(e.getName() + "\n" + e.getLocation());
+            LinearLayout scheduleEntry = new LinearLayout(getActivity().getApplicationContext());
+            scheduleEntry.setOrientation(LinearLayout.VERTICAL);
+            lp.setMargins(0, margin, 0, 0);
+            scheduleEntry.setPadding(16,16,16,0);
+            scheduleEntry.setLayoutParams(lp);
+            scheduleEntry.setBackgroundColor(e.getColor());
+
+            float[] hsv = new float[3];
+            Color.colorToHSV(e.getColor(), hsv);
+            hsv[2] *= 0.8f;
+            int textColor = Color.HSVToColor(hsv);
+
+            classtv.setTextColor(textColor);
+            classtv.setText(e.getName());
+            classtv.setTextSize(14);
+            classtv.setTypeface(null, Typeface.BOLD);
+
+            locationtv.setTextColor(textColor);
+            locationtv.setText(e.getLocation());
+            locationtv.setTextSize(13);
+
+            scheduleEntry.addView(classtv);
+            scheduleEntry.addView(locationtv);
+
             Log.d("sched", "adding view with height " + height);
-            tab.addView(tv);
-            tv.setLayoutParams(lp);
+
+            tab.addView(scheduleEntry);
 
             time = e.getEnd();
         }
