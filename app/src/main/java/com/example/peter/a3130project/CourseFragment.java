@@ -74,9 +74,6 @@ public class CourseFragment extends Fragment {
         // Apply the adapter to the spinner
         sortByFacultySpinner.setAdapter(sortByFacultyAdapter);
 
-        Button registerButton = (Button) view.findViewById(R.id.registerButton);
-        if (courseRVAdapter.getcourses().size() > 4) registerButton.setEnabled(false);
-
         return view;
     }
 }
