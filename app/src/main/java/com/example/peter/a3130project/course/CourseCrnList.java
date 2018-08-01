@@ -30,7 +30,6 @@ public class CourseCrnList {
         this.crn = crn;
     }
 
-
     /**
      * Get and set methods for code, name, semester, and year
      */
@@ -47,5 +46,4 @@ public class CourseCrnList {
     public void setcrn(String val){
          this.crn = val;
     }
-
 }

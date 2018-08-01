@@ -30,7 +30,6 @@ public class CourseSection {
      * @param courseTimeList list of course times
      */
     public CourseSection(int enrolled, int capacity, String sectionNum, String crn, String professor, Course course, List<CourseTime> courseTimeList){
-
         this.enrolled = enrolled;
         this.capacity = capacity;
         this.sectionNum = sectionNum;

@@ -15,7 +15,6 @@ public class Course {
 
     private String code;
     private String name;
-    // TODO this probably is not needed (semester and year)
     private String semester;
     private String year;
 
@@ -48,12 +47,11 @@ public class Course {
      */
     @Override
     public boolean equals(Object ot) {
-	Course other = (Course) ot;
-	return (this.code.equals(other.getcode()) &&
-		this.name.equals(other.getname()) &&
-		this.semester.equals(other.getsemester()) &&
-		this.year.equals(other.getyear()));
-
+        Course other = (Course) ot;
+        return (this.code.equals(other.getcode()) &&
+            this.name.equals(other.getname()) &&
+            this.semester.equals(other.getsemester()) &&
+            this.year.equals(other.getyear()));
     }
 
     /**
