@@ -104,20 +104,18 @@ public class AvailableCoursesActivity extends AppCompatActivity {
         sortByFacultySpinner.setAdapter(sortByFacultyAdapter);
 
         sortByFacultySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    // Check to see if courses are null first
-                    if (allcourses == null) return;
-                    updateSorting();
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // Check to see if courses are null first
+                if (allcourses == null) return;
+                updateSorting();
+            }
 
-                }
-                
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    // your code here
-                }
-                
-            });
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+        });
     }
 
     /**
@@ -233,7 +231,6 @@ public class AvailableCoursesActivity extends AppCompatActivity {
 
         Log.d("Course", "listener init complete");
         myRef.addListenerForSingleValueEvent(courseListener);
-
 
         Log.d("Course", "Getting Courses Complete");
     }

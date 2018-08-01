@@ -32,6 +32,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private FirebaseDatabase db;
     private FirebaseAuth mAuth;
     private String b00;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +43,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        
     }
+
     public void clickReset(View view) {
         newPassword = et_password.getText().toString();
         email = et_email.getText().toString();
-
 
         switch(LoginChecker.checkLogin(email,newPassword)) {
 
@@ -79,35 +79,28 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         case OK:
             db.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        b00 = queryNameInDatabase(dataSnapshot);
-                        if (b00!=null) {
-
-                            changePassword();
-     
-
-                        }
-                        else{
-                            //give feedback
-                            Toast.makeText(ResetPasswordActivity.this, "Not updated. User does not exist.", Toast.LENGTH_SHORT).show();
-                        }
-                       
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    b00 = queryNameInDatabase(dataSnapshot);
+                    if (b00!=null) {
+                        changePassword();
                     }
-                    @Override
-                    public void onCancelled(DatabaseError e){
+                    else{
+                        //give feedback
+                        Toast.makeText(ResetPasswordActivity.this, "Not updated. User does not exist.", Toast.LENGTH_SHORT).show();
                     }
-                });
-            
-                    
-
-
+                }
+                @Override
+                public void onCancelled(DatabaseError e){
+                }
+            });
+        }
     }
-        
-    }
-    /** Obtain the password from the database 
-        returns true if name is found; false otherwise
-**/
+
+    /**
+     * Obtain the password from the database
+     * returns true if name is found; false otherwise
+     **/
     private String queryNameInDatabase(DataSnapshot dataSnapshot) {
         Log.d("query","start");
         for (DataSnapshot bentry : dataSnapshot.child("students").getChildren()) {
@@ -121,28 +114,23 @@ public class ResetPasswordActivity extends AppCompatActivity {
     }
     
     public void changePassword() {
-        Log.d("change poassword", oldPassword);
-        AuthCredential cred = EmailAuthProvider.getCredential(email, oldPassword); //todo oldtask
-        //user.reauthenticate(cred).addOnCompleteListener(new OnCompleteListener<Void>() {
+        Log.d("change password", oldPassword);
+        AuthCredential cred = EmailAuthProvider.getCredential(email, oldPassword);
         mAuth.signInWithEmailAndPassword(email, oldPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(Task<AuthResult> task ) {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        db.getReference().child("students").child(b00).child("password").setValue(newPassword);
-                        user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                public void onComplete(Task<Void> task) {
-                                    Toast.makeText(ResetPasswordActivity.this, "Password updated successfully.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        mAuth.signOut();
+            if (task.isSuccessful()) {
+                FirebaseUser user = mAuth.getCurrentUser();
+                db.getReference().child("students").child(b00).child("password").setValue(newPassword);
+                user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(Task<Void> task) {
+                        Toast.makeText(ResetPasswordActivity.this, "Password updated successfully.", Toast.LENGTH_SHORT).show();
                     }
-                }
-            });
-        
-        
-        
+                });
+                mAuth.signOut();
+            }
+            }
+        });
     }
-
 }
 

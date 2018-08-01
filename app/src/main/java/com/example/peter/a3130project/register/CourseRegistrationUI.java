@@ -48,7 +48,6 @@ public class CourseRegistrationUI extends CourseRegistration{
     private String B00;
     private FirebaseUser user;
 
-
     /**
      * Constructor
      */
@@ -70,8 +69,6 @@ public class CourseRegistrationUI extends CourseRegistration{
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         user = fuser;
         dbRef = db.getReference();
-
-        // TODO setup B00 numbers for each user and query for them here
 
         final ArrayList<Integer> students = new ArrayList<>(Arrays.asList(0));
         final String crn = cs.getcrn();
@@ -99,25 +96,19 @@ public class CourseRegistrationUI extends CourseRegistration{
                     }
                 }
 
-
                 String fullterm = coursesection.getcourse().getsemester()+ " " + coursesection.getcourse().getyear();
 
-
                 int enrolled = dataSnapshot.child("crn").child(crn).child("enrolled").getValue(Integer.class);
-
 
                 if (B00 == null) {
                     Toast.makeText(applicationContext, "Can't register. Not logged in.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-
                 if (enrolled >= capacity) {
                     Toast.makeText(applicationContext, "Can't register. Course section is full.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-
 
                 CRNs = new ArrayList<>();
                 setCRN = new HashSet<>();
@@ -263,7 +254,6 @@ public class CourseRegistrationUI extends CourseRegistration{
         dbRef.child("students").child(B00).child("courses").child("current").child(index).setValue(course_sec.getcrn(), onComplete);
 
         //increments the number of students enrolled at course
-
         String fullterm = course_sec.getcourse().getsemester()+ " " + course_sec.getcourse().getyear();
 
         dbRef.child("crn").child(course_sec.getcrn()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -278,6 +268,4 @@ public class CourseRegistrationUI extends CourseRegistration{
             }
         });
     }
-
-
 }

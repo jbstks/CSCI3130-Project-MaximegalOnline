@@ -52,15 +52,14 @@ public class LoginActivity extends AppCompatActivity implements android.support.
         mAuth = FirebaseAuth.getInstance();
         et_password = (EditText) findViewById(R.id.et_password);
 
-        // TODO: change this
         et_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
+            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+                attemptLogin();
+                return true;
+            }
+            return false;
             }
         });
 
@@ -137,10 +136,10 @@ public class LoginActivity extends AppCompatActivity implements android.support.
         /* Evaluate login result*/
         switch(LoginChecker.checkLogin(email,password)) {
             case EMPTY_USER:
-                    Log.d("emaillen", "0");
+                Log.d("emaillen", "0");
 
-                    et_email.setError((CharSequence) getString(R.string.error_field_required),null);
-                    et_email.requestFocus();
+                et_email.setError((CharSequence) getString(R.string.error_field_required),null);
+                et_email.requestFocus();
             break;
 
 	        case EMPTY_PASSWORD:
@@ -163,21 +162,20 @@ public class LoginActivity extends AppCompatActivity implements android.support.
 		    break;
 
 	        case OK:
-	            // TODO: refactor this to avoid lambda function
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d("B", "signInWithEmail:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("A", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
+                    if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("B", "signInWithEmail:success");
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w("A", "signInWithEmail:failure", task.getException());
+                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
+                    }
                     }
 			    });
 
@@ -202,6 +200,7 @@ public class LoginActivity extends AppCompatActivity implements android.support.
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
 
     }
+
     @Override
     public void onBackPressed() {
     }

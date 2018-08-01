@@ -56,7 +56,6 @@ public class CourseInfo extends AppCompatActivity {
         Bundle termActivityBundle = termActivityIntent.getExtras();
         Log.d("COURSE", termActivityBundle.toString());
 
-
         if (termActivityBundle != null) {
             TextView codeTextView = (TextView) findViewById(R.id.courseInfo_code);
             TextView nameTextView = (TextView) findViewById(R.id.courseInfo_name);
@@ -69,13 +68,10 @@ public class CourseInfo extends AppCompatActivity {
             Log.d("COURSEINFO", "semester: " + semester + " year: " + year);
 
             curr_course = new Course(code, name, semester, year);
-
-            // TODO: query for the extra course information under the course_listings database
             getCourseExtra(code);
 
             // Database query for all sections of this course
             getSections(code, semester, year);
-            // TODO: build a dynamic place to show all the sections and a button to register for a specific section
 
             codeTextView.setText(code);
             nameTextView.setText(name);
@@ -156,13 +152,11 @@ public class CourseInfo extends AppCompatActivity {
 
                         CourseCrnList sectionCrn = new CourseCrnList(sectionNum, crn);
                         sectionCrns.add(sectionCrn);
-
                     }
 
                     Log.d("SECTION", "getting crns finished");
                 }
             }
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -170,9 +164,7 @@ public class CourseInfo extends AppCompatActivity {
             }
         });
 
-        DatabaseReference myRef2 =
-                database.getReference("crn");
-
+        DatabaseReference myRef2 = database.getReference("crn");
         myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -210,8 +202,6 @@ public class CourseInfo extends AppCompatActivity {
                     section_rv.setAdapter(sectionRVAdapter);
 
                     Log.d("SECTION", "finished");
-
-
                 }
             }
 
@@ -219,9 +209,6 @@ public class CourseInfo extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
         });
-
-
     }
 }

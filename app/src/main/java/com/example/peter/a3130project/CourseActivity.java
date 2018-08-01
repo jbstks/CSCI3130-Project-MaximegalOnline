@@ -16,5 +16,4 @@ public class CourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
     }
-
 }

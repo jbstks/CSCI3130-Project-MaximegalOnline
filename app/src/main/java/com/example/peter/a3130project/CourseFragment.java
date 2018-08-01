@@ -21,7 +21,7 @@ import java.util.List;
  * @author Peter Lee
  */
 public class CourseFragment extends Fragment {
-    public static String[] faculties = new String[] {"Business", "Chemistry", "Computer Science", "Mathematics", "Statistics"};
+    public static String[] faculties = new String[] {"Computer Science", "Business", "Chemistry", "Mathematics", "Statistics"};
     private CourseRVAdapter courseRVAdapter;
     private Spinner sortByFacultySpinner;
 

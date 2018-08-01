@@ -58,27 +58,27 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), CourseInfo.class);
-                    int position = getAdapterPosition();
+                Intent intent = new Intent(v.getContext(), CourseInfo.class);
+                int position = getAdapterPosition();
 
-                    Course intentCourse = adapter.courses.get(position);
-                    String name = intentCourse.getname();
-                    String code = intentCourse.getcode();
-                    String semester = intentCourse.getsemester();
-                    String year = intentCourse.getyear();
+                Course intentCourse = adapter.courses.get(position);
+                String name = intentCourse.getname();
+                String code = intentCourse.getcode();
+                String semester = intentCourse.getsemester();
+                String year = intentCourse.getyear();
 
-                    intent.putExtra("name", name);
-                    intent.putExtra("code", code);
-                    intent.putExtra("semester", semester);
-                    intent.putExtra("year", year);
+                intent.putExtra("name", name);
+                intent.putExtra("code", code);
+                intent.putExtra("semester", semester);
+                intent.putExtra("year", year);
 
-                    Log.d("COURSERV", "semester: " + semester + " year: " + year);
+                Log.d("COURSERV", "semester: " + semester + " year: " + year);
 
-                    Log.d("COURSERV", "Course click found" + code);
-                    Log.d("COURSERV", "getSimpleName" + v.getContext().getClass().getSimpleName());
-                    if (v.getContext().getClass().getSimpleName().equals("MainActivity")) intent.putExtra("prevActivity", "Main");
-                    else intent.putExtra("prevActivity", "AvailCourses");
-                    v.getContext().startActivity(intent);
+                Log.d("COURSERV", "Course click found" + code);
+                Log.d("COURSERV", "getSimpleName" + v.getContext().getClass().getSimpleName());
+                if (v.getContext().getClass().getSimpleName().equals("MainActivity")) intent.putExtra("prevActivity", "Main");
+                else intent.putExtra("prevActivity", "AvailCourses");
+                v.getContext().startActivity(intent);
                 }
             });
         }
@@ -109,6 +109,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
     public List<Course> getcourses(){
         return this.courses;
     }

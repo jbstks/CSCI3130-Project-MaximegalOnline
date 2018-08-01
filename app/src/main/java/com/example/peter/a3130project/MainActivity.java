@@ -286,90 +286,6 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         return true;
     }
 
-    // TODO: query out only the courses that are the correct semester
-    // we would query for the information then pass it into the Course Class
-    // The CourseTime part takes an arrayList of all the course times for that course
-
-
-    // TODO: this probably doesn't need to be here anymore, it is in AvailableCoursesActivity
-    // I don't think it's used for anything in MainActivity anymore.
-    /**
-     * Gets courses from the database
-     * This will obtain all of the courses offered in that semester and fill in the course_rv recyclerView
-     *
-     * @param semester The semester of the year you want course from
-     * @param year The year that you want courses from
-     */
-    public void getCourses(final String semester, final String year) {
-        Log.d("COURSE", "Creating Course View\n");
-
-        Log.d("COURSE", "Creating Linear Layout\n");
-
-        // Database setup
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("available_courses2").child(semester + " " + year);
-
-        Log.d("COURSE", "Creating cards\n");
-
-        /**
-         * Queries the database and fills in the courses ArrayList
-         */
-        ValueEventListener courseListener = new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Here is the id of the course (CRN)
-                    String key = snapshot.getKey();
-                    Log.d("COURSE", "Found course id: " + key);
-
-                    Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
-
-                    // TODO the semester and year probably are not needed (or can just be filled in from the given function values)
-                    Course course = new Course(key, (String) values.get("name"), semester, year);
-
-                    Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " + (String) values.get("semester") + " " + (String) values.get("year"));
-
-                    //courses.add(course);
-                    allcourses.add(course);
-
-                    Log.d("COURSE", "courses size is now: " + allcourses.size());
-
-                    //courseRVAdapter.notifyDataSetChanged();
-                }
-                
-                Log.d("Course", "returning courses");
-
-                Log.d("Course", "finished");
-                
-                //String selectedSubject;
-                //subjectSpinner = findViewById(R.id.sortByFacultySpinner);
-                //selectedSubject = subjectSpinner.getItemAtPosition(subjectSpinner.getSelectedItemPosition()).toString();
-
-                //ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
-                //courseRVAdapter.setcourses(sortCourseList);
-                courseRVAdapter.setcourses(allcourses);
-                courseRVAdapter.notifyDataSetChanged();
-            }
-
-            /**
-             * Prints error if there was a problem getting data from the database
-             *
-             * @param error
-             */
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("MainActivity", "Failed to read value.", error.toException());
-            }
-        };
-
-        Log.d("Course", "listener init complete");
-        myRef.addListenerForSingleValueEvent(courseListener);
-
-        Log.d("Course", "Getting Courses Complete");
-    }
-
     /**
      * Gets courses as CourseSections and put them in a list, from the database
      * Modified from {@link com.example.peter.a3130project.register.CourseRegistrationUI}'s
@@ -476,8 +392,6 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
     /**
      * changelistener for spinner. Changes sorting by faculty/subject
-     * 
-     * 
      **/
     public void changeSubjectSpinner(View view) {
         String selectedSubject;
@@ -485,7 +399,5 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         selectedSubject = subjectSpinner.getItemAtPosition(subjectSpinner.getSelectedItemPosition()).toString();
 
         ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
-        //courseRVAdapter.setcourses(sortCourseList);
-        //courseRVAdapter.notifyDataSetChanged();
     }
 }

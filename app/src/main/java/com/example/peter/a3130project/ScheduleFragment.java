@@ -26,6 +26,7 @@ import static android.graphics.Color.valueOf;
  *
  * @author Joanna Bistekos
  * @author Bradley Garagan
+ * @author Peter Lee
  */
 public class ScheduleFragment extends Fragment {
 
@@ -90,11 +91,8 @@ public class ScheduleFragment extends Fragment {
 
         final LinearLayout tab = view.findViewById(R.id.schedule_tab);
 
-        // TODO: Clear out commented code
-        //final ArrayList<String> days = new ArrayList<String>(Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday"));
         final ArrayList<String> days = new ArrayList<String>(Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"));
 
-        //final String[] colors = { "#ffe8e8", "#f0f0da", "#d3eabb", "#a9c4a0" };
         final String[] colors = { "#40f44336", "#40ffc107", "#404caf50", "#402196f3" };
         int colorIndex = 0;
 
@@ -133,13 +131,7 @@ public class ScheduleFragment extends Fragment {
             int height = blockSize * duration / 60;
             int margin = blockSize * before / 60;
 
-            // TODO: Clear out commented code
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
-            //LinearLayout.LayoutParams mlp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, margin);
-
-            /*View v = new View(getActivity().getApplicationContext());
-            v.setLayoutParams(mlp);
-            tab.addView(v);*/
 
             LinearLayout scheduleEntry = new LinearLayout(getActivity().getApplicationContext());
             scheduleEntry.setOrientation(LinearLayout.VERTICAL);
@@ -148,6 +140,7 @@ public class ScheduleFragment extends Fragment {
             scheduleEntry.setLayoutParams(lp);
             scheduleEntry.setBackgroundColor(e.getColor());
 
+            // Get darker color
             float[] hsv = new float[3];
             Color.colorToHSV(e.getColor(), hsv);
             hsv[2] *= 0.8f;

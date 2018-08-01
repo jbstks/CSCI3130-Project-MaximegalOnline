@@ -106,17 +106,16 @@ public class CourseDrop {
      **/
     public void decrementCourse(String crn) {
         dbRef.child("crn").child(crn).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    dataSnapshot.child("enrolled").getRef().setValue(dataSnapshot.child("enrolled").getValue(Integer.class) - 1);
-                    
-                }
-                
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    
-                }
-            });
-       
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.child("enrolled").getRef().setValue(dataSnapshot.child("enrolled").getValue(Integer.class) - 1);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

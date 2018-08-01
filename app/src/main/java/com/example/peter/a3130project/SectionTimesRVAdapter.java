@@ -61,8 +61,6 @@ public class SectionTimesRVAdapter extends RecyclerView.Adapter<SectionTimesRVAd
             times_start = itemView.findViewById(R.id.section_times_start);
             times_end = itemView.findViewById(R.id.section_times_end);
             times_location = itemView.findViewById(R.id.section_times_location);
-
-            // TODO: maybe we do a pop up and ask if they want to register?
         }
     }
 

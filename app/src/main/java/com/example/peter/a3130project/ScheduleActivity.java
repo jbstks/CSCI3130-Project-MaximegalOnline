@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-
 /**ScheduleEntry
  * Class to create an entry in a users schedule
  *
