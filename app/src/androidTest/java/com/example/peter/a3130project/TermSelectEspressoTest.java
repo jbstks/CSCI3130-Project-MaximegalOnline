@@ -1,6 +1,5 @@
 package com.example.peter.a3130project;
 
-import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.widget.TextView;
 

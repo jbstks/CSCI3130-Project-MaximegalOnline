@@ -1,7 +1,6 @@
 /* Note, some portions of code are adapted from https://firebase.google.com/docs/auth/android/password-auth */
 package com.example.peter.a3130project;
 
-import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -50,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements android.support.
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        et_password = (EditText) findViewById(R.id.et_password);
+        et_password = findViewById(R.id.et_password);
 
         et_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -121,8 +120,8 @@ public class LoginActivity extends AppCompatActivity implements android.support.
      * Takes the email and password stores in fields and attempts to login
      */
     private void attemptLogin() {
-        et_email = (EditText) findViewById(R.id.et_email);
-        et_password = (EditText) findViewById(R.id.et_password);
+        et_email = findViewById(R.id.et_email);
+        et_password = findViewById(R.id.et_password);
         // Reset errors
         et_email.setError(null);
         et_password.setError(null);
@@ -138,12 +137,12 @@ public class LoginActivity extends AppCompatActivity implements android.support.
             case EMPTY_USER:
                 Log.d("emaillen", "0");
 
-                et_email.setError((CharSequence) getString(R.string.error_field_required),null);
+                et_email.setError(getString(R.string.error_field_required),null);
                 et_email.requestFocus();
             break;
 
 	        case EMPTY_PASSWORD:
-                et_password.setError((CharSequence) getString(R.string.error_field_required), null);
+                et_password.setError(getString(R.string.error_field_required), null);
 
                 et_password.requestFocus();
                 Log.d("passwlen", "0");
@@ -151,13 +150,13 @@ public class LoginActivity extends AppCompatActivity implements android.support.
 
 	        case SHORT_USER:
                 Log.d("emaillen", "less8");
-                et_email.setError((CharSequence) getString(R.string.error_invalid_email),null);
+                et_email.setError(getString(R.string.error_invalid_email),null);
                 et_email.requestFocus();
 		    break;
 
 	        case SHORT_PASSWORD:
                 Log.d("passwlen", "less8");
-                et_password.setError((CharSequence) getString(R.string.error_invalid_password), null);
+                et_password.setError(getString(R.string.error_invalid_password), null);
                 et_password.requestFocus();
 		    break;
 

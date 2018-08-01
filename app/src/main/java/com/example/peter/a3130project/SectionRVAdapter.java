@@ -1,12 +1,9 @@
 package com.example.peter.a3130project;
-import com.example.peter.a3130project.course.CourseSection;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 /** This class functions as a bridge between the course section data and the RecyclerView
  * that displays it
@@ -30,7 +23,6 @@ import static java.security.AccessController.getContext;
 import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.register.CourseDrop;
 import com.example.peter.a3130project.register.CourseRegistrationUI;
-import com.example.peter.a3130project.register.RegistrationException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -86,7 +78,7 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
             section_id = itemView.findViewById(R.id.section_id);
             register_button = itemView.findViewById(R.id.register_button);
 	        drop_button = itemView.findViewById(R.id.drop_button);
-            times_rv = (RecyclerView) itemView.findViewById(R.id.section_times_rv);
+            times_rv = itemView.findViewById(R.id.section_times_rv);
 
             applicationContext = itemView.getContext().getApplicationContext();
 

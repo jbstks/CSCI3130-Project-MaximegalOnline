@@ -8,13 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import android.view.View;
 import android.util.Log;
 
 import android.widget.TextView;
 
 import com.example.peter.a3130project.course.CourseCrnList;
-import com.example.peter.a3130project.register.CourseRegistrationUI;
 import com.example.peter.a3130project.course.Course;
 import com.example.peter.a3130project.course.CourseTime;
 import com.example.peter.a3130project.course.CourseSection;
@@ -27,7 +25,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /** CourseInfo
@@ -49,7 +46,7 @@ public class CourseInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_info);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Intent termActivityIntent = getIntent();
@@ -57,8 +54,8 @@ public class CourseInfo extends AppCompatActivity {
         Log.d("COURSE", termActivityBundle.toString());
 
         if (termActivityBundle != null) {
-            TextView codeTextView = (TextView) findViewById(R.id.courseInfo_code);
-            TextView nameTextView = (TextView) findViewById(R.id.courseInfo_name);
+            TextView codeTextView = findViewById(R.id.courseInfo_code);
+            TextView nameTextView = findViewById(R.id.courseInfo_name);
 
             String name = (String) termActivityBundle.get("name");
             String code = (String) termActivityBundle.get("code");

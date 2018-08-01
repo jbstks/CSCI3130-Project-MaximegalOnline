@@ -1,8 +1,5 @@
 package com.example.peter.a3130project.course;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents a course
  *

@@ -7,18 +7,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.peter.a3130project.course.Course;
-import com.example.peter.a3130project.course.CourseSection;
-import com.example.peter.a3130project.course.CourseTime;
 import com.example.peter.a3130project.subject.SubjectSort;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -96,7 +92,7 @@ public class AvailableCoursesActivity extends AppCompatActivity {
         getCourses((String) mainActivityBundle.get("semester"), (String) mainActivityBundle.get("year"));
         
         // Grabbed from documentation https://developer.android.com/guide/topics/ui/controls/spinner
-        sortByFacultySpinner = (Spinner) findViewById(R.id.sortByFacultySpinner);
+        sortByFacultySpinner = findViewById(R.id.sortByFacultySpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> sortByFacultyAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, faculties);
         sortByFacultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -202,7 +198,7 @@ public class AvailableCoursesActivity extends AppCompatActivity {
 
                     Course course = new Course(key, (String) values.get("name"), inSemester, inYear);
 
-                    Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " +  inSemester + " " + inYear);
+                    Log.d("COURSE", "We are adding values: " + key + " " + values.get("name") + " " +  inSemester + " " + inYear);
 
                     allcourses.add(course);
 

@@ -1,8 +1,5 @@
 package com.example.peter.a3130project;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /** Term
  *
  * Data structure for holding term information

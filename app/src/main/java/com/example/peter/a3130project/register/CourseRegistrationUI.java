@@ -6,19 +6,16 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.peter.a3130project.CourseInfo;
 import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.course.Course;
 
 import com.example.peter.a3130project.course.CourseTime;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -86,7 +83,7 @@ public class CourseRegistrationUI extends CourseRegistration{
                     String Bcand = bentry.getKey();
 
                     for (DataSnapshot course : bentry.child("courses").child("current").getChildren()) {
-                        if (((String)course.getValue()).equals(crn)) {
+                        if (course.getValue().equals(crn)) {
                             students += 1;
                         }
                     }

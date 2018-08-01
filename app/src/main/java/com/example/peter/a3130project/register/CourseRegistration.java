@@ -1,7 +1,6 @@
 package com.example.peter.a3130project.register;
 import android.util.Log;
 
-import com.example.peter.a3130project.course.CourseSection;
 import com.example.peter.a3130project.course.CourseTime;
 import com.example.peter.a3130project.course.CourseSection;
 

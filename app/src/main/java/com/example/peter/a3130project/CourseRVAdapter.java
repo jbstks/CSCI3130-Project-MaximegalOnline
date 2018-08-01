@@ -1,7 +1,7 @@
 package com.example.peter.a3130project;
 
 import com.example.peter.a3130project.course.Course;
-import com.example.peter.a3130project.subject.SubjectSort;
+
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 /** CourseRVAdapter
  * Adapter view for holding course selection

@@ -37,8 +37,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resetpass);
-        et_email = (EditText) findViewById(R.id.et_email);
-        et_password =(EditText) findViewById(R.id.et_password);
+        et_email = findViewById(R.id.et_email);
+        et_password = findViewById(R.id.et_password);
         db = FirebaseDatabase.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
@@ -54,12 +54,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
         case EMPTY_USER:
             Log.d("emaillen", "0");
             
-            et_email.setError((CharSequence) getString(R.string.error_field_required),null);
+            et_email.setError(getString(R.string.error_field_required),null);
             et_email.requestFocus();
             break;
             
         case EMPTY_PASSWORD:
-            et_password.setError((CharSequence) getString(R.string.error_field_required), null);
+            et_password.setError(getString(R.string.error_field_required), null);
             
             et_password.requestFocus();
             Log.d("passwlen", "0");
@@ -67,13 +67,13 @@ public class ResetPasswordActivity extends AppCompatActivity {
             
         case SHORT_USER:
             Log.d("emaillen", "less8");
-            et_email.setError((CharSequence) getString(R.string.error_invalid_email),null);
+            et_email.setError(getString(R.string.error_invalid_email),null);
             et_email.requestFocus();
             break;
             
         case SHORT_PASSWORD:
             Log.d("passwlen", "less8");
-            et_password.setError((CharSequence) getString(R.string.error_invalid_password), null);
+            et_password.setError(getString(R.string.error_invalid_password), null);
             et_password.requestFocus();
             break;
 

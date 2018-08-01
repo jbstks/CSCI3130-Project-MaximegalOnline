@@ -17,9 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-
-import static android.graphics.Color.valueOf;
 
 /**
  * A fragment containing the user's schedule.

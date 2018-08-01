@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-import com.example.peter.a3130project.course.CourseSection;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
