@@ -224,7 +224,6 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                     return courseTab;
                 case 1:
                     scheduleFragment = new ScheduleFragment();
-                    // TODO should this be the courseList or currentCourseList?
                     scheduleFragment.update(courseList);
                     return scheduleFragment;
                 default:

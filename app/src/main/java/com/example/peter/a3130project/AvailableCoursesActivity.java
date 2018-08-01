@@ -200,7 +200,6 @@ public class AvailableCoursesActivity extends AppCompatActivity {
 
                     Map<String, Object> values = (Map<String, Object>) dataSnapshot.child(key).getValue();
 
-                    // TODO the semester and year probably are not needed (or can just be filled in from the given function values)
                     Course course = new Course(key, (String) values.get("name"), inSemester, inYear);
 
                     Log.d("COURSE", "We are adding values: " + key + " " + (String) values.get("name") + " " +  inSemester + " " + inYear);

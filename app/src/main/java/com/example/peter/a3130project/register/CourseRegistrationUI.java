@@ -197,23 +197,25 @@ public class CourseRegistrationUI extends CourseRegistration{
                 Log.d("registration","values of sometimes broken if " + coursesection.getcourse().getsemester()
                         + " " + coursesection.getcourse().getyear());
                 ArrayList<CourseSection> register_result = attempt_register(coursesection);
-                if (register_result == null) { //TODO: define applicationContext
+
+                if (register_result == null) {
                     Toast.makeText(applicationContext, "Can't register. Course is already registered for you.", Toast.LENGTH_SHORT).show();
-                } else if (register_result.size() != 0) {  // There is a conflicting course. Mention the conflicting course in the output.
+                }
+                else if (register_result.size() != 0) {  // There is a conflicting course. Mention the conflicting course in the output.
                     StringBuilder outputmessage = new StringBuilder("Can't register. Course conflicts with ");
                     for (int i = 0; i < register_result.size(); i++) {
                         outputmessage.append(" " + register_result.get(i).getcrn());
                     }
 
                     Toast.makeText(applicationContext, outputmessage.toString(), Toast.LENGTH_SHORT).show();
-                } else { //Otherwise, register
+                }
+                else { //Otherwise, register
                     try {
                         pushRegister(coursesection, index);
                     } catch (RegistrationException e) {
                         Log.d("Register", "Something bad happened on register");
                     }
                 }
-
             }
 
             @Override
@@ -243,10 +245,10 @@ public class CourseRegistrationUI extends CourseRegistration{
         DatabaseReference.CompletionListener onComplete = new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                if (databaseError == null) {
-                    String code = course_sec.getcourse().getcode();
-                    Toast.makeText(applicationContext, "Successfully registered for " + code + ".", Toast.LENGTH_SHORT).show();
-                }
+            if (databaseError == null) {
+                String code = course_sec.getcourse().getcode();
+                Toast.makeText(applicationContext, "Successfully registered for " + code + ".", Toast.LENGTH_SHORT).show();
+            }
             }
         };
 
