@@ -252,8 +252,6 @@ public class CourseRegistrationUI extends CourseRegistration{
         /* Adds the course to the database*/
         dbRef.child("students").child(B00).child("courses").child("current").child(index).setValue(course_sec.getcrn(), onComplete);
 
-        //increments the number of students enrolled at course
-        String fullterm = course_sec.getcourse().getsemester()+ " " + course_sec.getcourse().getyear();
 
         dbRef.child("crn").child(course_sec.getcrn()).addListenerForSingleValueEvent(new ValueEventListener() {
 

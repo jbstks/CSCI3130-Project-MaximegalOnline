@@ -1,11 +1,16 @@
 package com.example.peter.a3130project;
 
 import android.os.SystemClock;
-import android.support.test.InstrumentationRegistry;
+
+import android.support.test.espresso.UiController;
+import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.rule.ActivityTestRule;
+import android.view.View;
 
 
+import org.hamcrest.Matcher;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,15 +19,15 @@ import org.junit.runners.MethodSorters;
 
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+
 import static android.support.test.espresso.action.ViewActions.click;
 
-import static android.support.test.espresso.action.ViewActions.typeText;
+
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.core.AllOf.allOf;
+
 
 /**
  * RegisterEspressoTest
@@ -38,78 +43,72 @@ public class RegisterEspressoTest {
             new ActivityTestRule<>(LoginActivity.class);
 
     /**
-     *  A_attemptRegister
-     *Attempts registration of course 
-     *
+     * A_attemptRegister
+     * Attempts registration of course
      **/
     @Test
     public void A_attemptRegister() {
-
-
         SystemClock.sleep(1500);
-        onView(withId(R.id.rv)).perform(actionOnItemAtPosition(0, click()));
-
-        SystemClock.sleep(2500);
         onView(withId(R.id.rv)).perform(actionOnItemAtPosition(1, click()));
-
-
-
-
         SystemClock.sleep(1500);
-        
-        onView(withText("CSCI3110")).perform(click());
+        onView(withId(R.id.registerButton)).perform(click());
+        SystemClock.sleep(1500);
+        onView(withId(R.id.sortByFacultySpinner)).perform(click());
+        SystemClock.sleep(1500);
+        onView(withText("Computer Science")).perform(click());
+        SystemClock.sleep(1500);
+        onView(withId(R.id.course_rv)).perform(actionOnItemAtPosition(0, click()));
+        SystemClock.sleep(1500);
+        onView(withId(R.id.sections_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.register_button)));
         SystemClock.sleep(1500);
 
-
-        onView(allOf(withId(R.id.register_button), isDisplayed())).perform(click());
     }
 
 
     /**
-     *  B_removeTest
-     *Attempts removing a course from registration
-     *
+     * B_removeTest
+     * Attempts removing a course from registration
      **/
     @Test
     public void B_removeTest() {
 
-        SystemClock.sleep(1500);
+
         onView(withId(R.id.rv)).perform(actionOnItemAtPosition(1, click()));
-
         SystemClock.sleep(1500);
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText("Drop")).perform(click());
+        onView(withText("Computer Science I")).perform(click());
+        SystemClock.sleep(1500);
+        onView(withId(R.id.sections_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.drop_button)));
         SystemClock.sleep(1500);
 
-        onView(withId(R.id.crnText)).perform(typeText("42343"));
 
-        
-        
+
 
     }
 
 
-//    /**
-//     *  fullTest
-//     *Attempts registering for a course that it's at full capacity
-//     *
-//     **/
-//    @Test
-//    public void C_fullTest() {
-//
-//        SystemClock.sleep(1500);
-//        onView(withId(R.id.rv)).perform(actionOnItemAtPosition(1, click()));
-//
-//        SystemClock.sleep(1500);
-//        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-//        onView(withText("Drop")).perform(click());
-//        SystemClock.sleep(1500);
-//
-//        onView(withId(R.id.crnText)).perform(typeText("42343"));
-//
-//
-//
-//
-//    }
+    public static ViewAction clickChildViewWithId(final int id) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return null;
+            }
+
+            @Override
+            public String getDescription() {
+                return "Click on a child view with specified id.";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                View v = view.findViewById(id);
+                v.performClick();
+            }
+        };
+
+
+    }
 }
+
 
