@@ -385,4 +385,12 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
         ArrayList<Course> sortCourseList = subsort.doSort(allcourses).get(selectedSubject);
     }
+
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+   }
 }
