@@ -164,8 +164,6 @@
                 android:text="Drop" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 
 </android.support.v7.widget.CardView>
