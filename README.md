@@ -1,1 +1,2 @@
-[![CircleCI](https://circleci.com/gh/constxd/3130project.svg?style=svg)](https://circleci.com/gh/constxd/3130project)
+# University of Maximegalon Course Registration
+[![CircleCI](https://circleci.com/gh/jbstks/3130project.svg?style=svg)](https://circleci.com/gh/jbstks/3130project)
