@@ -27,14 +27,14 @@ public class RegisterTest {
 	CourseTime at1 = new CourseTime("Monday", "1135", "1225", "lol");
 	CourseTime at2 = new CourseTime("Wednesday", "1135", "1225", "lol");
 	Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
-        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+        CourseSection a = new CourseSection(0, 100,"1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
         
 
 	CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
 	CourseTime bt2 = new CourseTime("Wednesday", "1235", "1325", "lol");
 
         Course b_c = new Course("CSCI1001","B",  "Fall", "2050");
-        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
+        CourseSection b= new CourseSection(0, 100,"1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
 
 
 	
@@ -42,7 +42,7 @@ public class RegisterTest {
 	CourseTime ct2 = new CourseTime("Wednesday", "1335", "1425", "lol");
 
 	Course c_c = new Course("CSCI1002","C", "Fall", "2050");
-        CourseSection c = new CourseSection("1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
+        CourseSection c = new CourseSection(0, 100,"1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
         
 
 	CourseRegistration cr = new CourseRegistration(new ArrayList<CourseSection>(Arrays.asList(a,b)));
@@ -61,14 +61,14 @@ public class RegisterTest {
 	CourseTime at1 = new CourseTime("Monday", "1135", "1225", "lol");
 
         Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
-        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1)));
+        CourseSection a = new CourseSection(0, 100,"1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1)));
 
         
 	CourseTime bt2 = new CourseTime("Wednesday", "1235", "1325", "lol");
 
 
         Course b_c = new Course("CSCI1001","B",  "Fall", "2050");
-        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt2)));
+        CourseSection b= new CourseSection(0, 100,"1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt2)));
 
         
 	
@@ -77,7 +77,7 @@ public class RegisterTest {
 
 
         Course c_c = new Course("CSCI1002","C", "Fall", "2050");
-        CourseSection c = new CourseSection("1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
+        CourseSection c = new CourseSection(0, 100,"1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
 
 
 
@@ -100,7 +100,7 @@ public class RegisterTest {
 	//Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
 
         Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
-        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+        CourseSection a = new CourseSection(0, 100,"1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
 
 
 	CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
@@ -109,7 +109,7 @@ public class RegisterTest {
 	//Course b = new Course("11112", "B", "CSCI1001", "You", "Winter", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
 
         Course b_c = new Course("CSCI1001","B",  "Winter", "2050");
-        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
+        CourseSection b= new CourseSection(0, 100,"1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
 
 	
 	CourseTime ct1 = new CourseTime("Monday", "1235", "1325", "lol");
@@ -117,7 +117,7 @@ public class RegisterTest {
 
 	//Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
         Course c_c = new Course("CSCI1002","C", "Fall", "2050");
-        CourseSection c = new CourseSection("1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
+        CourseSection c = new CourseSection(0, 100,"1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
 
 
 
@@ -139,7 +139,7 @@ public class RegisterTest {
 	//Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
 
         Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
-        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+        CourseSection a = new CourseSection(0, 100,"1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
 
 
 	CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
@@ -147,7 +147,7 @@ public class RegisterTest {
 
 	//Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
         Course b_c = new Course("CSCI1001","B",  "Fall", "2050");
-        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
+        CourseSection b= new CourseSection(0, 100,"1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
 
 	
 	CourseTime ct1 = new CourseTime("Monday", "1300", "1425", "lol");
@@ -155,7 +155,7 @@ public class RegisterTest {
 
 	//Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
         Course c_c = new Course("CSCI1002","C", "Fall", "2050");
-        CourseSection c = new CourseSection("1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
+        CourseSection c = new CourseSection(0, 100,"1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
 
 
 
@@ -178,7 +178,7 @@ public class RegisterTest {
 	//Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
 
         Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
-        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+        CourseSection a = new CourseSection(0, 100,"1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
 
 
 	CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
@@ -186,7 +186,7 @@ public class RegisterTest {
 
 	//Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
             Course b_c = new Course("CSCI1001","B",  "Fall", "2050");
-        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
+        CourseSection b= new CourseSection(0, 100,"1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
 
 	
 	CourseTime ct1 = new CourseTime("Monday", "1000", "1200", "lol");
@@ -194,7 +194,7 @@ public class RegisterTest {
 
 	//Course c = new Course("11113", "try", "CSCI1002", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(ct1,ct2))));
         Course c_c = new Course("CSCI1002","C", "Fall", "2050");
-        CourseSection c = new CourseSection("1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
+        CourseSection c = new CourseSection(0, 100,"1", "11113", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(ct1,ct2)));
 
 
 
@@ -216,14 +216,14 @@ public class RegisterTest {
 	//Course a = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
 
         Course a_c = new Course( "CSCI1000", "A", "Fall",  "2050");
-        CourseSection a = new CourseSection("1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+        CourseSection a = new CourseSection(0, 100,"1", "11111", "OtherP", a_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
 
 
 	CourseTime bt1 = new CourseTime("Monday", "1235", "1325", "lol");
 	CourseTime bt2 = new CourseTime("Wednesday", "1235", "1325", "lol");
 
         Course b_c = new Course("CSCI1001","B",  "Fall", "2050");
-        CourseSection b= new CourseSection("1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
+        CourseSection b= new CourseSection(0, 100,"1", "11112", "OtherP", b_c ,new ArrayList<CourseTime>(Arrays.asList(bt1, bt2)));
 
 
         //Course b = new Course("11112", "B", "CSCI1001", "You", "Fall", "year", new ArrayList<CourseTime>(Arrays.asList(bt1,bt2)));
@@ -231,7 +231,7 @@ public class RegisterTest {
 
         //Course c = new Course("11111", "A", "CSCI1000", "You", "Fall", "year", new ArrayList<CourseTime>((Arrays.asList(at1,at2))));
 	Course c_c = new Course("CSCI1000","A", "Fall", "2050");
-        CourseSection c = new CourseSection("1", "11111", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
+        CourseSection c = new CourseSection(0, 100,"1", "11111", "OtherP", c_c ,new ArrayList<CourseTime>(Arrays.asList(at1,at2)));
 
 
 
