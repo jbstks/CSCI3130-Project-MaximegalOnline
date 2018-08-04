@@ -74,10 +74,6 @@ public class CourseRegistration {
                 CourseSection candidate = current_courses.get(i);
                 ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.getcourseTimeList();
 
-                Log.d("registration","values of sometimes broken if " + candidate.getcourse().getsemester()
-                        + " " + course.getcourse().getsemester()
-                        + " " + candidate.getcourse().getyear()
-                        + " " + course.getcourse().getyear());
 
                 // This term and/or year doesn't match. No need to check schedule
                 if (!(candidate.getcourse().getsemester().equals(course.getcourse().getsemester()) &&
@@ -112,7 +108,6 @@ public class CourseRegistration {
             if (!complete_courses.contains(prerequisites.get(i))) {
                 // there is a matching item, therefore return null
                 result.add(prerequisites.get(i));
-                Log.d("registration", "No prereq found for " + prerequisites.get(i));
             }
         }
         return result;
