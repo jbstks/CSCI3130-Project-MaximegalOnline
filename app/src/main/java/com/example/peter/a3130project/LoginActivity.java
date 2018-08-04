@@ -1,7 +1,6 @@
 /* Note, some portions of code are adapted from https://firebase.google.com/docs/auth/android/password-auth */
 package com.example.peter.a3130project;
 
-import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -30,8 +29,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
-
 /** LoginActivity
  *
  * Main entry point for sign-in
@@ -52,17 +49,16 @@ public class LoginActivity extends AppCompatActivity implements android.support.
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        et_password = (EditText) findViewById(R.id.et_password);
+        et_password = findViewById(R.id.et_password);
 
-        // TODO: change this
         et_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
+            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+                attemptLogin();
+                return true;
+            }
+            return false;
             }
         });
 
@@ -81,6 +77,16 @@ public class LoginActivity extends AppCompatActivity implements android.support.
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         attemptLogin();
+    }
+
+    /**resetPassword
+     *  Called on forgot password text field
+     *  Initiates password reset, starts ResetPasswordActivity
+     *  @param view
+     */
+    public void resetPassword(View view) {
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -114,8 +120,8 @@ public class LoginActivity extends AppCompatActivity implements android.support.
      * Takes the email and password stores in fields and attempts to login
      */
     private void attemptLogin() {
-        et_email = (EditText) findViewById(R.id.et_email);
-        et_password = (EditText) findViewById(R.id.et_password);
+        et_email = findViewById(R.id.et_email);
+        et_password = findViewById(R.id.et_password);
         // Reset errors
         et_email.setError(null);
         et_password.setError(null);
@@ -129,14 +135,14 @@ public class LoginActivity extends AppCompatActivity implements android.support.
         /* Evaluate login result*/
         switch(LoginChecker.checkLogin(email,password)) {
             case EMPTY_USER:
-                    Log.d("emaillen", "0");
+                Log.d("emaillen", "0");
 
-                    et_email.setError((CharSequence) getString(R.string.error_field_required),null);
-                    et_email.requestFocus();
+                et_email.setError(getString(R.string.error_field_required),null);
+                et_email.requestFocus();
             break;
 
 	        case EMPTY_PASSWORD:
-                et_password.setError((CharSequence) getString(R.string.error_field_required), null);
+                et_password.setError(getString(R.string.error_field_required), null);
 
                 et_password.requestFocus();
                 Log.d("passwlen", "0");
@@ -144,32 +150,31 @@ public class LoginActivity extends AppCompatActivity implements android.support.
 
 	        case SHORT_USER:
                 Log.d("emaillen", "less8");
-                et_email.setError((CharSequence) getString(R.string.error_invalid_email),null);
+                et_email.setError(getString(R.string.error_invalid_email),null);
                 et_email.requestFocus();
 		    break;
 
 	        case SHORT_PASSWORD:
                 Log.d("passwlen", "less8");
-                et_password.setError((CharSequence) getString(R.string.error_invalid_password), null);
+                et_password.setError(getString(R.string.error_invalid_password), null);
                 et_password.requestFocus();
 		    break;
 
 	        case OK:
-	            // TODO: refactor this to avoid lambda function
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d("B", "signInWithEmail:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("A", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
+                    if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("B", "signInWithEmail:success");
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w("A", "signInWithEmail:failure", task.getException());
+                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
+                    }
                     }
 			    });
 
@@ -193,6 +198,10 @@ public class LoginActivity extends AppCompatActivity implements android.support.
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }
 

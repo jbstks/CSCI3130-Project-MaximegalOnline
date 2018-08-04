@@ -1,10 +1,9 @@
 package com.example.peter.a3130project;
-import com.example.peter.a3130project.course.CourseSection;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 /** This class functions as a bridge between the course section data and the RecyclerView
  * that displays it
@@ -26,8 +21,8 @@ import static java.security.AccessController.getContext;
  */
 
 import com.example.peter.a3130project.course.CourseSection;
+import com.example.peter.a3130project.register.CourseDrop;
 import com.example.peter.a3130project.register.CourseRegistrationUI;
-import com.example.peter.a3130project.register.RegistrationException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -35,10 +30,11 @@ import com.google.firebase.auth.FirebaseUser;
  *
  * Adapter for handling view for courses.
  *
- * @author DW
- * @author AC
- * @author PL
- * @author MG
+ * @author Dawson Wilson
+ * @author Aecio Cavalcanti
+ * @author Peter Lee
+ * @author Megan Gosse
+ * @author Joanna Bistekos
  */
 public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.SectionViewHolder>{
 
@@ -51,14 +47,18 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
     SectionRVAdapter(List<CourseSection> sections) {
         this.sections = sections;
     }
+
     /** SectionViewHolder
      * provides a way to access data
      */
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
+        TextView section_capacity;
+        TextView section_enrolled;
         TextView section_crn;
         TextView section_prof;
         TextView section_id;
         Button register_button;
+	    Button drop_button;
         RecyclerView times_rv;
         List<CourseSection> sections;
         Context applicationContext;
@@ -71,11 +71,14 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         SectionViewHolder(View itemView, final List<CourseSection> sections) {
             super(itemView);
             this.sections = sections;
+            section_enrolled = itemView.findViewById(R.id.section_enrolled);
+            section_capacity = itemView.findViewById(R.id.section_capacity);
             section_crn = itemView.findViewById(R.id.section_crn);
             section_prof = itemView.findViewById(R.id.section_professor);
             section_id = itemView.findViewById(R.id.section_id);
             register_button = itemView.findViewById(R.id.register_button);
-            times_rv = (RecyclerView) itemView.findViewById(R.id.section_times_rv);
+	        drop_button = itemView.findViewById(R.id.drop_button);
+            times_rv = itemView.findViewById(R.id.section_times_rv);
 
             applicationContext = itemView.getContext().getApplicationContext();
 
@@ -93,16 +96,37 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
                 CourseRegistrationUI coursereg = null;
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-		        coursereg = new CourseRegistrationUI(); //TODO change null pointer here
-		        CourseSection cs = sections.get(position);
-		        coursereg.firebaseRegister(currentUser,cs, applicationContext);
+		        coursereg = new CourseRegistrationUI();
+                CourseSection cs = sections.get(position);
+                Log.d("SECTIONRV","values of sometimes broken if " + cs.getcourse().getsemester()
+                            + " " + cs.getcourse().getyear());
 
+                coursereg.firebaseRegister(currentUser, cs, applicationContext);
+                
                 }
             });
+
+            drop_button.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * manager for clicking on drop button
+                 **/
+                @Override
+                public void onClick(View v) {
+                int position = getAdapterPosition();
+                CourseSection cs = sections.get(position);
+                CourseDrop cd = new CourseDrop(applicationContext);
+                cd.drop(cs.getcrn());
+                }
+            });
+
+            Intent courseRVIntent = ((Activity) itemView.getContext()).getIntent();
+            Bundle courseRVBundle = courseRVIntent.getExtras();
+            if (courseRVBundle != null) {
+                if (courseRVBundle.get("prevActivity").equals("Main")) register_button.setVisibility(View.GONE);
+                else if (courseRVBundle.get("prevActivity").equals("AvailCourses")) drop_button.setVisibility(View.GONE);
+            }
         }
     }
-
-
 
     /**
      * Creates and returns a SectionViewHolder to be used by onBindViewHolder
@@ -132,18 +156,15 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
         // This refers to the public class Courses
         Log.d("SECTION","Section will have these values: " + sections.get(i).getcrn() + " " + sections.get(i).getprofessor());
         sectionViewHolder.section_crn.setText(sections.get(i).getcrn());
+        sectionViewHolder.section_enrolled.setText(sections.get(i).getenrolled()+"");
+        sectionViewHolder.section_capacity.setText(sections.get(i).getcapacity()+"");
         sectionViewHolder.section_prof.setText(sections.get(i).getprofessor());
         sectionViewHolder.section_id.setText(sections.get(i).getsectionNum());
 
-        //Get the context from the view in the constructor
-        LinearLayoutManager layoutManager = new LinearLayoutManager(sectionViewHolder.itemView.getContext());
-        sectionViewHolder.times_rv.setLayoutManager(layoutManager);
-
         //Setting up the inner recycler view
-        SectionTimesRVAdapter adapter=new SectionTimesRVAdapter(sections.get(i).getcourseTimeList());
+        SectionTimesRVAdapter adapter = new SectionTimesRVAdapter(sections.get(i).getcourseTimeList());
         sectionViewHolder.times_rv.setAdapter(adapter);
         sectionViewHolder.times_rv.setHasFixedSize(true);
-
     }
 
     /**

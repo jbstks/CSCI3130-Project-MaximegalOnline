@@ -1,19 +1,18 @@
 package com.example.peter.a3130project;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +67,7 @@ public class TermActivity extends AppCompatActivity {
     }
 
    /**
-    * Called when the user taps a course card
+    * Called when the user taps a term card
     */
     public void viewTermInfo(View view) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -109,5 +108,55 @@ public class TermActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_term, container, false);
             return rootView;
         }
+    }
+
+    /**
+     * Inflate the menu; this adds items to the action bar if it is present
+     *
+     * @param menu
+     * @return true if successful
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_term, menu);
+        return true;
+    }
+
+    /**
+     * Handle action bar item clicks here. The action bar will automatically handle clicks on
+     * the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
+     *
+     * @param item
+     * @return MenuItem selected
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /** logOut
+     * Called when user presses logout button in menu.
+     *
+     * @param item logout button in the menu
+     * @return whether or not the log out was successful
+     */
+    public boolean logOut(MenuItem item){
+        try {
+            FirebaseAuth.getInstance().signOut();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        return true;
     }
 }

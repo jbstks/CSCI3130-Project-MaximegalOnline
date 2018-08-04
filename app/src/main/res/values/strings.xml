@@ -3,12 +3,6 @@
 
     <string name="title_activity_login">MaximegalOnline</string>
 
-    <string-array name="semesterArray">
-        <item>Fall</item>
-        <item>Winter</item>
-        <item>Summer</item>
-    </string-array>
-
     <!-- Strings related to login -->
     <string name="prompt_email">Enter your user mail</string>
     <string name="prompt_password">Password</string>
@@ -27,8 +21,7 @@
     <!-- Default values as they will be overwritten by the RecyclerView -->
     <string name="term_semester">Winter</string>
     <string name="term_year">2018</string>
-    <!-- Ideally this will be retrieved from the database -->
-    <string name="title_selected_term">Winter 2018</string>
+
     <string name="action_more">more</string>
     <string name="action_menu">menu</string>
     <string name="tab_text_1">Courses</string>
@@ -39,9 +32,7 @@
 
     <string name="logout_name">Log Out</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_resetpass">Reset Password</string>
     <string name="title_activity_register">Register</string>
 
     <!-- formatting string -->
@@ -55,5 +46,4 @@
     <string name="prerequisites_title">PREREQUISITES</string>
     <string name="prerequisites_default_content">No prerequisites listed.</string>
     <string name="sections_title">SECTIONS</string>
-
 </resources>

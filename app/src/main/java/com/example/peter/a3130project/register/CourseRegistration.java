@@ -1,5 +1,6 @@
 package com.example.peter.a3130project.register;
-import com.example.peter.a3130project.course.CourseSection;
+import android.util.Log;
+
 import com.example.peter.a3130project.course.CourseTime;
 import com.example.peter.a3130project.course.CourseSection;
 
@@ -14,6 +15,7 @@ import java.util.HashSet;
  **/
 public class CourseRegistration {
     private ArrayList<CourseSection> current_courses;
+    private ArrayList<String> complete_courses;
 
     public CourseRegistration() {
     }
@@ -54,6 +56,10 @@ public class CourseRegistration {
                 // there is a matching item, therefore return null
                 return null;
             }
+            if (course.getcourse().getcode().equals(current_courses.get(i).getcourse().getcode())) {
+                // there is a matching item, therefore return null
+                return null;
+            }
         }
 
         ArrayList<CourseSection> result = new ArrayList<CourseSection>();
@@ -65,34 +71,46 @@ public class CourseRegistration {
             int [] course_time = coursetimes.get(a).get_universal_time();
 
             for (int i=0;i < current_courses.size(); i++) {
-            CourseSection candidate = current_courses.get(i);
-            ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.getcourseTimeList();
+                CourseSection candidate = current_courses.get(i);
+                ArrayList<CourseTime> candtimes = (ArrayList<CourseTime>)candidate.getcourseTimeList();
 
-            // This term and/or year doesn't match. No need to check schedule
-            if (!(candidate.getcourse().getsemester().equals(course.getcourse().getsemester()) &&
-                  candidate.getcourse().getyear().equals(course.getcourse().getyear())) ||
-                  hashresult.contains(candidate))
-            {
-                continue;
-            }
 
-            for (int j=0; j < candtimes.size(); j++ ) {
-                int [] cand_time = candtimes.get(j).get_universal_time();
-
-                /* Check for conflict, if there is add it to the list */
-                if ((course_time[0] >= cand_time[0] && course_time[0] <= cand_time[1]) ||
-                    (course_time[1] >= cand_time[0] && course_time[1] <= cand_time[1]) ||
-                    (cand_time[0] >= course_time[0] && cand_time[0] <= course_time[1]) ||
-                    (cand_time[1] >= course_time[0] && cand_time[1] <= course_time[1]))
+                // This term and/or year doesn't match. No need to check schedule
+                if (!(candidate.getcourse().getsemester().equals(course.getcourse().getsemester()) &&
+                      candidate.getcourse().getyear().equals(course.getcourse().getyear())) ||
+                      hashresult.contains(candidate))
                 {
-                    result.add(candidate);
-                    hashresult.add(candidate);
+                    continue;
+                }
+
+                for (int j=0; j < candtimes.size(); j++ ) {
+                    int [] cand_time = candtimes.get(j).get_universal_time();
+
+                    /* Check for conflict, if there is add it to the list */
+                    if ((course_time[0] >= cand_time[0] && course_time[0] <= cand_time[1]) ||
+                        (course_time[1] >= cand_time[0] && course_time[1] <= cand_time[1]) ||
+                        (cand_time[0] >= course_time[0] && cand_time[0] <= course_time[1]) ||
+                        (cand_time[1] >= course_time[0] && cand_time[1] <= course_time[1]))
+                    {
+                        result.add(candidate);
+                        hashresult.add(candidate);
+                    }
                 }
             }
-        }
-	}
-	return result;
+	    }
+	    return result;
 
+    }
+
+    public ArrayList<String> checkPrerequisites(ArrayList<String> prerequisites) {
+        ArrayList<String> result = new ArrayList<>();
+        for (int i=0; i < prerequisites.size(); i++) {
+            if (!complete_courses.contains(prerequisites.get(i))) {
+                // there is a matching item, therefore return null
+                result.add(prerequisites.get(i));
+            }
+        }
+        return result;
     }
 
 
@@ -101,6 +119,13 @@ public class CourseRegistration {
     }
     public void setcurrent_courses(ArrayList<CourseSection> val){
          this.current_courses = val;
+    }
+
+    public ArrayList<String> getcomplete_courses(){
+        return complete_courses;
+    }
+    public void setcomplete_courses(ArrayList<String> val){
+        this.complete_courses = val;
     }
 
     public boolean equals(CourseRegistration cr) {

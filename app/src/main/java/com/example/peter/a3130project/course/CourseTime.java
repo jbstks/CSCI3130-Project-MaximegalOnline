@@ -39,14 +39,6 @@ public class CourseTime {
         day_time_conversion.put("Thursday", 4);
         day_time_conversion.put("Friday", 5);
         day_time_conversion.put("Saturday", 6);
-
-        day_time_conversion.put("sunday", 0);
-        day_time_conversion.put("monday", 1);
-        day_time_conversion.put("tuesday", 2);
-        day_time_conversion.put("wednesday", 3);
-        day_time_conversion.put("thursday", 4);
-        day_time_conversion.put("friday", 5);
-        day_time_conversion.put("saturday", 6);
     }
     
 
@@ -62,9 +54,7 @@ public class CourseTime {
             startime = daymul*2400 + Integer.parseInt(startTime);
             endtime = daymul*2400 + Integer.parseInt(endTime);
         }
-        catch (Exception e) {
-            // TODO: change this
-        }
+        catch (Exception e) { }
         int arr[] = {startime, endtime};
         return arr;
     }

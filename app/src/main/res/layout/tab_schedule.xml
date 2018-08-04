@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ScheduleActivity">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/schedule_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabSelectedTextColor="@color/primary">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="M" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="T" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="W" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="F" />
+    </android.support.design.widget.TabLayout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="8 AM"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="9 AM"
+                    android:background="#eee"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="10 AM"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="11 AM"
+                    android:background="#eee"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="12 PM"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="1 PM"
+                    android:background="#eee"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="2 PM"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="3 PM"
+                    android:background="#eee"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="4 PM"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="5 PM"
+                    android:background="#eee"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="6 PM"
+                    android:textAlignment="viewEnd" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:padding="8dp"
+                    android:text="7 PM"
+                    android:background="#eee"
+                    android:textAlignment="viewEnd" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/schedule_tab">
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

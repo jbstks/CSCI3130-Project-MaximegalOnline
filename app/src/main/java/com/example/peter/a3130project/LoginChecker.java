@@ -21,8 +21,7 @@ public class LoginChecker {
 
     public static LoginRet checkLogin (String email, String password) {
 		if ( email.isEmpty()){
-
-				return EMPTY_USER;
+			return EMPTY_USER;
 		}
 		if (password.isEmpty()) {
 			return EMPTY_PASSWORD;

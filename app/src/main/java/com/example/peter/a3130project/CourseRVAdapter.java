@@ -1,6 +1,7 @@
 package com.example.peter.a3130project;
 
 import com.example.peter.a3130project.course.Course;
+
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 /** CourseRVAdapter
  * Adapter view for holding course selection
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.CourseViewHolder>{
 
-    List<Course> courses;
+    private List<Course> courses;
 
     /**
      * Creates a CourseRVAdapter
@@ -31,7 +31,8 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
      */
     CourseRVAdapter(List<Course> courses) {
         this.courses = courses;
-        Log.d("Course", "called the CourseRVAdapter");
+
+        Log.d("COURSERV", "called the CourseRVAdapter");
     }
 
     /**
@@ -42,37 +43,41 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
         TextView course_code;
         TextView course_name;
 
-        List<Course> courses = new ArrayList<>();
+        CourseRVAdapter adapter;
 
-        CourseViewHolder(View itemView, final List<Course> courses) {
+        CourseViewHolder(View itemView, final CourseRVAdapter adapter) {
             super(itemView);
-            this.courses = courses;
+            this.adapter = adapter;
             course_cv = itemView.findViewById(R.id.course_cv);
             course_code = itemView.findViewById(R.id.course_code);
             course_name = itemView.findViewById(R.id.course_name);
 
-            Log.d("COURSE","Creating click function");
+            Log.d("COURSERV","Creating click function");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), CourseInfo.class);
-                    int position = getAdapterPosition();
+                Intent intent = new Intent(v.getContext(), CourseInfo.class);
+                int position = getAdapterPosition();
 
-                    Course intentCourse = courses.get(position);
-                    String name = intentCourse.getname();
-                    String code = intentCourse.getcode();
-                    String semester = intentCourse.getsemester();
-                    String year = intentCourse.getyear();
+                Course intentCourse = adapter.courses.get(position);
+                String name = intentCourse.getname();
+                String code = intentCourse.getcode();
+                String semester = intentCourse.getsemester();
+                String year = intentCourse.getyear();
 
-                    intent.putExtra("name", name);
-                    intent.putExtra("code", code);
-                    intent.putExtra("semester", semester);
-                    intent.putExtra("year", year);
+                intent.putExtra("name", name);
+                intent.putExtra("code", code);
+                intent.putExtra("semester", semester);
+                intent.putExtra("year", year);
 
-                    Log.d("COURSE", "Course click found" + code);
+                Log.d("COURSERV", "semester: " + semester + " year: " + year);
 
-                    v.getContext().startActivity(intent);
+                Log.d("COURSERV", "Course click found" + code);
+                Log.d("COURSERV", "getSimpleName" + v.getContext().getClass().getSimpleName());
+                if (v.getContext().getClass().getSimpleName().equals("MainActivity")) intent.putExtra("prevActivity", "Main");
+                else intent.putExtra("prevActivity", "AvailCourses");
+                v.getContext().startActivity(intent);
                 }
             });
         }
@@ -82,7 +87,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     public CourseViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         Log.d("COURSE", "Creating card");
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.course_card_list, viewGroup, false);
-        CourseViewHolder pvh = new CourseViewHolder(v, this.courses);
+        CourseViewHolder pvh = new CourseViewHolder(v, this);
         return pvh;
     }
 
@@ -103,4 +108,9 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.Course
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
+    public List<Course> getcourses(){
+        return this.courses;
+    }
+    public void setcourses(List<Course> val) { this.courses = val; }
 }

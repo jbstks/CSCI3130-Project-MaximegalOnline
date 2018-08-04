@@ -1,8 +1,5 @@
 package com.example.peter.a3130project.course;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents a course
  *
@@ -47,12 +44,11 @@ public class Course {
      */
     @Override
     public boolean equals(Object ot) {
-	Course other = (Course) ot;
-	return (this.code.equals(other.getcode()) &&
-		this.name.equals(other.getname()) &&
-		this.semester.equals(other.getsemester()) &&
-		this.year.equals(other.getyear()));
-
+        Course other = (Course) ot;
+        return (this.code.equals(other.getcode()) &&
+            this.name.equals(other.getname()) &&
+            this.semester.equals(other.getsemester()) &&
+            this.year.equals(other.getyear()));
     }
 
     /**

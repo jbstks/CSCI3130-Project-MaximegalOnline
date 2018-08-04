@@ -8,11 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import android.view.View;
 import android.util.Log;
 
 import android.widget.TextView;
-import com.example.peter.a3130project.register.CourseRegistrationUI;
+
+import com.example.peter.a3130project.course.CourseCrnList;
 import com.example.peter.a3130project.course.Course;
 import com.example.peter.a3130project.course.CourseTime;
 import com.example.peter.a3130project.course.CourseSection;
@@ -25,7 +25,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /** CourseInfo
@@ -47,31 +46,29 @@ public class CourseInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_info);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Intent termActivityIntent = getIntent();
         Bundle termActivityBundle = termActivityIntent.getExtras();
         Log.d("COURSE", termActivityBundle.toString());
 
-
         if (termActivityBundle != null) {
-            TextView codeTextView = (TextView) findViewById(R.id.courseInfo_code);
-            TextView nameTextView = (TextView) findViewById(R.id.courseInfo_name);
+            TextView codeTextView = findViewById(R.id.courseInfo_code);
+            TextView nameTextView = findViewById(R.id.courseInfo_name);
 
             String name = (String) termActivityBundle.get("name");
             String code = (String) termActivityBundle.get("code");
             String semester = (String) termActivityBundle.get("semester");
             String year = (String) termActivityBundle.get("year");
 
-            curr_course = new Course(code, name, semester, year);
+            Log.d("COURSEINFO", "semester: " + semester + " year: " + year);
 
-            // TODO: query for the extra course information under the course_listings database
+            curr_course = new Course(code, name, semester, year);
             getCourseExtra(code);
 
             // Database query for all sections of this course
             getSections(code, semester, year);
-            // TODO: build a dynamic place to show all the sections and a button to register for a specific section
 
             codeTextView.setText(code);
             nameTextView.setText(name);
@@ -121,7 +118,7 @@ public class CourseInfo extends AppCompatActivity {
     /**
      * Queries data from the database based upon supplied information name, semester, year
      */
-    public void getSections(String code, String semester, String year) {
+    public void getSections(String code, String inSemester, String inYear) {
 
         final RecyclerView section_rv = findViewById(R.id.sections_rv);
         section_rv.setHasFixedSize(true);
@@ -133,9 +130,11 @@ public class CourseInfo extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef =
-                database.getReference("available_courses1").child(semester + " " + year).child(code);
+                database.getReference("available_courses2").child(inSemester + " " + inYear).child(code);
 
         Query query = myRef.child("sections");
+
+        final List<CourseCrnList> sectionCrns = new ArrayList<>();
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -143,15 +142,44 @@ public class CourseInfo extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
-                    List<CourseSection> sections = new ArrayList<>();
+                    // List<CourseSection> sections = new ArrayList<>();
                     for (DataSnapshot section : dataSnapshot.getChildren()) {
-
                         String sectionNum = section.getKey();
-                        String crn = section.child("crn").getValue(String.class);
-                        String professor = section.child("professor").getValue(String.class);
+                        String crn = section.getValue(String.class);
+
+                        CourseCrnList sectionCrn = new CourseCrnList(sectionNum, crn);
+                        sectionCrns.add(sectionCrn);
+                    }
+
+                    Log.d("SECTION", "getting crns finished");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference myRef2 = database.getReference("crn");
+        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    List<CourseSection> sections = new ArrayList<>();
+                    for (int i=0; i<sectionCrns.size(); i++) {
+
+                        String sectionNum = sectionCrns.get(i).getSection();
+                        String crn = sectionCrns.get(i).getcrn();
+                        Log.d("SECTIONS", "Looking up the crn" + " " + crn);
+                        String professor = dataSnapshot.child(crn).child("professor").getValue(String.class);
+                        int capacity = dataSnapshot.child(crn).child("capacity").getValue(Integer.class);
+                        int enrolled = dataSnapshot.child(crn).child("enrolled").getValue(Integer.class);
                         List<CourseTime> courseTimes = new ArrayList<>();
 
-                        for(DataSnapshot time : section.child("times").getChildren()) {
+                        for(DataSnapshot time : dataSnapshot.child(crn).child("times").getChildren()) {
                             String day = time.getKey();
                             String start = time.child("start").getValue(String.class);
                             String end = time.child("end").getValue(String.class);
@@ -161,7 +189,9 @@ public class CourseInfo extends AppCompatActivity {
                             courseTimes.add(courseTime);
                         }
 
-                        CourseSection courseSection= new CourseSection(sectionNum, crn, professor, curr_course, courseTimes);
+                        CourseSection courseSection= new CourseSection(enrolled, capacity, sectionNum, crn, professor, curr_course, courseTimes);
+                        Log.d("COURSEINFO","values of sometimes broken if " + courseSection.getcourse().getsemester()
+                                + " " + courseSection.getcourse().getyear());
                         sections.add(courseSection);
                     }
 

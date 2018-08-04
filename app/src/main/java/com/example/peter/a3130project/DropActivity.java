@@ -1,6 +1,5 @@
 package com.example.peter.a3130project;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +28,7 @@ public class DropActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.crnText);
         String crn = editText.getText().toString();
 
-        CourseDrop cd = new CourseDrop();
+        CourseDrop cd = new CourseDrop(this.getApplicationContext());
         cd.drop(crn);
     }
 }

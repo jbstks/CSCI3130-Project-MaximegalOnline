@@ -1,7 +1,6 @@
 package com.example.peter.a3130project;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -52,19 +49,18 @@ public class TermRVAdapter extends RecyclerView.Adapter<TermRVAdapter.TermViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    String semester = term_semester.getText().toString();
-                    String year = term_year.getText().toString();
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                String semester = term_semester.getText().toString();
+                String year = term_year.getText().toString();
 
-                    Log.d("Debug","Trying with " + semester + " and " + year + " .");
+                Log.d("Debug","Trying with " + semester + " and " + year + " .");
 
-                    intent.putExtra("semester", semester);
-                    intent.putExtra("year", year);
-                    v.getContext().startActivity(intent);
+                intent.putExtra("semester", semester);
+                intent.putExtra("year", year);
+                v.getContext().startActivity(intent);
                 }
             });
         }
-
     }
 
     /**
