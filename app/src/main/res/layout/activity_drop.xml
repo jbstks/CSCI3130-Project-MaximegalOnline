@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="register.CourseDrop">
+    tools:context="com.csci3130.project.maximegalonline.register.CourseDrop">
 
     <Button
         android:id="@+id/dropButton"

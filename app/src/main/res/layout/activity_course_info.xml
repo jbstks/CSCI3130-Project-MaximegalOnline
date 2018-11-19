@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context=".CourseInfo"
+    tools:context="com.csci3130.project.maximegalonline.CourseInfo"
     tools:layout_editor_absoluteY="25dp">
 
     <TextView
